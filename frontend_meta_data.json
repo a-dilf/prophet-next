@@ -1,0 +1,10 @@
+{
+    "account_owner_address": "0x173B8C2E0E0DD52B7685B6E8f9D25328f567055d",
+    "nft_contract_address": "0xA7b205092cCB9D581CECfA0439b61f2A44605118",
+    "token_contract_address": "0x9daa44637Ac3417fBC9198E0464c7F8b5759d5A3",
+    "vault_contract_address": "0xF1a806485C311f8bFca232F8ea5058EfC4422cf3",
+    "liquidty_pool_address": "0x190685e825c14a8D89672f17035EFC8DB53b12F4",
+    "token_staking_contract_address": "0x3Cb43455702BC99ab696670AFCA630C8c66c8005",
+    "nft_staking_contract_address": "0x1D51b0aB7018a86ADD284f881FA6fC47aeD7AF96",
+    "lp_staking_contract_address": "0xeE8f87c7cd22D8939eB825dc55e0D0380A849DE1"
+}

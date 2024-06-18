@@ -1,0 +1,33 @@
+{
+  "name": "with-next-mint-nft",
+  "private": true,
+  "version": "0.0.91",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.20",
+    "@mui/material": "^5.15.20",
+    "@rainbow-me/rainbowkit": "^2.1.2",
+    "@tanstack/react-query": "^5.28.4",
+    "framer-motion": "^6.3.3",
+    "next": "^14.2.3",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "viem": "2.9.31",
+    "wagmi": "^2.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.3",
+    "@types/react": "^18.3.0",
+    "typescript": "5.4.2"
+  },
+  "description": "Contract here: https://gist.github.com/peduarte/b48fbf6ff35de431207d68250679a05b",
+  "main": "next.config.js",
+  "author": "",
+  "license": "ISC"
+}
