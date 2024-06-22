@@ -13,7 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <>
             <NavBar open={open} setOpen={setOpen} />
-            <main>{children}</main>
+            <main style={{ marginBottom: "100px", marginTop: "100px" }} >{children}</main>
         </>
     );
 };

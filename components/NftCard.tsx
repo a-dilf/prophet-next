@@ -5,6 +5,8 @@ import Image from 'next/legacy/image';
 // component imports
 import FlipCard, { BackCard, FrontCard } from './FlipCard';
 
+import { Typography, Button } from '@mui/material';
+
 // rainbowkit+ imports
 import {
     useReadContract,
@@ -27,7 +29,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
     // get image URL for display
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch('https://api.prophetlady.com/api/v1/nft/0.json');
+            const response = await fetch('https://api.prophetlady.com/api/v1/nft/' + tokenId + '.json');
             const data = await response.json();
             // Assuming the image URL is directly accessible in the data object
             setTokenImageUrl(data.image || '');
@@ -35,21 +37,6 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
 
         fetchData();
     }, []);
-
-    /*
-    async function fetchNFTData(): Promise<void> {
-        try {
-            const response = await fetch('https://api.prophetlady.com/api/v1/nft/0.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
-            }
-            const url = await response.json();
-            setTokenImageUrl(url["image"])
-        } catch (error) {
-            console.error('There was a problem with the fetch operation: ', error);
-        }
-    }
-    */
 
     // read operations
     const { data: tokenTierLevel } = useReadContract({
@@ -87,14 +74,19 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
 
     const isMinted = txSuccess;
 
+    // TODO - update and test the NFT functions!
+    // TODO - make the card flip based on stake status
+    // TODO - get stake status in and make stake turn to unstake (or)
+    // perhaps unstake is a button on the backside of the card!
+    
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
                 <div style={{ padding: '24px 24px 24px 0' }}>
-                    <h1>Prophet Lady: {Number(tokenId)}</h1>
-                    <p style={{ margin: '12px 0 24px' }}>
+                    <Typography variant="h5">Prophet Lady: {Number(tokenId)}</Typography>
+                    <Typography style={{ margin: '12px 0 24px' }}>
                         Tier: {Number(tokenTier)}
-                    </p>
+                    </Typography>
 
                     {mintError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>
@@ -108,10 +100,11 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                     )}
 
                     {mounted && isConnected && !isMinted && (
-                        <button
-                            style={{ marginTop: 24 }}
-                            disabled={!mint || isMintLoading || isMintStarted}
-                            className="button"
+                        <Button
+                            color="secondary"
+                            variant="contained"
+                            style={{ marginTop: 24, marginLeft: 15 }}
+                            disabled={!mint || isMintLoading || isMintStarted || Number(tokenTier) >= 5}
                             data-mint-loading={isMintLoading}
                             data-mint-started={isMintStarted}
                             onClick={() =>
@@ -123,10 +116,52 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                         >
                             {isMintLoading && 'Waiting for approval'}
                             {isMintStarted && 'Minting...'}
-                            {!isMintLoading && !isMintStarted && 'Mint'}
-                        </button>
+                            {!isMintLoading && !isMintStarted && 'Lvl'}
+                        </Button>
                     )}
-                    
+
+                    {mounted && isConnected && !isMinted && (
+                        <Button
+                            color="secondary"
+                            variant="contained"
+                            style={{ marginTop: 24, marginLeft: 15 }}
+                            disabled={!mint || isMintLoading || isMintStarted || Number(tokenTier) >= 5}
+                            data-mint-loading={isMintLoading}
+                            data-mint-started={isMintStarted}
+                            onClick={() =>
+                                mint?.({
+                                    ...nftContractConfig,
+                                    functionName: 'mint',
+                                })
+                            }
+                        >
+                            {isMintLoading && 'Waiting for approval'}
+                            {isMintStarted && 'Minting...'}
+                            {!isMintLoading && !isMintStarted && 'MAX'}
+                        </Button>
+                    )}
+
+                    {mounted && isConnected && !isMinted && (
+                        <Button
+                            color="secondary"
+                            variant="contained"
+                            style={{ marginTop: 24, marginLeft: 15 }}
+                            disabled={!mint || isMintLoading || isMintStarted || Number(tokenTier) < 5}
+                            data-mint-loading={isMintLoading}
+                            data-mint-started={isMintStarted}
+                            onClick={() =>
+                                mint?.({
+                                    ...nftContractConfig,
+                                    functionName: 'mint',
+                                })
+                            }
+                        >
+                            {isMintLoading && 'Waiting for approval'}
+                            {isMintStarted && 'Minting...'}
+                            {!isMintLoading && !isMintStarted && 'stake'}
+                        </Button>
+                    )}
+
                 </div>
             </div>
 
