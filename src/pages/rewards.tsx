@@ -17,9 +17,6 @@ import { staking_lp_abi } from '../../abi_objects/staking_lp_abi';
 
 import RewardCard from "../../components/RewardCard";
 
-
-
-
 const rewards: NextPage = () => {
     const [mounted, setMounted] = React.useState(false);
     const [stateTokenRewardsAmount, setStateTokenRewardsAmount] = React.useState(0n);
@@ -58,13 +55,13 @@ const rewards: NextPage = () => {
     const { data: nftRewardsAmount } = useReadContract({
         ...nftStakingContractConfig,
         functionName: "userInfo",
-        args: [address]
+        args: [address as '0x${string}']
     });
 
     const { data: lpRewardsAmount } = useReadContract({
         ...lpStakingContractConfig,
         functionName: "userInfo",
-        args: [address]
+        args: [address as '0x${string}']
     });
 
     // update state with the read results
@@ -95,10 +92,12 @@ const rewards: NextPage = () => {
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
             <Typography className="container" variant="h2">Rewards Zone</Typography>
             <RewardCard mounted={mounted} isConnected={isConnected} cardTitle={"Token Staking Rewards"} rewardStakingContractConfig={tokenStakingContractConfig} rewardFunctionName={"claim"} rewardsAmount={Number(stateTokenRewardsAmount)}></RewardCard>
-            <RewardCard mounted={mounted} isConnected={isConnected} cardTitle={"NFT Staking Rewards"} rewardStakingContractConfig={nftStakingContractConfig} rewardFunctionName={"harvest"} rewardsAmount={Number(stateNftRewardsAmount)}></RewardCard>
-            <RewardCard mounted={mounted} isConnected={isConnected} cardTitle={"LP Staking Rewards"} rewardStakingContractConfig={lpStakingContractConfig} rewardFunctionName={"harvest"} rewardsAmount={Number(stateLpRewardsAmount)}></RewardCard>
+            <RewardCard mounted={mounted} isConnected={isConnected} cardTitle={"NFT Staking Rewards"} rewardStakingContractConfig={nftStakingContractConfig} rewardFunctionName={"claim"} rewardsAmount={Number(stateNftRewardsAmount)}></RewardCard>
+            <RewardCard mounted={mounted} isConnected={isConnected} cardTitle={"LP Staking Rewards"} rewardStakingContractConfig={lpStakingContractConfig} rewardFunctionName={"claim"} rewardsAmount={Number(stateLpRewardsAmount)}></RewardCard>
         </div>
     );
 };
+
+// TODO - REWARDCARD needs to have its rewardFunctionName turned to harvest - maybe as a seperate component...
 
 export default rewards;

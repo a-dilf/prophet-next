@@ -51,13 +51,13 @@ const Home: NextPage = () => {
     const allowanceContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [address, process.env.NEXT_PUBLIC_NFT_ADDRESS]
+        args: [address as '0x${string}', process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}']
     } as const;
 
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [process.env.NEXT_PUBLIC_NFT_ADDRESS, Number(toWei(mintCount, "ether")) * 400000.01]
+        args: [process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}', BigInt(Number(toWei(mintCount, "ether")) * 400000.01)]
     } as const;
 
     //// READ OPERATIONS
@@ -138,7 +138,7 @@ const Home: NextPage = () => {
                     </IconButton>
                 </Box>
             </div>
-            <ApproveAndAction mounted={mounted} isConnected={isConnected} cardTitle={"Approve and Mint"} actionContractConfig={nftMintConfig} allowanceAmount={currentAllowance} approvingContractConfig={approvingContractConfig} actionFunctionName={"mint"}></ApproveAndAction>
+            <ApproveAndAction mounted={mounted} isConnected={isConnected} cardTitle={"Approve and Mint"} allowanceAmount={Number(currentAllowance)} approvingContractConfig={approvingContractConfig} mintCount={mintCount}></ApproveAndAction>
             <Typography className="container" variant="h3">NFTs at 0x{String(address).slice(-4)}</Typography>
             <NftCard mounted={mounted} isConnected={isConnected} tokenId={tokenId} nftContractConfig={nftContractConfig}></NftCard>
             <NftCard mounted={mounted} isConnected={isConnected} tokenId={9} nftContractConfig={nftContractConfig}></NftCard>

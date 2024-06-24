@@ -14,14 +14,18 @@ import {
     useWriteContract,
 } from 'wagmi';
 
+import { staking_token_abi } from '../abi_objects/staking_token_abi';
+
 interface RewardCardProps {
     mounted: boolean;
     isConnected: boolean;
     cardTitle: string;
     rewardStakingContractConfig: object;
-    rewardFunctionName: string;
+    rewardFunctionName: "claim";
     rewardsAmount: Number;
 }
+
+// TODO - revert rewardFunctionName type changes??
 
 const RewardCard: React.FC<RewardCardProps> = ({ mounted, isConnected, cardTitle, rewardStakingContractConfig, rewardFunctionName, rewardsAmount }) => {
 
@@ -45,6 +49,11 @@ const RewardCard: React.FC<RewardCardProps> = ({ mounted, isConnected, cardTitle
             enabled: !!hash,
         },
     });
+
+    const tokenStakingContractConfig = {
+        address: process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}',
+        abi: staking_token_abi
+    } as const;
 
     return (
         <div className="container">
@@ -73,7 +82,7 @@ const RewardCard: React.FC<RewardCardProps> = ({ mounted, isConnected, cardTitle
                             data-mint-started={isClaimStarted}
                             onClick={() =>
                                 claim?.({
-                                    ...rewardStakingContractConfig,
+                                    ...tokenStakingContractConfig,
                                     functionName: rewardFunctionName,
                                 })
                             }

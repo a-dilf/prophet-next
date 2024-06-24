@@ -17,13 +17,16 @@ import {
 interface NftCardProps {
     mounted: boolean;
     isConnected: boolean;
-    tokenId: Number;
+    tokenId: number;
     nftContractConfig: object;
 }
 
+import { nft_abi } from '../abi_objects/nft_abi';
+console.log(nft_abi)
+
 const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftContractConfig }) => {
     // state values
-    const [tokenTier, setTokenTier] = React.useState(0n);
+    const [tokenTier, setTokenTier] = React.useState(BigInt(0));
     const [tokenImageUrl, setTokenImageUrl] = React.useState("");
 
     // get image URL for display
@@ -37,13 +40,24 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
 
         fetchData();
     }, []);
+    
+    const nftContractConfig2 = {
+        address: process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}',
+        abi: nft_abi,
+        args: [BigInt(tokenId)]
+    } as const;
 
     // read operations
     const { data: tokenTierLevel } = useReadContract({
-        ...nftContractConfig,
-        functionName: 'nftTiers',
-        args: [tokenId]
+        ...nftContractConfig2,
+        functionName: 'nftTiers'
     });
+
+    React.useEffect(() => {
+        if (tokenTierLevel) {
+            setTokenTier(tokenTierLevel);
+        }
+    }, [tokenTierLevel]);
 
     // write opertions
     const {
@@ -66,19 +80,13 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         },
     });
 
-    React.useEffect(() => {
-        if (tokenTierLevel) {
-            setTokenTier(tokenTierLevel);
-        }
-    }, [tokenTierLevel]);
-
     const isMinted = txSuccess;
 
     // TODO - update and test the NFT functions!
     // TODO - make the card flip based on stake status
     // TODO - get stake status in and make stake turn to unstake (or)
     // perhaps unstake is a button on the backside of the card!
-    
+
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
@@ -99,6 +107,8 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                         </p>
                     )}
 
+                    
+
                     {mounted && isConnected && !isMinted && (
                         <Button
                             color="secondary"
@@ -109,7 +119,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             data-mint-started={isMintStarted}
                             onClick={() =>
                                 mint?.({
-                                    ...nftContractConfig,
+                                    ...nftContractConfig2,
                                     functionName: 'mint',
                                 })
                             }
@@ -130,7 +140,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             data-mint-started={isMintStarted}
                             onClick={() =>
                                 mint?.({
-                                    ...nftContractConfig,
+                                    ...nftContractConfig2,
                                     functionName: 'mint',
                                 })
                             }
@@ -151,7 +161,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             data-mint-started={isMintStarted}
                             onClick={() =>
                                 mint?.({
-                                    ...nftContractConfig,
+                                    ...nftContractConfig2,
                                     functionName: 'mint',
                                 })
                             }

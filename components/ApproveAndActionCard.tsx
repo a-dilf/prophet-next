@@ -6,7 +6,10 @@ import Image from 'next/legacy/image';
 import FlipCard, { BackCard, FrontCard } from './FlipCard';
 
 import { Typography, Button } from '@mui/material';
+
 import { token_abi } from '../abi_objects/token_abi';
+import { nft_abi } from '../abi_objects/nft_abi';
+import { abi } from '../abi_objects/contract-abi';
 
 import { toWei } from 'web3-utils';
 
@@ -21,13 +24,27 @@ interface ApproveAndActionCardProps {
     mounted: boolean;
     isConnected: boolean;
     cardTitle: string;
-    allowanceAmount: Object
-    approvingContractConfig: Object
-    actionContractConfig: Object;
-    actionFunctionName: string;
+    allowanceAmount: number
+    approvingContractConfig: Object;
+    mintCount: number;
 }
 
-const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, isConnected, cardTitle, allowanceAmount, approvingContractConfig, actionContractConfig, actionFunctionName }) => {
+const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, isConnected, cardTitle, allowanceAmount, mintCount }) => {
+    
+    // TODO - make suer this BigInt isn't supposed to be an actual value
+    const approvingContractConfig = {
+        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+        abi: token_abi,
+        args: [ process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}', BigInt(allowanceAmount)]
+    } as const;
+
+    const nftMintConfig = {
+        address: process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}',
+        abi: nft_abi,
+        args: [BigInt(mintCount)]
+    } as const;
+
+    console.log(nft_abi)
 
     //// WRITE OPERATIONS
     // let user approve $PROPHET tokens
@@ -139,7 +156,7 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
                             />
                             <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Allowance provided!</Typography>
                             <Typography style={{ marginBottom: 24 }}>
-                                {Math.floor(toWei(Number(allowanceAmount), "wei") / 100000000000000000)} approved for minting!
+                                {Math.floor(Number(toWei(Number(allowanceAmount), "wei")) / 100000000000000000)} approved for minting!
                             </Typography>
                             <Button
                                 color="primary"
@@ -150,14 +167,14 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
                                 data-mint-started={isActionStarted}
                                 onClick={() =>
                                     action?.({
-                                        ...actionContractConfig,
-                                        functionName: actionFunctionName,
+                                        ...nftMintConfig,
+                                        functionName: "mint",
                                     })
                                 }
                             >
                                 {isActionLoading && 'Confirming...'}
-                                {isActionStarted && actionFunctionName + 'ing...'}
-                                {!isActionLoading && !isActionStarted && actionFunctionName}
+                                {isActionStarted && 'minting...'}
+                                {!isActionLoading && !isActionStarted && "mint"}
                             </Button>
                             {!isActionLoading && isActionStarted && (
                                 <Typography style={{ marginBottom: 6 }}>
