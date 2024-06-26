@@ -2,7 +2,7 @@
 import React from 'react';
 import type { NextPage } from 'next';
 
-import { Typography, Button, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 import IconButton from '@mui/material/IconButton';
 import IncrementIcon from '@mui/icons-material/Add'; // Import Add Icon
@@ -22,30 +22,31 @@ import { token_abi } from '../../abi_objects/token_abi';
 
 // component imports
 import NftCard from '../../components/NftCard';
-import ApproveAndAction from '../../components/ApproveAndActionCard';
+import NftApproveAndActionCard from '../../components/NftApproveAndActionCard';
 
 import { toWei } from 'web3-utils';
-
 
 const Home: NextPage = () => {
     const [totalMinted, setTotalMinted] = React.useState(0n);
     const [mounted, setMounted] = React.useState(false);
     const [mintCount, setMintCount] = React.useState(1);
-    const { address, isConnected } = useAccount();
-
     const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
+    const [ownedNftCardProps, setOwnedNftCardProps] = React.useState(new Array);
+
+    const { address, isConnected } = useAccount();
 
     React.useEffect(() => setMounted(true), []);
 
+    // contract config objects
     const nftContractConfig = {
         address: process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}',
         abi: nft_abi
     } as const;
 
-    const nftMintConfig = {
+    const nftOwnerContractConfig = {
         address: process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}',
         abi: nft_abi,
-        args: [mintCount]
+        args: [address as '0x${string}']
     } as const;
 
     const allowanceContractConfig = {
@@ -54,17 +55,44 @@ const Home: NextPage = () => {
         args: [address as '0x${string}', process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}']
     } as const;
 
-    const approvingContractConfig = {
-        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
-        abi: token_abi,
-        args: [process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}', BigInt(Number(toWei(mintCount, "ether")) * 400000.01)]
-    } as const;
-
     //// READ OPERATIONS
+    const { data: ownedNfts } = useReadContract({
+        ...nftOwnerContractConfig,
+        functionName: 'tokensOfOwner',
+    });
+
+    const { data: totalSupplyData } = useReadContract({
+        ...nftContractConfig,
+        functionName: 'totalSupply',
+    });
+
     const { data: allowanceAmount } = useReadContract({
         ...allowanceContractConfig,
         functionName: "allowance"
     });
+
+
+    //// STATE UPDATES
+    // update state with the read results
+    React.useEffect(() => {
+        if (ownedNfts) {
+
+            const nftCardsData = ownedNfts.map(tokenId => ({
+                mounted: mounted, // Example value, replace with actual logic if needed
+                isConnected: isConnected, // Example value, replace with actual logic if needed
+                tokenId,
+                nftContractConfig: nftContractConfig, // Example value, replace with actual logic if needed
+            }));
+
+            setOwnedNftCardProps(nftCardsData)
+        }
+    }, [ownedNfts]);
+
+    React.useEffect(() => {
+        if (totalSupplyData) {
+            setTotalMinted(totalSupplyData);
+        }
+    }, [totalSupplyData]);
 
     // update state with the read results
     React.useEffect(() => {
@@ -73,50 +101,17 @@ const Home: NextPage = () => {
         }
     }, [allowanceAmount]);
 
-
-    // Function to increment the count
+    // state management for user to select number of NFTs to mint
     const incrementCount = () => {
         setMintCount(mintCount + 1);
     };
 
-    // Function to decrement the count
     const decrementCount = () => {
         if (mintCount > 1) {
             setMintCount(mintCount - 1);
         }
     };
 
-    const {
-        data: hash,
-        writeContract: mint,
-        isPending: isMintLoading,
-        isSuccess: isMintStarted,
-        error: mintError,
-    } = useWriteContract();
-
-    const { data: totalSupplyData } = useReadContract({
-        ...nftContractConfig,
-        functionName: 'totalSupply',
-    });
-
-    const {
-        data: txData,
-        isSuccess: txSuccess,
-        error: txError,
-    } = useWaitForTransactionReceipt({
-        hash,
-        query: {
-            enabled: !!hash,
-        },
-    });
-
-    React.useEffect(() => {
-        if (totalSupplyData) {
-            setTotalMinted(totalSupplyData);
-        }
-    }, [totalSupplyData]);
-
-    const isMinted = txSuccess;
     const tokenId = 0
 
     // TODO - make NFTS populate iteratively and fix the always minting forever bug
@@ -138,12 +133,22 @@ const Home: NextPage = () => {
                     </IconButton>
                 </Box>
             </div>
-            <ApproveAndAction mounted={mounted} isConnected={isConnected} cardTitle={"Approve and Mint"} allowanceAmount={Number(currentAllowance)} approvingContractConfig={approvingContractConfig} mintCount={mintCount}></ApproveAndAction>
+            <NftApproveAndActionCard mounted={mounted} isConnected={isConnected} cardTitle={"Approve and Mint"} amountToApprove={(Number(toWei(mintCount, "ether")) * 400000.01)} allowanceAmount={Number(currentAllowance)} mintCount={mintCount}></NftApproveAndActionCard>
             <Typography className="container" variant="h3">NFTs at 0x{String(address).slice(-4)}</Typography>
-            <NftCard mounted={mounted} isConnected={isConnected} tokenId={tokenId} nftContractConfig={nftContractConfig}></NftCard>
-            <NftCard mounted={mounted} isConnected={isConnected} tokenId={9} nftContractConfig={nftContractConfig}></NftCard>
+            {ownedNftCardProps.map((cardData, index) => (
+                <NftCard
+                    key={index}
+                    mounted={cardData.mounted}
+                    isConnected={cardData.isConnected}
+                    tokenId={cardData.tokenId}
+                    nftContractConfig={cardData.nftContractConfig}
+                />
+            ))}
         </div>
     );
 };
+
+// TODO - make it so staked NFTs use the flip card with unstake on it
+// TODO - disable the stake button as well!
 
 export default Home;

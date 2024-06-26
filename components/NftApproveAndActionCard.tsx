@@ -9,33 +9,33 @@ import { Typography, Button } from '@mui/material';
 
 import { token_abi } from '../abi_objects/token_abi';
 import { nft_abi } from '../abi_objects/nft_abi';
-import { abi } from '../abi_objects/contract-abi';
 
 import { toWei } from 'web3-utils';
 
 // rainbowkit+ imports
 import {
-    useReadContract,
     useWaitForTransactionReceipt,
     useWriteContract,
 } from 'wagmi';
 
-interface ApproveAndActionCardProps {
+// TODO - minting button gets stuck on minting forever...
+
+interface NftApproveAndActionCardProps {
     mounted: boolean;
     isConnected: boolean;
     cardTitle: string;
-    allowanceAmount: number
-    approvingContractConfig: Object;
+    amountToApprove: number;
+    allowanceAmount: number;
     mintCount: number;
 }
 
-const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, isConnected, cardTitle, allowanceAmount, mintCount }) => {
-    
-    // TODO - make suer this BigInt isn't supposed to be an actual value
+const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mounted, isConnected, cardTitle, amountToApprove, allowanceAmount, mintCount }) => {
+    const [amountMintable, setAmountMintable] = React.useState(0);
+
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [ process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}', BigInt(allowanceAmount)]
+        args: [ process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}', BigInt(amountToApprove)]
     } as const;
 
     const nftMintConfig = {
@@ -43,8 +43,6 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
         abi: nft_abi,
         args: [BigInt(mintCount)]
     } as const;
-
-    console.log(nft_abi)
 
     //// WRITE OPERATIONS
     // let user approve $PROPHET tokens
@@ -88,6 +86,17 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
         },
     });
 
+    //// STATE UPDATES amountMintable
+    React.useEffect(() => {
+        if (allowanceAmount) {
+            let allowance = Math.floor(Number(toWei(Number(allowanceAmount), "wei")) / 1000000000000000000)
+
+            setAmountMintable(allowance / 400000);
+        }
+    }, [allowanceAmount]);
+
+    // TODO - fix rewards amount?? look for the 1 / 1000000 statement
+
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
@@ -122,7 +131,7 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
                         >
                             {isApproveLoading && 'Confirming...'}
                             {isApproveStarted && 'approving...'}
-                            {!isApproveLoading && !isApproveStarted && "approve"}
+                            {!isApproveLoading && !isApproveStarted && "approve " + mintCount}
                         </Button>
                     )}
 
@@ -131,7 +140,7 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
 
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
-                    <FrontCard isCardFlipped={allowanceAmount}>
+                    <FrontCard isCardFlipped={allowanceAmount && Math.floor(Number(toWei(Number(allowanceAmount), "wei")) / 100000000000000000) > 1}>
                         Rewards to claim: {1 / 1000000000000000000}
                         <Image
                             layout="fill"
@@ -144,7 +153,7 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
                             quality={100}
                         />
                     </FrontCard>
-                    <BackCard isCardFlipped={allowanceAmount}>
+                    <BackCard isCardFlipped={allowanceAmount && Math.floor(Number(toWei(Number(allowanceAmount), "wei")) / 100000000000000000) > 1}>
                         <div style={{ padding: 24 }}>
                             <Image
                                 src="/nft.png"
@@ -154,15 +163,15 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
                                 style={{ borderRadius: 8 }}
                                 priority
                             />
-                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Allowance provided!</Typography>
+                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>{amountMintable} mintable!</Typography>
                             <Typography style={{ marginBottom: 24 }}>
-                                {Math.floor(Number(toWei(Number(allowanceAmount), "wei")) / 100000000000000000)} approved for minting!
+                                {Math.floor(Number(toWei(Number(allowanceAmount), "wei")) / 1000000000000000000)} $PROPHET approved for burn.
                             </Typography>
                             <Button
                                 color="primary"
                                 variant="contained"
                                 style={{ marginBottom: 5, marginLeft: 15 }}
-                                disabled={!action || isActionLoading || isActionStarted}
+                                disabled={!action || isActionLoading || isActionStarted || amountMintable < mintCount}
                                 data-mint-loading={isActionLoading}
                                 data-mint-started={isActionStarted}
                                 onClick={() =>
@@ -174,7 +183,7 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
                             >
                                 {isActionLoading && 'Confirming...'}
                                 {isActionStarted && 'minting...'}
-                                {!isActionLoading && !isActionStarted && "mint"}
+                                {!isActionLoading && !isActionStarted && "mint " + mintCount}
                             </Button>
                             {!isActionLoading && isActionStarted && (
                                 <Typography style={{ marginBottom: 6 }}>
@@ -197,4 +206,4 @@ const ApproveAndActionCard: React.FC<ApproveAndActionCardProps> = ({ mounted, is
                 
 */
 
-export default ApproveAndActionCard;
+export default NftApproveAndActionCard;

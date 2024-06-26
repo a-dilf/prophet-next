@@ -22,12 +22,13 @@ interface NftCardProps {
 }
 
 import { nft_abi } from '../abi_objects/nft_abi';
-console.log(nft_abi)
+import { staking_nft_abi } from '../abi_objects/staking_nft_abi';
 
 const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftContractConfig }) => {
     // state values
     const [tokenTier, setTokenTier] = React.useState(BigInt(0));
     const [tokenImageUrl, setTokenImageUrl] = React.useState("");
+    const [tokenStakeStatusForButton, setTokenStakeStatusForButton] = React.useState(false);
 
     // get image URL for display
     useEffect(() => {
@@ -40,10 +41,16 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
 
         fetchData();
     }, []);
-    
+
     const nftContractConfig2 = {
         address: process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}',
         abi: nft_abi,
+        args: [BigInt(tokenId)]
+    } as const;
+
+    const unstakeNftContractConfig = {
+        address: process.env.NEXT_PUBLIC_NFT_STAKING_ADDRESS as '0x${string}',
+        abi: staking_nft_abi,
         args: [BigInt(tokenId)]
     } as const;
 
@@ -53,11 +60,23 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         functionName: 'nftTiers'
     });
 
+    const { data: tokenStakeStatus } = useReadContract({
+        ...nftContractConfig2,
+        functionName: 'stakedTokens'
+    });
+
     React.useEffect(() => {
         if (tokenTierLevel) {
             setTokenTier(tokenTierLevel);
         }
     }, [tokenTierLevel]);
+
+    React.useEffect(() => {
+        if (tokenStakeStatus) {
+            setTokenStakeStatusForButton(tokenStakeStatus);
+        }
+    }, [tokenStakeStatus]);
+
 
     // write opertions
     const {
@@ -80,7 +99,26 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         },
     });
 
-    const isMinted = txSuccess;
+    // write opertions
+    const {
+        data: unstakeHash,
+        writeContract: unstake,
+        isPending: isUnstakeLoading,
+        isSuccess: isUnstakeStarted,
+        error: unstakeError,
+    } = useWriteContract();
+
+    // ??
+    const {
+        data: unstakeData,
+        isSuccess: unstakeSuccess,
+        error: unstakeTxError,
+    } = useWaitForTransactionReceipt({
+        hash: unstakeHash,
+        query: {
+            enabled: !!hash,
+        },
+    });
 
     // TODO - update and test the NFT functions!
     // TODO - make the card flip based on stake status
@@ -107,9 +145,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                         </p>
                     )}
 
-                    
-
-                    {mounted && isConnected && !isMinted && (
+                    {mounted && isConnected && (
                         <Button
                             color="secondary"
                             variant="contained"
@@ -130,7 +166,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                         </Button>
                     )}
 
-                    {mounted && isConnected && !isMinted && (
+                    {mounted && isConnected && (
                         <Button
                             color="secondary"
                             variant="contained"
@@ -151,12 +187,12 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                         </Button>
                     )}
 
-                    {mounted && isConnected && !isMinted && (
+                    {mounted && isConnected && (
                         <Button
                             color="secondary"
                             variant="contained"
                             style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!mint || isMintLoading || isMintStarted || Number(tokenTier) < 5}
+                            disabled={!mint || isMintLoading || isMintStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
                             data-mint-loading={isMintLoading}
                             data-mint-started={isMintStarted}
                             onClick={() =>
@@ -177,7 +213,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
 
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
-                    <FrontCard isCardFlipped={isMinted}>
+                    <FrontCard isCardFlipped={tokenStakeStatus}>
                         <>
                             {tokenImageUrl && (
                                 <Image
@@ -194,34 +230,45 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             {!tokenImageUrl && <p>Loading NFT image...</p>}
                         </>
                     </FrontCard>
-                    <BackCard isCardFlipped={isMinted}>
+                    <BackCard isCardFlipped={tokenStakeStatus}>
                         <div style={{ padding: 24 }}>
                             <Image
-                                src="/nft.png"
-                                width="80"
+                                src={tokenImageUrl}
+                                width="60"
                                 height="80"
                                 alt="RainbowKit Demo NFT"
                                 style={{ borderRadius: 8 }}
                                 priority
                             />
-                            <h2 style={{ marginTop: 24, marginBottom: 6 }}>NFT Minted!</h2>
-                            <p style={{ marginBottom: 24 }}>
-                                Your NFT will show up in your wallet in the next few minutes.
-                            </p>
-                            <p style={{ marginBottom: 6 }}>
-                                View on{' '}
-                                <a href={`https://rinkeby.etherscan.io/tx/${hash}`}>
-                                    Etherscan
-                                </a>
-                            </p>
-                            <p>
-                                View on{' '}
-                                <a
-                                    href={`https://testnets.opensea.io/assets/rinkeby/${txData?.to}/1`}
-                                >
-                                    Opensea
-                                </a>
-                            </p>
+                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>NFT currently staked!</Typography>
+                            <Typography style={{ marginBottom: 24 }}>
+                                NFT generating rewards from NFT staking reward pool.
+                            </Typography>
+                            <Button
+                                color="primary"
+                                variant="contained"
+                                style={{ marginBottom: 5, marginLeft: 15 }}
+                                data-mint-loading={isUnstakeLoading}
+                                data-mint-started={isUnstakeStarted}
+                                onClick={() =>
+                                    unstake?.({
+                                        ...unstakeNftContractConfig,
+                                        functionName: "withdraw",
+                                    })
+                                }
+                            >
+                                {isUnstakeLoading && 'Confirming...'}
+                                {isUnstakeStarted && 'minting...'}
+                                {!isUnstakeLoading && !isUnstakeStarted && "unstake"}
+                            </Button>
+                            {!isUnstakeLoading && isUnstakeStarted && (
+                                <Typography style={{ marginBottom: 6 }}>
+                                    View on{' '}
+                                    <a href={`https://arbiscan.io/tx/${unstakeHash}`}>
+                                        Arbiscan
+                                    </a>
+                                </Typography>
+                            )}
                         </div>
                     </BackCard>
                 </FlipCard>

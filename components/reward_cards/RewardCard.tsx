@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Image from 'next/legacy/image';
 
 // component imports
-import FlipCard, { BackCard, FrontCard } from './FlipCard';
+import FlipCard, { BackCard, FrontCard } from '../FlipCard';
 
 import { Typography, Button } from '@mui/material';
 
@@ -14,7 +14,7 @@ import {
     useWriteContract,
 } from 'wagmi';
 
-import { staking_token_abi } from '../abi_objects/staking_token_abi';
+import { staking_token_abi } from '../../abi_objects/staking_token_abi';
 
 interface RewardCardProps {
     mounted: boolean;
@@ -25,7 +25,7 @@ interface RewardCardProps {
     rewardsAmount: Number;
 }
 
-// TODO - revert rewardFunctionName type changes??
+// TODO - revert these type changes??
 
 const RewardCard: React.FC<RewardCardProps> = ({ mounted, isConnected, cardTitle, rewardStakingContractConfig, rewardFunctionName, rewardsAmount }) => {
 

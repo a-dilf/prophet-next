@@ -9,13 +9,15 @@ import {
     type UseAccountReturnType
 } from 'wagmi';
 
-import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItemText, ListItemButton, Grid, Button } from '@mui/material';
+import { Typography} from '@mui/material';
 
 import { staking_token_abi } from '../../abi_objects/staking_token_abi';
 import { staking_nft_abi } from '../../abi_objects/staking_nft_abi';
 import { staking_lp_abi } from '../../abi_objects/staking_lp_abi';
 
-import RewardCard from "../../components/RewardCard";
+import LpRewardCard from '../../components/reward_cards/LpRewardCard';
+import TokenRewardCard from '../../components/reward_cards/TokenRewardCard';
+import NftRewardCard from '../../components/reward_cards/NftRewardCard';
 
 const rewards: NextPage = () => {
     const [mounted, setMounted] = React.useState(false);
@@ -25,8 +27,7 @@ const rewards: NextPage = () => {
 
     React.useEffect(() => setMounted(true), []);
 
-    const { address, isConnected }: UseAccountReturnType = useAccount();
-    const [stateRewardsAmount, setStateRewardsAmount] = React.useState(0n);
+    const { address }: UseAccountReturnType = useAccount();
 
     // create contract configs for the three staking contracts
     const tokenStakingContractConfig = {
@@ -86,18 +87,16 @@ const rewards: NextPage = () => {
         }
     }, [lpRewardsAmount]);
 
-    // todo - call the reward functions here and pass results to the reward cards (no address needed, easier to render...)
+    // todo - get actual reward amounts and update the placeholder images on reward cards
 
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
             <Typography className="container" variant="h2">Rewards Zone</Typography>
-            <RewardCard mounted={mounted} isConnected={isConnected} cardTitle={"Token Staking Rewards"} rewardStakingContractConfig={tokenStakingContractConfig} rewardFunctionName={"claim"} rewardsAmount={Number(stateTokenRewardsAmount)}></RewardCard>
-            <RewardCard mounted={mounted} isConnected={isConnected} cardTitle={"NFT Staking Rewards"} rewardStakingContractConfig={nftStakingContractConfig} rewardFunctionName={"claim"} rewardsAmount={Number(stateNftRewardsAmount)}></RewardCard>
-            <RewardCard mounted={mounted} isConnected={isConnected} cardTitle={"LP Staking Rewards"} rewardStakingContractConfig={lpStakingContractConfig} rewardFunctionName={"claim"} rewardsAmount={Number(stateLpRewardsAmount)}></RewardCard>
+            <TokenRewardCard mounted={mounted} cardTitle={"Token Staking Rewards"} rewardsAmount={Number(stateTokenRewardsAmount)}></TokenRewardCard>
+            <NftRewardCard mounted={mounted} cardTitle={"NFT Staking Rewards"} rewardsAmount={Number(stateNftRewardsAmount)}></NftRewardCard>
+            <LpRewardCard mounted={mounted} cardTitle={"LP Staking Rewards"} rewardsAmount={Number(stateLpRewardsAmount)}></LpRewardCard>
         </div>
     );
 };
-
-// TODO - REWARDCARD needs to have its rewardFunctionName turned to harvest - maybe as a seperate component...
 
 export default rewards;
