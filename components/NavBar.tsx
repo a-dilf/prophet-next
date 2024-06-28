@@ -5,9 +5,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
-// navigation imports
-// import Link from 'next/link';
-
 interface NavbarProps {
     open: boolean;
     setOpen: Function;
@@ -40,25 +37,26 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
                             <ListItemText primary="Home" />
                         </ListItemButton>
                     </Box>
-                    <ListItemButton onClick={() => setOpen(false)} key="Lite Paper">
-                        <ListItemText primary="Lite Paper" />
-                    </ListItemButton>
-                    <ListItemButton onClick={() => setOpen(false)} key="Buy $PROPHET">
-                        <Box component={Link} href="/rewards" underline="none">
-                            <ListItemText primary="Buy $PROPHET" />
-                        </Box>
-                    </ListItemButton>
+                    <Box component={Link} href="/litepaper" underline="none">
+                        <ListItemButton onClick={() => setOpen(false)} key="litepaper">
+                            <ListItemText primary="Litepaper" />
+                        </ListItemButton>
+                    </Box>
+                    <Box component={Link} href="/prophet" underline="none">
+                        <ListItemButton onClick={() => setOpen(false)} key="prophet">
+                            <ListItemText primary="$Prophet" />
+                        </ListItemButton>
+                    </Box>
                     <Box component={Link} href="/nfts" underline="none">
                         <ListItemButton onClick={() => setOpen(false)} key="NFTs">
                             <ListItemText primary="NFTs" />
                         </ListItemButton>
                     </Box>
-                    <ListItemButton onClick={() => setOpen(false)} key="Liquidity">
-                        <ListItemText primary="Liquidity" />
-                    </ListItemButton>
-                    <ListItemButton onClick={() => setOpen(false)} key="Stake">
-                        <ListItemText primary="Stake" />
-                    </ListItemButton>
+                    <Box component={Link} href="/liquidity" underline="none">
+                        <ListItemButton onClick={() => setOpen(false)} key="Liquidity">
+                            <ListItemText primary="Liquidity" />
+                        </ListItemButton>
+                    </Box>
                     <Box component={Link} href="/rewards" underline="none">
                         <ListItemButton onClick={() => setOpen(false)} key="Rewards">
                             <ListItemText primary="Rewards" />

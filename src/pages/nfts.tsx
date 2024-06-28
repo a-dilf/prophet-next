@@ -12,8 +12,6 @@ import DecrementIcon from '@mui/icons-material/Remove'; // Import Remove Icon
 import {
     useAccount,
     useReadContract,
-    useWaitForTransactionReceipt,
-    useWriteContract,
 } from 'wagmi';
 
 // abi objects

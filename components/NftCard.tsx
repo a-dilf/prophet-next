@@ -77,8 +77,8 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         }
     }, [tokenStakeStatus]);
 
-
-    // write opertions
+    //// WRITE
+    // mint NFT
     const {
         data: hash,
         writeContract: mint,
@@ -99,7 +99,28 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         },
     });
 
-    // write opertions
+    // stake NFT
+    const {
+        data: stakeHash,
+        writeContract: stake,
+        isPending: isStakeLoading,
+        isSuccess: isStakeStarted,
+        error: unStakeError,
+    } = useWriteContract();
+
+    // ??
+    const {
+        data: unStakeData,
+        isSuccess: unStakeSuccess,
+        error: unsSakeTxError,
+    } = useWaitForTransactionReceipt({
+        hash: stakeHash,
+        query: {
+            enabled: !!hash,
+        },
+    });
+
+    // unstake NFT
     const {
         data: unstakeHash,
         writeContract: unstake,
@@ -120,10 +141,14 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         },
     });
 
+    
+    
+
     // TODO - update and test the NFT functions!
     // TODO - make the card flip based on stake status
     // TODO - get stake status in and make stake turn to unstake (or)
     // perhaps unstake is a button on the backside of the card!
+    // TODO - make level up and MAX button actually do something
 
     return (
         <div className="container">
@@ -186,25 +211,25 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             {!isMintLoading && !isMintStarted && 'MAX'}
                         </Button>
                     )}
-
+                    
                     {mounted && isConnected && (
                         <Button
                             color="secondary"
                             variant="contained"
                             style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!mint || isMintLoading || isMintStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
-                            data-mint-loading={isMintLoading}
-                            data-mint-started={isMintStarted}
+                            disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
+                            data-mint-loading={isStakeLoading}
+                            data-mint-started={isStakeStarted}
                             onClick={() =>
-                                mint?.({
+                                stake?.({
                                     ...nftContractConfig2,
-                                    functionName: 'mint',
+                                    functionName: 'stake',
                                 })
                             }
                         >
-                            {isMintLoading && 'Waiting for approval'}
-                            {isMintStarted && 'Minting...'}
-                            {!isMintLoading && !isMintStarted && 'stake'}
+                            {isStakeLoading && 'Waiting for approval'}
+                            {isStakeStarted && 'Minting...'}
+                            {!isStakeLoading && !isStakeStarted && 'stake'}
                         </Button>
                     )}
 
