@@ -37,6 +37,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     // TODO - get this from user input!
     const [tokenAmountToAdd, setTokenAmountToAdd] = React.useState(0n);
     const [ethAmountToAddInWei, setEthAmountToAdd] = React.useState(0n);
+    const ethAmount = 0 // TODO make this the quote function result
 
     // contract configs
     // collect token amount from user and get an ETH quote
@@ -63,10 +64,12 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     } as const;
 
     //// READ OPERATIONS
+    /*
     const { data: ethAmount } = useReadContract({
         ...routerContractConfig,
         functionName: 'quote',
     });
+    */
 
     React.useEffect(() => {
         if (ethAmount) {
