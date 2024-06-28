@@ -19,7 +19,7 @@ import LpRewardCard from '../../components/reward_cards/LpRewardCard';
 import TokenRewardCard from '../../components/reward_cards/TokenRewardCard';
 import NftRewardCard from '../../components/reward_cards/NftRewardCard';
 
-const rewards: NextPage = () => {
+const Rewards: NextPage = () => {
     const [mounted, setMounted] = React.useState(false);
     const [stateTokenRewardsAmount, setStateTokenRewardsAmount] = React.useState(0n);
     const [stateNftRewardsAmount, setStateNftRewardsAmount] = React.useState(0n);
@@ -99,4 +99,4 @@ const rewards: NextPage = () => {
     );
 };
 
-export default rewards;
+export default Rewards;

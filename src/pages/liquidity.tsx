@@ -22,7 +22,7 @@ import LiquidityCard from '../../components/reward_cards/LiquidityCard';
 
 import { toWei } from 'web3-utils';
 
-const Home: NextPage = () => {
+const Liquidity: NextPage = () => {
     const [mounted, setMounted] = React.useState(false);
     const [reservesProphet, setReservesProphet] = React.useState(0n);
     const [reservesEth, setReservesEth] = React.useState(0n);
@@ -75,4 +75,4 @@ const Home: NextPage = () => {
 // TODO - make it so staked NFTs use the flip card with unstake on it
 // TODO - disable the stake button as well!
 
-export default Home;
+export default Liquidity;

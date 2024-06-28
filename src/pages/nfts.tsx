@@ -24,7 +24,7 @@ import NftApproveAndActionCard from '../../components/NftApproveAndActionCard';
 
 import { toWei } from 'web3-utils';
 
-const Home: NextPage = () => {
+const Nfts: NextPage = () => {
     const [totalMinted, setTotalMinted] = React.useState(0n);
     const [mounted, setMounted] = React.useState(false);
     const [mintCount, setMintCount] = React.useState(1);
@@ -149,4 +149,4 @@ const Home: NextPage = () => {
 // TODO - make it so staked NFTs use the flip card with unstake on it
 // TODO - disable the stake button as well!
 
-export default Home;
+export default Nfts;

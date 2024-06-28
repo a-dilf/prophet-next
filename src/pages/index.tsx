@@ -2,13 +2,9 @@
 import React from 'react';
 import type { NextPage } from 'next';
 
-import Image from 'next/legacy/image';
-
 import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box, Grid, Link, Button, List, ListItem, ListItemText, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import FlipCard, { BackCard, FrontCard } from '../../components/FlipCard';
 
 // rainbowkit+ imports
 import {
