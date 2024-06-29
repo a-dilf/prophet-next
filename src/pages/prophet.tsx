@@ -12,7 +12,7 @@ import {
   useWriteContract,
 } from 'wagmi';
 
-const Home: NextPage = () => {
+const Prophet: NextPage = () => {
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
 
@@ -23,4 +23,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Prophet;
