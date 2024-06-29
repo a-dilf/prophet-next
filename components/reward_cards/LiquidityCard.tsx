@@ -60,6 +60,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     } as const;
 
     console.log(BigInt(tokenAmountToAdd), toWei(Number(tokenAmountToAdd), "ether"), ethAmountToAddInWei)
+    console.log(reservesProphet, reservesEth)
     
     // use ETH quote amount and token amount in proper peg ratio
     const untaxedContractConfig = {
@@ -73,8 +74,9 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const untaxedFixedContractConfig = {
         address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
         abi: untaxed_abi,
-        args: [BigInt(200000000000000000000000)],
-        value: BigInt(543666666666666),
+        args: [BigInt(1000000000000000000000)],
+        value: BigInt(2718333333333),
+        functionName: "addLiquidityETHUntaxed"
     } as const;
 
     const pairContractConfig = {
@@ -188,7 +190,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                             data-mint-started={isAddStarted}
                             onClick={() =>
                                 addLiquidity?.({
-                                    ...untaxedContractConfig,
+                                    ...untaxedFixedContractConfig,
                                 })
                             }
                         >
