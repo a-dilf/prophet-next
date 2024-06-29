@@ -4,10 +4,6 @@ import type { NextPage } from 'next';
 
 import { Typography, Box } from '@mui/material';
 
-import IconButton from '@mui/material/IconButton';
-import IncrementIcon from '@mui/icons-material/Add'; // Import Add Icon
-import DecrementIcon from '@mui/icons-material/Remove'; // Import Remove Icon
-
 // rainbowkit+ imports
 import {
     useAccount,
@@ -16,7 +12,6 @@ import {
 
 // abi objects
 import { pair_abi } from '../../abi_objects/pair_abi';
-
 // component imports
 import LiquidityCard from '../../components/reward_cards/LiquidityCard';
 
@@ -36,7 +31,7 @@ const Liquidity: NextPage = () => {
         address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
         abi: pair_abi
     } as const;
-
+    
     //// READ OPERATIONS
     const { data: reserves } = useReadContract({
         ...pairContractConfig,
@@ -67,7 +62,7 @@ const Liquidity: NextPage = () => {
             <Typography className="container"> {Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET currently pegged with {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH </Typography>
             <div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             </div>
-            <LiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Provide Liquidity"} reservesProphet={reservesProphet} reservesEth={reservesEth}></LiquidityCard>
+            <LiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Provide Liquidity"}></LiquidityCard>
         </div>
     );
 };

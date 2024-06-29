@@ -18,59 +18,94 @@ import {
     useReadContract,
     useWaitForTransactionReceipt,
     useWriteContract,
+    useAccount
 } from 'wagmi';
 
 import { staking_token_abi } from '../../abi_objects/staking_token_abi';
+import { token_abi } from '../../abi_objects/token_abi';
+import { pair_abi } from '../../abi_objects/pair_abi';
 
 interface LiquidityCardProps {
     mounted: boolean;
     isConnected: boolean;
     cardTitle: string;
-    reservesProphet: BigInt;
-    reservesEth: BigInt;
 }
 
 // TODO - revert these type changes??
 
-const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, cardTitle, reservesProphet, reservesEth }) => {
+const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, cardTitle }) => {
 
     // TODO - get this from user input!
     const [tokenAmountToAdd, setTokenAmountToAdd] = React.useState(0n);
     const [ethAmountToAddInWei, setEthAmountToAdd] = React.useState(0n);
-    const ethAmount = 0 // TODO make this the quote function result
+    const [reservesProphet, setReservesProphet] = React.useState(0n);
+    const [reservesEth, setReservesEth] = React.useState(0n);
+
+    const { address } = useAccount();
+
+    const tokenBalanceOfContractConfig = {
+        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+        abi: token_abi,
+        args: [address as '0x${string}'],
+        functionName: "balanceOf"
+    } as const;
 
     // contract configs
     // collect token amount from user and get an ETH quote
-    /*
     const routerContractConfig = {
         address: process.env.NEXT_PUBLIC_ROUTER_ADDRESS as '0x${string}',
         abi: router_abi,
-        args: [BigInt(tokenAmountToAdd), reservesProphet, reservesEth]
+        args: [BigInt(toWei(Number(tokenAmountToAdd), "ether")), reservesProphet, reservesEth],
+        functionName: 'quote',
     } as const;
-    */
 
-    const routerContractConfig = {
-        address: process.env.NEXT_PUBLIC_ROUTER_ADDRESS as '0x${string}',
-        abi: router_abi,
-        args: [BigInt(tokenAmountToAdd), reservesProphet, reservesEth]
-    } as const;
+    console.log(BigInt(tokenAmountToAdd), toWei(Number(tokenAmountToAdd), "ether"), ethAmountToAddInWei)
     
     // use ETH quote amount and token amount in proper peg ratio
     const untaxedContractConfig = {
+        address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
+        abi: untaxed_abi,
+        args: [BigInt(toWei(Number(tokenAmountToAdd), "ether"))],
+        value: BigInt(ethAmountToAddInWei),
+        functionName: "addLiquidityETHUntaxed",
+    } as const;
+
+    const untaxedFixedContractConfig = {
         address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
         abi: untaxed_abi,
         args: [BigInt(200000000000000000000000)],
         value: BigInt(543666666666666),
     } as const;
 
+    const pairContractConfig = {
+        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
+        abi: pair_abi
+    } as const;
+
     //// READ OPERATIONS
-    /*
+    const { data: reserves } = useReadContract({
+        ...pairContractConfig,
+        functionName: 'getReserves',
+    });
+
+    const { data: userBalance } = useReadContract({
+        ...tokenBalanceOfContractConfig,
+    });
+
     const { data: ethAmount } = useReadContract({
         ...routerContractConfig,
-        functionName: 'quote',
     });
-    */
 
+    React.useEffect(() => {
+        if (reserves) {
+            // TODO - check if amount comes in as WEI
+            // setEthAmountToAdd(BigInt(toWei(Number(ethAmount), "wei")));
+            setReservesEth(reserves[0])
+            setReservesProphet(reserves[1]);
+        }
+    }, [reserves]);
+
+    //// READ OPERATIONS
     React.useEffect(() => {
         if (ethAmount) {
             console.log(ethAmount)
@@ -80,8 +115,16 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         }
     }, [ethAmount]);
 
-    //// WRITE OPERATIONS
+    React.useEffect(() => {
+        if (userBalance) {
+            // TODO - check if amount comes in as WEI
+            // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
+            const userAmountInWei = BigInt(toWei(Number(userBalance), "wei"))
+            setTokenAmountToAdd(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
+        }
+    }, [userBalance]);
 
+    //// WRITE OPERATIONS
     // let user claim rewards
     const {
         data: hash,
@@ -106,7 +149,6 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     // TODO - all input fields should pull user token counts!
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value)
         const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
         setTokenAmountToAdd(BigInt(newValue));
     };
@@ -123,6 +165,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                         onChange={handleChange}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
+                    <Typography>{Number(ethAmountToAddInWei)}</Typography>
 
                     {addError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>
@@ -146,7 +189,6 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                             onClick={() =>
                                 addLiquidity?.({
                                     ...untaxedContractConfig,
-                                    functionName: "addLiquidityETHUntaxed",
                                 })
                             }
                         >
