@@ -15,9 +15,9 @@ import { staking_token_abi } from '../../abi_objects/staking_token_abi';
 import { staking_nft_abi } from '../../abi_objects/staking_nft_abi';
 import { staking_lp_abi } from '../../abi_objects/staking_lp_abi';
 
-import LpRewardCard from '../../components/reward_cards/LpRewardCard';
-import TokenRewardCard from '../../components/reward_cards/TokenRewardCard';
-import NftRewardCard from '../../components/reward_cards/NftRewardCard';
+import LpRewardCard from '../../components/cards/LpRewardCard';
+import TokenRewardCard from '../../components/cards/TokenRewardCard';
+import NftRewardCard from '../../components/cards/NftRewardCard';
 
 const Rewards: NextPage = () => {
     const [mounted, setMounted] = React.useState(false);

@@ -13,7 +13,7 @@ import {
 // abi objects
 import { pair_abi } from '../../abi_objects/pair_abi';
 // component imports
-import LiquidityCard from '../../components/reward_cards/LiquidityCard';
+import LiquidityCard from '../../components/cards/LiquidityCard';
 
 import { toWei } from 'web3-utils';
 

@@ -19,8 +19,8 @@ import { nft_abi } from '../../abi_objects/nft_abi';
 import { token_abi } from '../../abi_objects/token_abi';
 
 // component imports
-import NftCard from '../../components/NftCard';
-import NftApproveAndActionCard from '../../components/NftApproveAndActionCard';
+import NftCard from '../../components/cards/NftCard';
+import NftApproveAndActionCard from '../../components/approval_cards/NftApproveAndActionCard';
 
 import { toWei } from 'web3-utils';
 

@@ -3,12 +3,12 @@ import React, { useEffect } from 'react';
 import Image from 'next/legacy/image';
 
 // component imports
-import FlipCard, { BackCard, FrontCard } from './FlipCard';
+import FlipCard, { BackCard, FrontCard } from '../FlipCard';
 
 import { Typography, Button } from '@mui/material';
 
-import { token_abi } from '../abi_objects/token_abi';
-import { nft_abi } from '../abi_objects/nft_abi';
+import { token_abi } from '../../abi_objects/token_abi';
+import { nft_abi } from '../../abi_objects/nft_abi';
 
 import { toWei } from 'web3-utils';
 

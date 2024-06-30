@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Image from 'next/legacy/image';
 
 // component imports
-import FlipCard, { BackCard, FrontCard } from './FlipCard';
+import FlipCard, { BackCard, FrontCard } from '../FlipCard';
 
 import { Typography, Button } from '@mui/material';
 
@@ -21,8 +21,8 @@ interface NftCardProps {
     nftContractConfig: object;
 }
 
-import { nft_abi } from '../abi_objects/nft_abi';
-import { staking_nft_abi } from '../abi_objects/staking_nft_abi';
+import { nft_abi } from '../../abi_objects/nft_abi';
+import { staking_nft_abi } from '../../abi_objects/staking_nft_abi';
 
 const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftContractConfig }) => {
     // state values

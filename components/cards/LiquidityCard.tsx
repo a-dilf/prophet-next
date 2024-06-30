@@ -40,6 +40,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const [ethAmountToAddInWei, setEthAmountToAdd] = React.useState(0n);
     const [reservesProphet, setReservesProphet] = React.useState(0n);
     const [reservesEth, setReservesEth] = React.useState(0n);
+    const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
 
     const { address } = useAccount();
 
@@ -51,32 +52,38 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     } as const;
 
     // contract configs
+    // allowance read contract
+    const allowanceContractConfig = {
+        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+        abi: token_abi,
+        args: [address as '0x${string}', process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}']
+    } as const;
+
+    // approval of proxy contracts
+    const approvingContractConfig = {
+        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+        abi: token_abi,
+        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToAdd), "ether"))]
+    } as const;
+
     // collect token amount from user and get an ETH quote
     const routerContractConfig = {
         address: process.env.NEXT_PUBLIC_ROUTER_ADDRESS as '0x${string}',
         abi: router_abi,
-        args: [BigInt(toWei(Number(tokenAmountToAdd), "ether")), reservesProphet, reservesEth],
+        args: [BigInt(currentAllowance), reservesProphet, reservesEth],
         functionName: 'quote',
     } as const;
 
     console.log(BigInt(tokenAmountToAdd), toWei(Number(tokenAmountToAdd), "ether"), ethAmountToAddInWei)
     console.log(reservesProphet, reservesEth)
-    
+
     // use ETH quote amount and token amount in proper peg ratio
     const untaxedContractConfig = {
         address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
         abi: untaxed_abi,
-        args: [BigInt(toWei(Number(tokenAmountToAdd), "ether"))],
+        args: [BigInt(currentAllowance)],
         value: BigInt(ethAmountToAddInWei),
         functionName: "addLiquidityETHUntaxed",
-    } as const;
-
-    const untaxedFixedContractConfig = {
-        address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
-        abi: untaxed_abi,
-        args: [BigInt(1000000000000000000000)],
-        value: BigInt(2718333333333),
-        functionName: "addLiquidityETHUntaxed"
     } as const;
 
     const pairContractConfig = {
@@ -96,6 +103,11 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
 
     const { data: ethAmount } = useReadContract({
         ...routerContractConfig,
+    });
+
+    const { data: allowanceAmount } = useReadContract({
+        ...allowanceContractConfig,
+        functionName: "allowance"
     });
 
     React.useEffect(() => {
@@ -126,10 +138,38 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         }
     }, [userBalance]);
 
+    // update state with the read results
+    React.useEffect(() => {
+        if (allowanceAmount) {
+            setStateAllowanceAmount(allowanceAmount);
+        }
+    }, [allowanceAmount]);
+
     //// WRITE OPERATIONS
-    // let user claim rewards
+    // let user approve $PROPHET tokens
     const {
         data: hash,
+        writeContract: approve,
+        isPending: isApproveLoading,
+        isSuccess: isApproveStarted,
+        error: approveError,
+    } = useWriteContract();
+
+    // approve actions
+    const {
+        data: approveTxData,
+        isSuccess: approveTxSuccess,
+        error: approveTxError,
+    } = useWaitForTransactionReceipt({
+        hash,
+        query: {
+            enabled: !!hash,
+        },
+    });
+
+    // let user claim rewards
+    const {
+        data: addHash,
         writeContract: addLiquidity,
         isPending: isAddLoading,
         isSuccess: isAddStarted,
@@ -142,9 +182,9 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         isSuccess: txSuccess,
         error: txError,
     } = useWaitForTransactionReceipt({
-        hash,
+        hash: addHash,
         query: {
-            enabled: !!hash,
+            enabled: !!addHash,
         },
     });
 
@@ -180,34 +220,35 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                         </p>
                     )}
 
-                    {mounted && isConnected && !(!isAddLoading && isAddStarted) && (
+                    {mounted && isConnected && (
                         <Button
                             color="secondary"
                             variant="contained"
                             style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!addLiquidity || isAddLoading || isAddStarted}
-                            data-mint-loading={isAddLoading}
-                            data-mint-started={isAddStarted}
+                            disabled={!approve || isApproveLoading || isApproveStarted}
+                            data-mint-loading={isApproveLoading}
+                            data-mint-started={isApproveStarted}
                             onClick={() =>
-                                addLiquidity?.({
-                                    ...untaxedFixedContractConfig,
+                                approve?.({
+                                    ...approvingContractConfig,
+                                    functionName: "approve",
                                 })
                             }
                         >
-                            {isAddLoading && 'Confirming...'}
-                            {isAddStarted && 'adding...'}
-                            {!isAddLoading && !isAddStarted && "add"}
+                            {isApproveLoading && 'Confirming...'}
+                            {isApproveStarted && 'approving...'}
+                            {!isApproveLoading && !isApproveStarted && "approve " + tokenAmountToAdd}
                         </Button>
                     )}
-                    
+
                 </div>
             </div>
 
 
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
-                    <FrontCard isCardFlipped={!isAddLoading && isAddStarted}>
-                        Rewards to claim
+                    <FrontCard isCardFlipped={currentAllowance}>
+                        provide an allowance to proceed
                         <Image
                             layout="fill"
                             src="/nft.png"
@@ -219,7 +260,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                             quality={100}
                         />
                     </FrontCard>
-                    <BackCard isCardFlipped={!isAddLoading && isAddStarted}>
+                    <BackCard isCardFlipped={currentAllowance}>
                         <div style={{ padding: 24 }}>
                             <Image
                                 src="/nft.png"
@@ -229,16 +270,36 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                                 style={{ borderRadius: 8 }}
                                 priority
                             />
-                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Rewards claimed!</Typography>
+                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Liquidity prepared!</Typography>
                             <Typography style={{ marginBottom: 24 }}>
-                                Stick around for more tomorrow!
+                                {Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 1000000000000000000)} $PROPHET approved.
                             </Typography>
-                            <Typography style={{ marginBottom: 6 }}>
-                                View on{' '}
-                                <a href={`https://arbiscan.io/tx/${hash}`}>
-                                    Arbiscan
-                                </a>
-                            </Typography>
+                            <Button
+                                color="primary"
+                                variant="contained"
+                                style={{ marginTop: 24, marginLeft: 15 }}
+                                disabled={!addLiquidity || isAddLoading || isAddStarted}
+                                data-mint-loading={isAddLoading}
+                                data-mint-started={isAddStarted}
+                                onClick={() =>
+                                    addLiquidity?.({
+                                        ...untaxedContractConfig,
+                                    })
+                                }
+                            >
+                                {isAddLoading && 'Confirming...'}
+                                {isAddStarted && 'adding...'}
+                                {!isAddLoading && !isAddStarted && "add"}
+                            </Button>
+                            {!isAddLoading && isAddStarted && (
+                                <Typography style={{ marginBottom: 6 }}>
+                                    View on{' '}
+                                    <a href={`https://arbiscan.io/tx/${addHash}`}>
+                                        Arbiscan
+                                    </a>
+                                </Typography>
+                            )}
+
                         </div>
                     </BackCard>
                 </FlipCard>
@@ -247,8 +308,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     );
 };
 
-/* TODO make !isMintLoading && isMintStarted the flip condition! and report the reward amount
-                
+/* TODO make !isMintLoading && isMintStarted the flip condition! and report the reward amount    
 */
 
 export default LiquidityCard;
