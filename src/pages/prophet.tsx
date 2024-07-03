@@ -19,7 +19,7 @@ import {
   useBalance
 } from 'wagmi';
 
-import IdoVaultCard from '../../components/cards/idoVaultCard';
+import IdoVaultCard from '../../components/cards/IdoVaultCard';
 
 const Prophet: NextPage = () => {
   const [mounted, setMounted] = React.useState(false);

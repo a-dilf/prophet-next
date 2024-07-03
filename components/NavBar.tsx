@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
                             </IconButton>
                         </Grid>
                         <Grid item>
-                            <ConnectButton />
+                            <ConnectButton/>
                         </Grid>
                         <Grid item>
                             <Button variant="contained" color="secondary">BUY</Button>
