@@ -19,7 +19,7 @@ import {
   useBalance
 } from 'wagmi';
 
-import IdoVaultCard from '../../components/cards/IdoVaultCard';
+import TokenCountCard from '../../components/cards/TokenCountCard';
 
 const Prophet: NextPage = () => {
   const [mounted, setMounted] = React.useState(false);
@@ -252,22 +252,22 @@ const Prophet: NextPage = () => {
         <Typography variant="h3">Stages</Typography>
       </div>
       <div className="container">
-        <IdoVaultCard cardTitle='Stage 1' tokensLeft={String(tokensRemaining[5])} ethPerTokenRate='.000000003125' stageNumber='1'></IdoVaultCard>
+        <TokenCountCard cardTitle='Stage 1' tokensLeft={String(tokensRemaining[5])} ethPerTokenRate='.000000003125' stageNumber='1'></TokenCountCard>
       </div>
       <div className="container">
-        <IdoVaultCard cardTitle='Stage 2' tokensLeft={String(tokensRemaining[4])} ethPerTokenRate='.000000006250' stageNumber='1'></IdoVaultCard>
+        <TokenCountCard cardTitle='Stage 2' tokensLeft={String(tokensRemaining[4])} ethPerTokenRate='.000000006250' stageNumber='1'></TokenCountCard>
       </div>
       <div className="container">
-        <IdoVaultCard cardTitle='Stage 3' tokensLeft={String(tokensRemaining[3])} ethPerTokenRate='.000000012500' stageNumber='1'></IdoVaultCard>
+        <TokenCountCard cardTitle='Stage 3' tokensLeft={String(tokensRemaining[3])} ethPerTokenRate='.000000012500' stageNumber='1'></TokenCountCard>
       </div>
       <div className="container">
-        <IdoVaultCard cardTitle='Stage 4' tokensLeft={String(tokensRemaining[2])} ethPerTokenRate='.000000025000' stageNumber='1'></IdoVaultCard>
+        <TokenCountCard cardTitle='Stage 4' tokensLeft={String(tokensRemaining[2])} ethPerTokenRate='.000000025000' stageNumber='1'></TokenCountCard>
       </div>
       <div className="container">
-        <IdoVaultCard cardTitle='Stage 5' tokensLeft={String(tokensRemaining[1])} ethPerTokenRate='.000000050000' stageNumber='1'></IdoVaultCard>
+        <TokenCountCard cardTitle='Stage 5' tokensLeft={String(tokensRemaining[1])} ethPerTokenRate='.000000050000' stageNumber='1'></TokenCountCard>
       </div>
       <div className="container">
-        <IdoVaultCard cardTitle='Stage 6' tokensLeft={String(tokensRemaining[0])} ethPerTokenRate='.000000100000' stageNumber='1'></IdoVaultCard>
+        <TokenCountCard cardTitle='Stage 6' tokensLeft={String(tokensRemaining[0])} ethPerTokenRate='.000000100000' stageNumber='1'></TokenCountCard>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import Image from 'next/legacy/image';
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
 import { Typography, LinearProgress } from '@mui/material';
 
-interface IdoVaultCardProps {
+interface TokenCountCardProps {
     cardTitle: string;
     tokensLeft: string;
     stageNumber: string;
@@ -16,7 +16,7 @@ interface IdoVaultCardProps {
 
 // TODO - revert these type changes??
 
-const IdoVaultCard: React.FC<IdoVaultCardProps> = ({ cardTitle, tokensLeft, stageNumber, ethPerTokenRate }) => {
+const TokenCountCard: React.FC<TokenCountCardProps> = ({ cardTitle, tokensLeft, stageNumber, ethPerTokenRate }) => {
 
     return (
         <div className="container">
@@ -68,4 +68,4 @@ const IdoVaultCard: React.FC<IdoVaultCardProps> = ({ cardTitle, tokensLeft, stag
                 
 */
 
-export default IdoVaultCard;
+export default TokenCountCard;
