@@ -133,7 +133,6 @@ const Prophet: NextPage = () => {
         vaults[vaultIndex] = tokensToAdd;
         tokensLeftInVault -= tokensToAdd;
         vaultIndex++;
-        console.log(vaults)
       }
 
       while (vaults.length < 6) {
@@ -161,7 +160,6 @@ const Prophet: NextPage = () => {
     setEthToUseInBuyWei(ethInWei)
     // setTokensThatCanBeBoughtWithCurrentEthState(BigInt(tokenAmount))
   };
-  console.log(tokensRemaining)
 
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
@@ -263,13 +261,13 @@ const Prophet: NextPage = () => {
         <IdoVaultCard cardTitle='Stage 3' tokensLeft={String(tokensRemaining[3])} ethPerTokenRate='.000000012500' stageNumber='1'></IdoVaultCard>
       </div>
       <div className="container">
-        <IdoVaultCard cardTitle='Stage 4' tokensLeft={String(tokensRemaining)[2]} ethPerTokenRate='.000000025000' stageNumber='1'></IdoVaultCard>
+        <IdoVaultCard cardTitle='Stage 4' tokensLeft={String(tokensRemaining[2])} ethPerTokenRate='.000000025000' stageNumber='1'></IdoVaultCard>
       </div>
       <div className="container">
-        <IdoVaultCard cardTitle='Stage 5' tokensLeft={String(tokensRemaining)[1]} ethPerTokenRate='.000000050000' stageNumber='1'></IdoVaultCard>
+        <IdoVaultCard cardTitle='Stage 5' tokensLeft={String(tokensRemaining[1])} ethPerTokenRate='.000000050000' stageNumber='1'></IdoVaultCard>
       </div>
       <div className="container">
-        <IdoVaultCard cardTitle='Stage 6' tokensLeft={String(tokensRemaining)[0]} ethPerTokenRate='.000000100000' stageNumber='1'></IdoVaultCard>
+        <IdoVaultCard cardTitle='Stage 6' tokensLeft={String(tokensRemaining[0])} ethPerTokenRate='.000000100000' stageNumber='1'></IdoVaultCard>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { arbitrum, sepolia } from 'wagmi/chains';
+import { arbitrum } from 'wagmi/chains';
 
 export const config = getDefaultConfig({
   appName: 'Prophet Lady Web Application',

@@ -4,7 +4,7 @@ import Image from 'next/legacy/image';
 
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
-import { Typography, Button } from '@mui/material';
+import { Typography, LinearProgress } from '@mui/material';
 
 interface IdoVaultCardProps {
     cardTitle: string;
@@ -13,10 +13,11 @@ interface IdoVaultCardProps {
     ethPerTokenRate: string;
 }
 
+
 // TODO - revert these type changes??
 
 const IdoVaultCard: React.FC<IdoVaultCardProps> = ({ cardTitle, tokensLeft, stageNumber, ethPerTokenRate }) => {
-    console.log(tokensLeft)
+
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
@@ -34,7 +35,11 @@ const IdoVaultCard: React.FC<IdoVaultCardProps> = ({ cardTitle, tokensLeft, stag
                     <FrontCard isCardFlipped={!ethPerTokenRate}>
                         <div style={{ padding: '24px 24px 24px 0' }}>
                             <Typography variant="h5">Tokens left: {tokensLeft}</Typography>
-                            Progress bar here...
+                            <LinearProgress color="secondary"
+                                sx={{
+                                    height: 25, // Adjust the height as needed
+                                    width: '80%', // Make the bar wider
+                                }} variant="determinate" value={Number(tokensLeft) / 20000000000} />
                         </div>
                     </FrontCard>
                     <BackCard isCardFlipped={!ethPerTokenRate}>

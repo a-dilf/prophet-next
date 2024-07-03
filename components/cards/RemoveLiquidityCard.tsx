@@ -12,6 +12,9 @@ import { Typography, Button } from '@mui/material';
 
 import { router_abi } from '../../abi_objects/router_abi';
 import { untaxed_abi } from '../../abi_objects/untaxed_abi';
+import { token_abi } from '../../abi_objects/token_abi';
+import { pair_abi } from '../../abi_objects/pair_abi';
+import { lp_abi } from '../../abi_objects/lp_abi';
 
 // rainbowkit+ imports
 import {
@@ -21,11 +24,7 @@ import {
     useAccount
 } from 'wagmi';
 
-import { staking_token_abi } from '../../abi_objects/staking_token_abi';
-import { token_abi } from '../../abi_objects/token_abi';
-import { pair_abi } from '../../abi_objects/pair_abi';
-
-interface LiquidityCardProps {
+interface RemoveLiquidityCardProps {
     mounted: boolean;
     isConnected: boolean;
     cardTitle: string;
@@ -33,21 +32,20 @@ interface LiquidityCardProps {
 
 // TODO - revert these type changes??
 
-const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, cardTitle }) => {
+const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isConnected, cardTitle }) => {
 
     // TODO - get this from user input!
-    const [tokenAmountToAdd, setTokenAmountToAdd] = React.useState(0n);
+    const [tokenAmountToRemove, settokenAmountToRemove] = React.useState(0n);
     const [ethAmountToAddInWei, setEthAmountToAdd] = React.useState(0n);
     const [reservesProphet, setReservesProphet] = React.useState(0n);
     const [reservesEth, setReservesEth] = React.useState(0n);
     const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
-    const [rerender, triggerReRender] = React.useState(false);
 
     const { address } = useAccount();
 
     const tokenBalanceOfContractConfig = {
-        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
-        abi: token_abi,
+        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
+        abi: lp_abi,
         args: [address as '0x${string}'],
         functionName: "balanceOf"
     } as const;
@@ -55,8 +53,8 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     // contract configs
     // allowance read contract
     const allowanceContractConfig = {
-        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
-        abi: token_abi,
+        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
+        abi: lp_abi,
         args: [address as '0x${string}', process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}']
     } as const;
 
@@ -64,15 +62,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToAdd), "ether"))]
-    } as const;
-
-    // collect token amount from user and get an ETH quote
-    const routerContractConfig = {
-        address: process.env.NEXT_PUBLIC_ROUTER_ADDRESS as '0x${string}',
-        abi: router_abi,
-        args: [BigInt(currentAllowance), reservesProphet, reservesEth],
-        functionName: 'quote',
+        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToRemove), "ether"))]
     } as const;
 
     // use ETH quote amount and token amount in proper peg ratio
@@ -80,8 +70,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
         abi: untaxed_abi,
         args: [BigInt(currentAllowance)],
-        value: BigInt(ethAmountToAddInWei),
-        functionName: "addLiquidityETHUntaxed",
+        functionName: "removeLiquidityETHUntaxed",
     } as const;
 
     const pairContractConfig = {
@@ -99,10 +88,6 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         ...tokenBalanceOfContractConfig,
     });
 
-    const { data: ethAmount } = useReadContract({
-        ...routerContractConfig,
-    });
-
     const { data: allowanceAmount } = useReadContract({
         ...allowanceContractConfig,
         functionName: "allowance"
@@ -117,26 +102,20 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         }
     }, [reserves]);
 
-    //// READ OPERATIONS
-    React.useEffect(() => {
-        if (ethAmount) {
-            setEthAmountToAdd(ethAmount);
-        }
-    }, [ethAmount]);
-
     React.useEffect(() => {
         if (userBalance) {
             // TODO - check if amount comes in as WEI
             // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
             const userAmountInWei = BigInt(toWei(Number(userBalance), "wei"))
-            setTokenAmountToAdd(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
+            settokenAmountToRemove(userAmountInWei);
         }
     }, [userBalance]);
 
     // update state with the read results
     React.useEffect(() => {
         if (allowanceAmount) {
-            setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
+            console.log("xxx")
+            setStateAllowanceAmount(BigInt(toWei(tokenAmountToRemove, "ether")))
         }
     }, [allowanceAmount]);
 
@@ -186,19 +165,18 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        setTokenAmountToAdd(BigInt(newValue));
+        settokenAmountToRemove(BigInt(newValue));
     };
 
     React.useEffect(() => {
         if (isApproveStarted) {
-            // triggerReRender(true);
-            setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
+            setStateAllowanceAmount(BigInt(toWei(tokenAmountToRemove, "ether")))
         }
     }, [isApproveStarted]);
 
     React.useEffect(() => {
         if (isAddStarted) {
-            setReservesProphet(reservesProphet + BigInt(toWei(tokenAmountToAdd, "ether")))
+            setReservesProphet(reservesProphet + BigInt(toWei(tokenAmountToRemove, "ether")))
             setReservesEth(reservesEth + BigInt(toWei(ethAmountToAddInWei, "ether")))
         }
     }, [isAddStarted]);
@@ -211,15 +189,15 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField
-                        label="Token Amount (ETHER)"
+                        label="Liquidity Amount (WEI)"
                         type="number"
-                        value={Number(tokenAmountToAdd)}
+                        value={Number(tokenAmountToRemove)}
                         onChange={handleChange}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}> {Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET currently</Typography>
-                    <Typography> pegged with {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH </Typography>
+                    <Typography sx={{marginTop: "15px"}}>Approve the LP tokens for removal from LP</Typography>
+                    <Typography>to receive ETH and $PROPHET added.</Typography>
 
                     {addError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>
@@ -247,7 +225,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                                 })
                             }
                         >
-                            {!isApproveLoading && !isApproveStarted && "approve " + tokenAmountToAdd}
+                            {!isApproveLoading && !isApproveStarted && "approve " + tokenAmountToRemove}
                             {isApproveLoading && 'Executing...'}
                             {!isApproveLoading && isApproveStarted && "complete"}
                         </Button>
@@ -322,4 +300,4 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
 /* TODO make !isMintLoading && isMintStarted the flip condition! and report the reward amount    
 */
 
-export default LiquidityCard;
+export default RemoveLiquidityCard;

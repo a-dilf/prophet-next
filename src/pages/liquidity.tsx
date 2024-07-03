@@ -14,6 +14,7 @@ import {
 import { pair_abi } from '../../abi_objects/pair_abi';
 // component imports
 import LiquidityCard from '../../components/cards/LiquidityCard';
+import RemoveLiquidityCard from '../../components/cards/RemoveLiquidityCard';
 
 import { toWei } from 'web3-utils';
 
@@ -59,6 +60,7 @@ const Liquidity: NextPage = () => {
             <div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             </div>
             <LiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Provide Liquidity"}></LiquidityCard>
+            <RemoveLiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Remove Liquidity"}></RemoveLiquidityCard>
         </div>
     );
 };
