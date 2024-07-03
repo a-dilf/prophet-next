@@ -41,6 +41,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const [reservesProphet, setReservesProphet] = React.useState(0n);
     const [reservesEth, setReservesEth] = React.useState(0n);
     const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
+    const [rerender, triggerReRender] = React.useState(false);
 
     const { address } = useAccount();
 
@@ -73,9 +74,6 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         args: [BigInt(currentAllowance), reservesProphet, reservesEth],
         functionName: 'quote',
     } as const;
-
-    console.log(BigInt(tokenAmountToAdd), toWei(Number(tokenAmountToAdd), "ether"), ethAmountToAddInWei)
-    console.log(reservesProphet, reservesEth)
 
     // use ETH quote amount and token amount in proper peg ratio
     const untaxedContractConfig = {
@@ -122,9 +120,6 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     //// READ OPERATIONS
     React.useEffect(() => {
         if (ethAmount) {
-            console.log(ethAmount)
-            // TODO - check if amount comes in as WEI
-            // setEthAmountToAdd(BigInt(toWei(Number(ethAmount), "wei")));
             setEthAmountToAdd(ethAmount);
         }
     }, [ethAmount]);
@@ -139,9 +134,11 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     }, [userBalance]);
 
     // update state with the read results
+    console.log(allowanceAmount)
     React.useEffect(() => {
         if (allowanceAmount) {
-            setStateAllowanceAmount(allowanceAmount);
+            console.log("xxx")
+            setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
         }
     }, [allowanceAmount]);
 
@@ -189,12 +186,30 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     });
 
     // TODO - all input fields should pull user token counts!
-
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
         setTokenAmountToAdd(BigInt(newValue));
     };
 
+    React.useEffect(() => {
+        if (isApproveStarted) {
+            triggerReRender(true);
+            setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
+        }
+    }, [isApproveStarted]);
+
+    React.useEffect(() => {
+        if (isAddStarted) {
+            setReservesProphet(reservesProphet + BigInt(toWei(tokenAmountToAdd, "ether")))
+            setReservesEth(reservesEth + BigInt(toWei(ethAmountToAddInWei, "ether")))
+        }
+    }, [isAddStarted]);
+
+    console.log("loading: ", isApproveLoading, " started: ", isApproveStarted, "tx success ", txSuccess)
+    console.log(rerender)
+    console.log(tokenAmountToAdd)
+    console.log(currentAllowance)
+    
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
@@ -207,7 +222,9 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                         onChange={handleChange}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
-                    <Typography>{Number(ethAmountToAddInWei)}</Typography>
+
+                    <Typography sx={{marginTop: "15px"}}> {Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET currently</Typography>
+                    <Typography> pegged with {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH </Typography>
 
                     {addError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>
@@ -226,8 +243,8 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                             variant="contained"
                             style={{ marginTop: 24, marginLeft: 15 }}
                             disabled={!approve || isApproveLoading || isApproveStarted}
-                            data-mint-loading={isApproveLoading}
-                            data-mint-started={isApproveStarted}
+                            data-mint-started={isApproveLoading && !isApproveStarted}
+                            data-mint-complete={!isApproveLoading && isApproveStarted}
                             onClick={() =>
                                 approve?.({
                                     ...approvingContractConfig,
@@ -235,19 +252,18 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                                 })
                             }
                         >
-                            {isApproveLoading && 'Confirming...'}
-                            {isApproveStarted && 'approving...'}
                             {!isApproveLoading && !isApproveStarted && "approve " + tokenAmountToAdd}
+                            {isApproveLoading && 'Executing...'}
+                            {!isApproveLoading && isApproveStarted && "complete"}
                         </Button>
                     )}
 
                 </div>
             </div>
 
-
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
-                    <FrontCard isCardFlipped={currentAllowance}>
+                    <FrontCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
                         provide an allowance to proceed
                         <Image
                             layout="fill"
@@ -260,7 +276,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                             quality={100}
                         />
                     </FrontCard>
-                    <BackCard isCardFlipped={currentAllowance}>
+                    <BackCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
                         <div style={{ padding: 24 }}>
                             <Image
                                 src="/nft.png"
@@ -271,25 +287,25 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                                 priority
                             />
                             <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Liquidity prepared!</Typography>
-                            <Typography style={{ marginBottom: 24 }}>
-                                {Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 1000000000000000000)} $PROPHET approved.
+                            <Typography style={{ marginBottom: 4}}>
+                                {Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 1000000000000000000)} $PROPHET requires {Number(toWei(Number(ethAmountToAddInWei), "wei")) / 1000000000000000000} ETH.
                             </Typography>
                             <Button
                                 color="primary"
                                 variant="contained"
-                                style={{ marginTop: 24, marginLeft: 15 }}
+                                style={{ marginTop: 6, marginLeft: 15, marginBottom: 6 }}
                                 disabled={!addLiquidity || isAddLoading || isAddStarted}
-                                data-mint-loading={isAddLoading}
-                                data-mint-started={isAddStarted}
+                                data-mint-started={isAddLoading && !isAddStarted}
+                                data-mint-complete={!isAddLoading && isAddStarted}
                                 onClick={() =>
                                     addLiquidity?.({
                                         ...untaxedContractConfig,
                                     })
                                 }
                             >
-                                {isAddLoading && 'Confirming...'}
-                                {isAddStarted && 'adding...'}
-                                {!isAddLoading && !isAddStarted && "add"}
+                                {!isAddLoading && !isAddStarted && "add approved liquidity"}
+                                {isAddLoading && 'Executing...'}
+                                {!isAddLoading && isAddStarted && 'complete'}
                             </Button>
                             {!isAddLoading && isAddStarted && (
                                 <Typography style={{ marginBottom: 6 }}>

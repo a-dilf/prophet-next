@@ -1,5 +1,5 @@
 // next and react imports
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import type { NextPage } from 'next';
 
 import { Typography, Box } from '@mui/material';
@@ -27,6 +27,7 @@ import { toWei } from 'web3-utils';
 const Nfts: NextPage = () => {
     const [totalMinted, setTotalMinted] = React.useState(0n);
     const [mounted, setMounted] = React.useState(false);
+    const [hasRenderedOnce, setHasRenderedOnce] = React.useState(false);
     const [mintCount, setMintCount] = React.useState(1);
     const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
     const [ownedNftCardProps, setOwnedNftCardProps] = React.useState(new Array);
@@ -73,18 +74,19 @@ const Nfts: NextPage = () => {
     //// STATE UPDATES
     // update state with the read results
     React.useEffect(() => {
-        if (ownedNfts) {
+        if (ownedNfts && currentAllowance >= 0) {
 
             const nftCardsData = ownedNfts.map(tokenId => ({
                 mounted: mounted, // Example value, replace with actual logic if needed
                 isConnected: isConnected, // Example value, replace with actual logic if needed
                 tokenId,
                 nftContractConfig: nftContractConfig, // Example value, replace with actual logic if needed
+                currentAllowance: currentAllowance
             }));
 
             setOwnedNftCardProps(nftCardsData)
         }
-    }, [ownedNfts]);
+    }, [ownedNfts, currentAllowance]);
 
     React.useEffect(() => {
         if (totalSupplyData) {
@@ -94,10 +96,12 @@ const Nfts: NextPage = () => {
 
     // update state with the read results
     React.useEffect(() => {
-        if (allowanceAmount) {
+        if (allowanceAmount && !hasRenderedOnce) {
             setStateAllowanceAmount(allowanceAmount);
+            setHasRenderedOnce(true);
+            console.log("parent action")
         }
-    }, [allowanceAmount]);
+    }, [allowanceAmount, hasRenderedOnce]);
 
     // state management for user to select number of NFTs to mint
     const incrementCount = () => {
@@ -120,7 +124,7 @@ const Nfts: NextPage = () => {
             <Typography className="container" variant="h2">NFT Zone</Typography>
             <Typography className="container">NFTs in circulation: {Number(totalMinted)}</Typography>
             <div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-                <Typography>Number of NFTS to mint: </Typography>
+                <Typography>Number of NFTS to mint and/or level up: </Typography>
                 <Box sx={{ border: '1px solid', borderColor: 'secondary.main', borderRadius: '4px', p: 1 }}>
                     <IconButton onClick={decrementCount}>
                         <DecrementIcon />
@@ -131,7 +135,7 @@ const Nfts: NextPage = () => {
                     </IconButton>
                 </Box>
             </div>
-            <NftApproveAndActionCard mounted={mounted} isConnected={isConnected} cardTitle={"Approve and Mint"} amountToApprove={(Number(toWei(mintCount, "ether")) * 400000.01)} allowanceAmount={Number(currentAllowance)} mintCount={mintCount}></NftApproveAndActionCard>
+            <NftApproveAndActionCard mounted={mounted} isConnected={isConnected} cardTitle={"Approve burning $PROPHET"} amountToApprove={(Number(toWei(mintCount, "ether")) * 400000.01)} allowanceAmount={Number(currentAllowance)} mintCount={mintCount} totalMinted={totalMinted} setTotalMinted={setTotalMinted} setOwnedNftCardProps={setOwnedNftCardProps} setStateAllowanceAmount={setStateAllowanceAmount}></NftApproveAndActionCard>
             <Typography className="container" variant="h3">NFTs at 0x{String(address).slice(-4)}</Typography>
             {ownedNftCardProps.map((cardData, index) => (
                 <NftCard
@@ -140,6 +144,7 @@ const Nfts: NextPage = () => {
                     isConnected={cardData.isConnected}
                     tokenId={cardData.tokenId}
                     nftContractConfig={cardData.nftContractConfig}
+                    currentAllowance={cardData.currentAllowance}
                 />
             ))}
         </div>

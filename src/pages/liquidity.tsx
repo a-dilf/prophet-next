@@ -2,7 +2,7 @@
 import React from 'react';
 import type { NextPage } from 'next';
 
-import { Typography, Box } from '@mui/material';
+import { Typography } from '@mui/material';
 
 // rainbowkit+ imports
 import {
@@ -48,9 +48,6 @@ const Liquidity: NextPage = () => {
     }, [reserves]);
 
     //// STATE UPDATES
-    // update state with the read results
-
-    const tokenId = 0
 
     // TODO - make NFTS populate iteratively and fix the always minting forever bug
     // TODO - make unstake flip the card and have the unstake button on the back
@@ -59,7 +56,6 @@ const Liquidity: NextPage = () => {
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
             <Typography className="container" variant="h2">Liquidity Zone</Typography>
-            <Typography className="container"> {Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET currently pegged with {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH </Typography>
             <div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             </div>
             <LiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Provide Liquidity"}></LiquidityCard>
@@ -67,6 +63,7 @@ const Liquidity: NextPage = () => {
     );
 };
 
+// <LiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Provide Liquidity"} setReservesEthParent={setReservesEth} setReservesProphetParent={setReservesProphet}></LiquidityCard>
 // TODO - make it so staked NFTs use the flip card with unstake on it
 // TODO - disable the stake button as well!
 

@@ -157,7 +157,7 @@ const Home: NextPage = () => {
             <TableBody>
               <TableRow>
                 <TableCell>No NFT</TableCell>
-                <TableCell>0%</TableCell>
+                <TableCell>13%</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Tier 1</TableCell>
@@ -191,28 +191,24 @@ const Home: NextPage = () => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell>Level 0 (Mint Only)</TableCell>
+                <TableCell>Level 1</TableCell>
                 <TableCell>400,000</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Level 1</TableCell>
+                <TableCell>Level 2</TableCell>
                 <TableCell>800,000</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Level 2</TableCell>
+                <TableCell>Level 3</TableCell>
                 <TableCell>1,200,000</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Level 3</TableCell>
+                <TableCell>Level 4</TableCell>
                 <TableCell>1,600,000</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Level 4</TableCell>
-                <TableCell>2,000,000</TableCell>
-              </TableRow>
-              <TableRow>
                 <TableCell>Level 5</TableCell>
-                <TableCell>2,400,000</TableCell>
+                <TableCell>2,000,000</TableCell>
               </TableRow>
             </TableBody>
           </Table>

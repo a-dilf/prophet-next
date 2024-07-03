@@ -14,17 +14,20 @@ import {
     useWriteContract,
 } from 'wagmi';
 
+import { toWei } from 'web3-utils';
+
 interface NftCardProps {
     mounted: boolean;
     isConnected: boolean;
     tokenId: number;
     nftContractConfig: object;
+    currentAllowance: BigInt;
 }
 
 import { nft_abi } from '../../abi_objects/nft_abi';
 import { staking_nft_abi } from '../../abi_objects/staking_nft_abi';
 
-const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftContractConfig }) => {
+const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftContractConfig, currentAllowance }) => {
     // state values
     const [tokenTier, setTokenTier] = React.useState(BigInt(0));
     const [tokenImageUrl, setTokenImageUrl] = React.useState("");
@@ -41,6 +44,13 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
 
         fetchData();
     }, []);
+
+    const nftLevelMaxContractConfig = {
+        address: process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}',
+        abi: nft_abi,
+        args: [BigInt(tokenId), BigInt(5 - Number(tokenTier))],
+        functionName: "upgradeTierMulti"
+    } as const;
 
     const nftContractConfig2 = {
         address: process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}',
@@ -64,18 +74,6 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         ...nftContractConfig2,
         functionName: 'stakedTokens'
     });
-
-    React.useEffect(() => {
-        if (tokenTierLevel) {
-            setTokenTier(tokenTierLevel);
-        }
-    }, [tokenTierLevel]);
-
-    React.useEffect(() => {
-        if (tokenStakeStatus) {
-            setTokenStakeStatusForButton(tokenStakeStatus);
-        }
-    }, [tokenStakeStatus]);
 
     //// WRITE
     // mint NFT
@@ -120,6 +118,48 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         },
     });
 
+    // levelUp NFT
+    const {
+        data: levelHash,
+        writeContract: level,
+        isPending: isLevelLoading,
+        isSuccess: isLevelStarted,
+        error: levelError,
+    } = useWriteContract();
+
+    // ??
+    const {
+        data: txLevelData,
+        isSuccess: levelSuccess,
+        error: levelTxError,
+    } = useWaitForTransactionReceipt({
+        hash: levelHash,
+        query: {
+            enabled: !!levelHash,
+        },
+    });
+
+    // max NFT
+    const {
+        data: maxHash,
+        writeContract: maxLevel,
+        isPending: isMaxLoading,
+        isSuccess: isMaxStarted,
+        error: maxError,
+    } = useWriteContract();
+
+    // ??
+    const {
+        data: maxData,
+        isSuccess: maxSuccess,
+        error: maxTxError,
+    } = useWaitForTransactionReceipt({
+        hash: maxHash,
+        query: {
+            enabled: !!maxHash,
+        },
+    });
+
     // unstake NFT
     const {
         data: unstakeHash,
@@ -141,14 +181,32 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         },
     });
 
-    
-    
+    React.useEffect(() => {
+        if (tokenTierLevel) {
+            setTokenTier(tokenTierLevel);
+        }
+    }, [tokenTierLevel]);
+
+    React.useEffect(() => {
+        if (tokenStakeStatus) {
+            setTokenStakeStatusForButton(tokenStakeStatus);
+        }
+    }, [tokenStakeStatus]);
+
+    React.useEffect(() => {
+        if (!isLevelLoading && isLevelStarted) {
+            console.log(tokenTier)
+            setTokenTier((prevTier) => prevTier + BigInt(1));
+        }
+    }, [isLevelLoading, isLevelStarted]);
 
     // TODO - update and test the NFT functions!
     // TODO - make the card flip based on stake status
     // TODO - get stake status in and make stake turn to unstake (or)
     // perhaps unstake is a button on the backside of the card!
     // TODO - make level up and MAX button actually do something
+
+    console.log((5 - Number(tokenTier)))
 
     return (
         <div className="container">
@@ -164,9 +222,14 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             Error: {mintError.message}
                         </p>
                     )}
-                    {txError && (
+                    {levelError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {txError.message}
+                            Error: {levelError.message}
+                        </p>
+                    )}
+                    {maxError && (
+                        <p style={{ marginTop: 24, color: '#FF6257' }}>
+                            Error: {maxError.message}
                         </p>
                     )}
 
@@ -175,19 +238,19 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             color="secondary"
                             variant="contained"
                             style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!mint || isMintLoading || isMintStarted || Number(tokenTier) >= 5}
-                            data-mint-loading={isMintLoading}
-                            data-mint-started={isMintStarted}
+                            disabled={!level || isLevelLoading || isLevelStarted || Number(tokenTier) >= 5 || Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 100000000000000000) < 1}
+                            data-mint-started={isLevelLoading && !isLevelStarted}
+                            data-mint-complete={!isLevelLoading && isLevelStarted}
                             onClick={() =>
-                                mint?.({
+                                level?.({
                                     ...nftContractConfig2,
-                                    functionName: 'mint',
+                                    functionName: 'upgradeTier',
                                 })
                             }
                         >
-                            {isMintLoading && 'Waiting for approval'}
-                            {isMintStarted && 'Minting...'}
-                            {!isMintLoading && !isMintStarted && 'Lvl'}
+                            {!isLevelLoading && !isLevelStarted && 'Lvl'}
+                            {isLevelLoading && 'Executing'}
+                            {!isMintStarted && isLevelStarted && 'complete'}
                         </Button>
                     )}
 
@@ -196,19 +259,18 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             color="secondary"
                             variant="contained"
                             style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!mint || isMintLoading || isMintStarted || Number(tokenTier) >= 5}
-                            data-mint-loading={isMintLoading}
-                            data-mint-started={isMintStarted}
+                            disabled={!maxLevel || isMaxLoading || isMaxStarted || Number(tokenTier) >= 5 || Number(tokenTier) >= 5 || Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 100000000000000000) < (5 - Number(tokenTier))}
+                            data-mint-started={isMaxLoading && !isMaxStarted}
+                            data-mint-complete={!isMaxLoading && isMaxStarted}
                             onClick={() =>
-                                mint?.({
-                                    ...nftContractConfig2,
-                                    functionName: 'mint',
+                                maxLevel?.({
+                                    ...nftLevelMaxContractConfig
                                 })
                             }
                         >
-                            {isMintLoading && 'Waiting for approval'}
-                            {isMintStarted && 'Minting...'}
-                            {!isMintLoading && !isMintStarted && 'MAX'}
+                            {!isMaxLoading && !isMaxStarted && 'MAX - ' + (5 - Number(tokenTier))}
+                            {isMaxLoading && 'Executing'}
+                            {!isMaxStarted && isMaxStarted && 'complete'}
                         </Button>
                     )}
                     
@@ -235,7 +297,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
 
                 </div>
             </div>
-
+f
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={tokenStakeStatus}>
