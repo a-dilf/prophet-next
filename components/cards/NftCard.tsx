@@ -315,9 +315,9 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                                 })
                             }
                         >
-                            {isStakeLoading && 'Waiting for approval'}
-                            {isStakeStarted && 'Minting...'}
-                            {!isStakeLoading && !isStakeStarted && 'stake'}
+                            {!isStakeLoading && !isStakeStarted && 'MAX - ' + (5 - Number(tokenTier))}
+                            {isStakeLoading && 'Executing'}
+                            {!isStakeStarted && isStakeStarted && 'complete'}
                         </Button>
                     )}
 
