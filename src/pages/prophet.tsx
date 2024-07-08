@@ -6,6 +6,7 @@ import { Typography, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
 import { token_abi } from '../../abi_objects/token_abi';
+import { staking_token_abi } from '../../abi_objects/staking_token_abi';
 import { ido_vault_abi } from '../../abi_objects/ido_abi';
 
 import { toWei } from 'web3-utils';
@@ -20,6 +21,8 @@ import {
 } from 'wagmi';
 
 import TokenCountCard from '../../components/cards/TokenCountCard';
+import ProphetApproveAndStakeCard from '../../components/approval_cards/ProphetApproveAndStake';
+import ProphetApproveAndUnstakeCard from '../../components/approval_cards/ProphetApproveAndUnstakeCard';
 
 const Prophet: NextPage = () => {
   const [mounted, setMounted] = React.useState(false);
@@ -29,8 +32,8 @@ const Prophet: NextPage = () => {
   const [ethToUseInBuyFloat, setEthToUseInBuyFloat] = React.useState(0);
   const [tokensThatCanBeBoughtWithCurrentEthState, setTokensThatCanBeBoughtWithCurrentEthState] = React.useState(0n);
   const [tokensRemaining, setTokensRemaining] = React.useState([0n]);
-
-  const { address } = useAccount();
+  
+  const { address, isConnected } = useAccount();
 
   const { data: currentEthBalance } = useBalance({
     address: address,
@@ -153,7 +156,6 @@ const Prophet: NextPage = () => {
   }, [currentEthBalance]);
 
   // TODO: make tier dynamic?
-
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEthToUseInBuyFloat(parseFloat(event.target.value));
     const ethInWei = BigInt(Number(event.target.value) * 1000000000000000000)
@@ -247,6 +249,13 @@ const Prophet: NextPage = () => {
         >
           MAX
         </Button>
+      </div>
+      <div className="container" style={{ marginTop: "20px" }}>
+        <Typography variant="h3">Staking</Typography>
+        <ProphetApproveAndStakeCard mounted={mounted} isConnected={isConnected} cardTitle='Stake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndStakeCard>
+      </div>
+      <div className='container'>
+      <ProphetApproveAndUnstakeCard mounted={mounted} isConnected={isConnected} cardTitle='Unstake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndUnstakeCard>
       </div>
       <div className="container" style={{ marginTop: "20px" }}>
         <Typography variant="h3">Stages</Typography>

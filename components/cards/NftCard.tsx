@@ -297,7 +297,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
 
                 </div>
             </div>
-f
+
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={tokenStakeStatus}>

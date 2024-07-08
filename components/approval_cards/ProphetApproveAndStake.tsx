@@ -10,11 +10,7 @@ import FlipCard, { BackCard, FrontCard } from '../FlipCard';
 
 import { Typography, Button } from '@mui/material';
 
-import { router_abi } from '../../abi_objects/router_abi';
 import { untaxed_abi } from '../../abi_objects/untaxed_abi';
-import { token_abi } from '../../abi_objects/token_abi';
-import { pair_abi } from '../../abi_objects/pair_abi';
-import { lp_abi } from '../../abi_objects/lp_abi';
 
 // rainbowkit+ imports
 import {
@@ -24,28 +20,30 @@ import {
     useAccount
 } from 'wagmi';
 
-interface RemoveLiquidityCardProps {
+import { staking_token_abi } from '../../abi_objects/staking_token_abi';
+import { token_abi } from '../../abi_objects/token_abi';
+
+interface ProphetApproveAndStakeCardProps {
     mounted: boolean;
     isConnected: boolean;
     cardTitle: string;
+    currentTokenBalanceState: bigint;
+    setCurrentTokenBalanceState: React.Dispatch<React.SetStateAction<bigint>>;
 }
 
 // TODO - revert these type changes??
 
-const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isConnected, cardTitle }) => {
+const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({ mounted, isConnected, cardTitle, currentTokenBalanceState, setCurrentTokenBalanceState }) => {
 
     // TODO - get this from user input!
-    const [tokenAmountToRemove, settokenAmountToRemove] = React.useState(0n);
-    const [ethAmountToAddInWei, setEthAmountToAdd] = React.useState(0n);
-    const [reservesProphet, setReservesProphet] = React.useState(0n);
-    const [reservesEth, setReservesEth] = React.useState(0n);
+    const [tokenAmountToAdd, setTokenAmountToAdd] = React.useState(0n);
     const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
 
     const { address } = useAccount();
 
     const tokenBalanceOfContractConfig = {
-        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
-        abi: pair_abi,
+        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+        abi: token_abi,
         args: [address as '0x${string}'],
         functionName: "balanceOf"
     } as const;
@@ -53,36 +51,25 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
     // contract configs
     // allowance read contract
     const allowanceContractConfig = {
-        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
-        abi: lp_abi,
-        args: [address as '0x${string}', process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}']
+        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+        abi: token_abi,
+        args: [address as '0x${string}', process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}']
     } as const;
 
     // approval of proxy contracts
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToRemove), "ether"))]
+        args: [process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToAdd), "ether"))]
     } as const;
 
-    // use ETH quote amount and token amount in proper peg ratio
-    const untaxedContractConfig = {
-        address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
-        abi: untaxed_abi,
-        args: [BigInt(currentAllowance)],
-        functionName: "removeLiquidityETHUntaxed",
+    // stake tokens function
+    const stakeTokensContractConfig = {
+        address: process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}',
+        abi: staking_token_abi,
+        args: [BigInt(tokenAmountToAdd)],
+        functionName: "stake",
     } as const;
-
-    const pairContractConfig = {
-        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
-        abi: pair_abi
-    } as const;
-
-    //// READ OPERATIONS
-    const { data: reserves } = useReadContract({
-        ...pairContractConfig,
-        functionName: 'getReserves',
-    });
 
     const { data: userBalance } = useReadContract({
         ...tokenBalanceOfContractConfig,
@@ -94,28 +81,18 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
     });
 
     React.useEffect(() => {
-        if (reserves) {
-            // TODO - check if amount comes in as WEI
-            // setEthAmountToAdd(BigInt(toWei(Number(ethAmount), "wei")));
-            setReservesEth(reserves[0])
-            setReservesProphet(reserves[1]);
-        }
-    }, [reserves]);
-
-    React.useEffect(() => {
         if (userBalance) {
-            console.log(userBalance)
             // TODO - check if amount comes in as WEI
             // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
             const userAmountInWei = BigInt(toWei(Number(userBalance), "wei"))
-            settokenAmountToRemove(userAmountInWei);
+            setTokenAmountToAdd(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
         }
     }, [userBalance]);
-    
+
     // update state with the read results
     React.useEffect(() => {
         if (allowanceAmount) {
-            setStateAllowanceAmount(BigInt(toWei(tokenAmountToRemove, "ether")))
+            setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
         }
     }, [allowanceAmount]);
 
@@ -143,11 +120,11 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
 
     // let user claim rewards
     const {
-        data: addHash,
-        writeContract: addLiquidity,
-        isPending: isAddLoading,
-        isSuccess: isAddStarted,
-        error: addError,
+        data: stakeHash,
+        writeContract: stakeTokens,
+        isPending: isStakeLoading,
+        isSuccess: isStakeStarted,
+        error: stakeError,
     } = useWriteContract();
 
     // ??
@@ -156,32 +133,31 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
         isSuccess: txSuccess,
         error: txError,
     } = useWaitForTransactionReceipt({
-        hash: addHash,
+        hash: stakeHash,
         query: {
-            enabled: !!addHash,
+            enabled: !!stakeHash,
         },
     });
 
     // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        settokenAmountToRemove(BigInt(newValue));
+        setCurrentTokenBalanceState(BigInt(newValue))
+        setTokenAmountToAdd(BigInt(newValue));
     };
 
     React.useEffect(() => {
         if (isApproveStarted) {
-            setStateAllowanceAmount(BigInt(toWei(tokenAmountToRemove, "ether")))
+            // triggerReRender(true);
+            setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
         }
     }, [isApproveStarted]);
 
     React.useEffect(() => {
-        if (isAddStarted) {
-            setReservesProphet(reservesProphet + BigInt(toWei(tokenAmountToRemove, "ether")))
-            setReservesEth(reservesEth + BigInt(toWei(ethAmountToAddInWei, "ether")))
+        if (isStakeStarted) {
+            console.log("state change here")
         }
-    }, [isAddStarted]);
-
-    console.log(allowanceAmount)
+    }, [isStakeStarted]);
     
     return (
         <div className="container">
@@ -189,19 +165,18 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField
-                        label="Liquidity Amount (WEI)"
+                        label="Token Amount (ETHER)"
                         type="number"
-                        value={Number(tokenAmountToRemove)}
+                        value={Number(tokenAmountToAdd)}
                         onChange={handleChange}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}>Approve the LP tokens for removal from LP</Typography>
-                    <Typography>to receive ETH and $PROPHET added.</Typography>
+                    <Typography sx={{marginTop: "15px"}}> Total $PROPHET staked: xxx </Typography>
 
-                    {addError && (
+                    {stakeError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {addError.message}
+                            Error: {stakeError.message}
                         </p>
                     )}
                     {txError && (
@@ -225,7 +200,7 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
                                 })
                             }
                         >
-                            {!isApproveLoading && !isApproveStarted && "approve " + tokenAmountToRemove}
+                            {!isApproveLoading && !isApproveStarted && "approve " + tokenAmountToAdd}
                             {isApproveLoading && 'Executing...'}
                             {!isApproveLoading && isApproveStarted && "complete"}
                         </Button>
@@ -261,29 +236,29 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
                             />
                             <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Liquidity prepared!</Typography>
                             <Typography style={{ marginBottom: 4}}>
-                                {Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 1000000000000000000)} $PROPHET requires {Number(toWei(Number(ethAmountToAddInWei), "wei")) / 1000000000000000000} ETH.
+                                Stake here.
                             </Typography>
                             <Button
                                 color="primary"
                                 variant="contained"
                                 style={{ marginTop: 6, marginLeft: 15, marginBottom: 6 }}
-                                disabled={!addLiquidity || isAddLoading || isAddStarted}
-                                data-mint-started={isAddLoading && !isAddStarted}
-                                data-mint-complete={!isAddLoading && isAddStarted}
+                                disabled={!stakeTokens || isStakeLoading || isStakeStarted}
+                                data-mint-started={isStakeLoading && !isStakeStarted}
+                                data-mint-complete={!isStakeLoading && isStakeStarted}
                                 onClick={() =>
-                                    addLiquidity?.({
-                                        ...untaxedContractConfig,
+                                    stakeTokens?.({
+                                        ...stakeTokensContractConfig,
                                     })
                                 }
                             >
-                                {!isAddLoading && !isAddStarted && "add approved liquidity"}
-                                {isAddLoading && 'Executing...'}
-                                {!isAddLoading && isAddStarted && 'complete'}
+                                {!isStakeLoading && !isStakeStarted && "stake"}
+                                {isStakeLoading && 'Executing...'}
+                                {!isStakeLoading && isStakeStarted && 'complete'}
                             </Button>
-                            {!isAddLoading && isAddStarted && (
+                            {!isStakeLoading && isStakeStarted && (
                                 <Typography style={{ marginBottom: 6 }}>
                                     View on{' '}
-                                    <a href={`https://arbiscan.io/tx/${addHash}`}>
+                                    <a href={`https://arbiscan.io/tx/${stakeHash}`}>
                                         Arbiscan
                                     </a>
                                 </Typography>
@@ -300,4 +275,4 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
 /* TODO make !isMintLoading && isMintStarted the flip condition! and report the reward amount    
 */
 
-export default RemoveLiquidityCard;
+export default ProphetApproveAndStakeCard;

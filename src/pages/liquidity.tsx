@@ -15,6 +15,8 @@ import { pair_abi } from '../../abi_objects/pair_abi';
 // component imports
 import LiquidityCard from '../../components/cards/LiquidityCard';
 import RemoveLiquidityCard from '../../components/cards/RemoveLiquidityCard';
+import LiquidityApproveAndStakeCard from '../../components/approval_cards/LiquidityApproveAndStake';
+import LiquidityApproveAndUnstakeCard from '../../components/approval_cards/LiquidityApproveAndUnstakeCard';
 
 import { toWei } from 'web3-utils';
 
@@ -32,7 +34,7 @@ const Liquidity: NextPage = () => {
         address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
         abi: pair_abi
     } as const;
-    
+
     //// READ OPERATIONS
     const { data: reserves } = useReadContract({
         ...pairContractConfig,
@@ -61,6 +63,16 @@ const Liquidity: NextPage = () => {
             </div>
             <LiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Provide Liquidity"}></LiquidityCard>
             <RemoveLiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Remove Liquidity"}></RemoveLiquidityCard>
+            <div className="container" style={{ marginTop: "20px" }}>
+                <Typography variant="h3">Staking</Typography>
+            </div>
+            <div className='container'>
+                <LiquidityApproveAndStakeCard mounted={mounted} isConnected={isConnected} cardTitle={"Stake Liquidity"}></LiquidityApproveAndStakeCard>
+            </div>
+            <div className='container'>
+                <LiquidityApproveAndUnstakeCard mounted={mounted} isConnected={isConnected} cardTitle={"Unstake Liquidity"}></LiquidityApproveAndUnstakeCard>
+            </div>
+
         </div>
     );
 };
