@@ -29,7 +29,7 @@ const Nfts: NextPage = () => {
     const [mounted, setMounted] = React.useState(false);
     const [hasRenderedOnce, setHasRenderedOnce] = React.useState(false);
     const [mintCount, setMintCount] = React.useState(1);
-    const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
+    const [currentAllowanceState, setStateAllowanceAmount] = React.useState(0n);
     const [ownedNftCardProps, setOwnedNftCardProps] = React.useState(new Array);
 
     const { address, isConnected } = useAccount();
@@ -74,19 +74,22 @@ const Nfts: NextPage = () => {
     //// STATE UPDATES
     // update state with the read results
     React.useEffect(() => {
-        if (ownedNfts && currentAllowance >= 0) {
+        if (ownedNfts && currentAllowanceState >= 0) {
 
             const nftCardsData = ownedNfts.map(tokenId => ({
                 mounted: mounted, // Example value, replace with actual logic if needed
                 isConnected: isConnected, // Example value, replace with actual logic if needed
                 tokenId,
                 nftContractConfig: nftContractConfig, // Example value, replace with actual logic if needed
-                currentAllowance: currentAllowance
+                currentAllowanceState: currentAllowanceState,
+                setStateAllowanceAmount: setStateAllowanceAmount
             }));
 
             setOwnedNftCardProps(nftCardsData)
         }
-    }, [ownedNfts, currentAllowance]);
+    }, [ownedNfts, currentAllowanceState]);
+
+    console.log("current allowance: ", currentAllowanceState)
 
     React.useEffect(() => {
         if (totalSupplyData) {
@@ -135,7 +138,7 @@ const Nfts: NextPage = () => {
                     </IconButton>
                 </Box>
             </div>
-            <NftApproveAndActionCard mounted={mounted} isConnected={isConnected} cardTitle={"Approve burning $PROPHET"} amountToApprove={(Number(toWei(mintCount, "ether")) * 400000.01)} allowanceAmount={Number(currentAllowance)} mintCount={mintCount} totalMinted={totalMinted} setTotalMinted={setTotalMinted} setOwnedNftCardProps={setOwnedNftCardProps} setStateAllowanceAmount={setStateAllowanceAmount}></NftApproveAndActionCard>
+            <NftApproveAndActionCard mounted={mounted} isConnected={isConnected} cardTitle={"Approve burning $PROPHET"} amountToApprove={(Number(toWei(mintCount, "ether")) * 400000.01)} allowanceAmount={Number(currentAllowanceState)} mintCount={mintCount} totalMinted={totalMinted} setTotalMinted={setTotalMinted} setOwnedNftCardProps={setOwnedNftCardProps} setStateAllowanceAmount={setStateAllowanceAmount}></NftApproveAndActionCard>
             <Typography className="container" variant="h3">NFTs at 0x{String(address).slice(-4)}</Typography>
             {ownedNftCardProps.map((cardData, index) => (
                 <NftCard
@@ -143,8 +146,8 @@ const Nfts: NextPage = () => {
                     mounted={cardData.mounted}
                     isConnected={cardData.isConnected}
                     tokenId={cardData.tokenId}
-                    nftContractConfig={cardData.nftContractConfig}
-                    currentAllowance={cardData.currentAllowance}
+                    currentAllowanceState={cardData.currentAllowanceState}
+                    setStateAllowanceAmount={cardData.setStateAllowanceAmount}
                 />
             ))}
         </div>

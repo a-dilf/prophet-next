@@ -20,18 +20,21 @@ interface NftCardProps {
     mounted: boolean;
     isConnected: boolean;
     tokenId: number;
-    nftContractConfig: object;
-    currentAllowance: BigInt;
+    currentAllowanceState: BigInt;
+    setStateAllowanceAmount: React.Dispatch<React.SetStateAction<bigint>>;
 }
 
 import { nft_abi } from '../../abi_objects/nft_abi';
 import { staking_nft_abi } from '../../abi_objects/staking_nft_abi';
 
-const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftContractConfig, currentAllowance }) => {
+const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, currentAllowanceState, setStateAllowanceAmount }) => {
     // state values
     const [tokenTier, setTokenTier] = React.useState(BigInt(0));
     const [tokenImageUrl, setTokenImageUrl] = React.useState("");
     const [tokenStakeStatusForButton, setTokenStakeStatusForButton] = React.useState(false);
+
+    console.log("asdf: ", currentAllowanceState)
+    console.log("qwert: ", (5 - Number(tokenTier)), Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000), (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000)
 
     // get image URL for display
     useEffect(() => {
@@ -56,6 +59,13 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         address: process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}',
         abi: nft_abi,
         args: [BigInt(tokenId)]
+    } as const;
+
+    const stakeNftContractConfig = {
+        address: process.env.NEXT_PUBLIC_NFT_STAKING_ADDRESS as '0x${string}',
+        abi: staking_nft_abi,
+        args: [BigInt(tokenId)],
+        functionName: "deposit"
     } as const;
 
     const unstakeNftContractConfig = {
@@ -103,14 +113,14 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         writeContract: stake,
         isPending: isStakeLoading,
         isSuccess: isStakeStarted,
-        error: unStakeError,
+        error: stakeError,
     } = useWriteContract();
 
     // ??
     const {
-        data: unStakeData,
-        isSuccess: unStakeSuccess,
-        error: unsSakeTxError,
+        data: stakeData,
+        isSuccess: stakeSuccess,
+        error: stakeTxError,
     } = useWaitForTransactionReceipt({
         hash: stakeHash,
         query: {
@@ -200,13 +210,25 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
         }
     }, [isLevelLoading, isLevelStarted]);
 
+    // update allowance after leveling up!
+    React.useEffect(() => {
+        if (!isLevelLoading && isLevelStarted) {
+            setStateAllowanceAmount(prevAllowanceAmount => prevAllowanceAmount - (BigInt(Number(toWei(400000, "ether")))));
+        }
+    }, [isLevelLoading, isLevelStarted]);
+
+    React.useEffect(() => {
+        if (!isMaxLoading && isMaxStarted) {
+            setStateAllowanceAmount(prevAllowanceAmount => prevAllowanceAmount - (BigInt(Number(toWei(400000 * (5 - Number(tokenTier)), "ether")))));
+        }
+    }, [isMaxLoading, isMaxStarted]);
+
     // TODO - update and test the NFT functions!
     // TODO - make the card flip based on stake status
     // TODO - get stake status in and make stake turn to unstake (or)
     // perhaps unstake is a button on the backside of the card!
     // TODO - make level up and MAX button actually do something
 
-    console.log((5 - Number(tokenTier)))
 
     return (
         <div className="container">
@@ -232,13 +254,18 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             Error: {maxError.message}
                         </p>
                     )}
+                    {stakeError && (
+                        <p style={{ marginTop: 24, color: '#FF6257' }}>
+                            Error: {stakeError.message}
+                        </p>
+                    )}
 
                     {mounted && isConnected && (
                         <Button
                             color="secondary"
                             variant="contained"
                             style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!level || isLevelLoading || isLevelStarted || Number(tokenTier) >= 5 || Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 100000000000000000) < 1}
+                            disabled={!level || isLevelLoading || isLevelStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < 1}
                             data-mint-started={isLevelLoading && !isLevelStarted}
                             data-mint-complete={!isLevelLoading && isLevelStarted}
                             onClick={() =>
@@ -259,7 +286,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             color="secondary"
                             variant="contained"
                             style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!maxLevel || isMaxLoading || isMaxStarted || Number(tokenTier) >= 5 || Number(tokenTier) >= 5 || Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 100000000000000000) < (5 - Number(tokenTier))}
+                            disabled={!maxLevel || isMaxLoading || isMaxStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < (5 - Number(tokenTier))}
                             data-mint-started={isMaxLoading && !isMaxStarted}
                             data-mint-complete={!isMaxLoading && isMaxStarted}
                             onClick={() =>
@@ -284,8 +311,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, nftCon
                             data-mint-started={isStakeStarted}
                             onClick={() =>
                                 stake?.({
-                                    ...nftContractConfig2,
-                                    functionName: 'stake',
+                                    ...stakeNftContractConfig,
                                 })
                             }
                         >

@@ -105,9 +105,8 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
 
     React.useEffect(() => {
         if (!isApproveLoading && isApproveStarted) {
-            console.log(mintCount)
             setAmountMintable(mintCount);
-            setStateAllowanceAmount(BigInt(mintCount * 400000));
+            setStateAllowanceAmount(BigInt(Number(toWei((mintCount + 1) * 400000, "ether"))));
         }
     }, [isApproveLoading, isApproveStarted]);
 
@@ -116,8 +115,6 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
             console.log(amountMintable)
         }
     }, [amountMintable]);
-
-    console.log("external: ", amountMintable)
 
     // update list of minted NFTs after mint
     React.useEffect(() => {

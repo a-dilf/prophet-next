@@ -5,6 +5,8 @@ import type { NextPage } from 'next';
 import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box, Grid, Link, Button, List, ListItem, ListItemText, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Test from '../../components/Test';
+
 
 // rainbowkit+ imports
 import {
@@ -26,10 +28,14 @@ const addressesForAccordian = [
 
 const Home: NextPage = () => {
   const [mounted, setMounted] = React.useState(false);
+  const [testState, setTestState] = React.useState(0)
+
+
   React.useEffect(() => setMounted(true), []);
 
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '35px' }}>
+
       <Typography className="container" variant="h2">$PROPHET</Typography>
       <Typography className="container" variant="h4">The Prophecy: A Milady inspired NFT derivative gambling #based ecosystem</Typography>
 
