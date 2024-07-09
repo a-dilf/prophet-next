@@ -23,6 +23,12 @@ yarn dev
 
 Then open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Styling
+
+This web application uses the Google Material Theme library for styling components.
+
+All Material components can be styled at `src/styles/theme.tsx`.
+Everything else can be styled traditionally using CSS at `src/styles/global.css`
 
 ## Learn More
 

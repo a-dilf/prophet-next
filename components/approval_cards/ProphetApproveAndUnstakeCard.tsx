@@ -142,8 +142,6 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{ marginTop: "15px" }}> Total $PROPHET staked: xxx </Typography>
-
                     {stakeError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>
                             Error: {stakeError.message}

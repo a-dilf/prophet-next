@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from 'react';
 import type { NextPage } from 'next';
 
-import { Typography, Box } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box } from '@mui/material';
 
 import IconButton from '@mui/material/IconButton';
 import IncrementIcon from '@mui/icons-material/Add'; // Import Add Icon
@@ -17,6 +17,7 @@ import {
 // abi objects
 import { nft_abi } from '../../abi_objects/nft_abi';
 import { token_abi } from '../../abi_objects/token_abi';
+import { staking_nft_abi } from '../../abi_objects/staking_nft_abi';
 
 // component imports
 import NftCard from '../../components/cards/NftCard';
@@ -26,6 +27,8 @@ import { toWei } from 'web3-utils';
 
 const Nfts: NextPage = () => {
     const [totalMinted, setTotalMinted] = React.useState(0n);
+    const [totalStakedState, setTotalStakedState] = React.useState(0n);
+    const [userStakedState, setUserStakedState] = React.useState(0n);
     const [mounted, setMounted] = React.useState(false);
     const [hasRenderedOnce, setHasRenderedOnce] = React.useState(false);
     const [mintCount, setMintCount] = React.useState(1);
@@ -54,6 +57,19 @@ const Nfts: NextPage = () => {
         args: [address as '0x${string}', process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}']
     } as const;
 
+    const totalStakedContractConfig = {
+        address: process.env.NEXT_PUBLIC_NFT_STAKING_ADDRESS as '0x${string}',
+        abi: staking_nft_abi,
+        functionName: "stakedCount"
+    } as const;
+
+    const userStakedContractConfig = {
+        address: process.env.NEXT_PUBLIC_NFT_STAKING_ADDRESS as '0x${string}',
+        abi: staking_nft_abi,
+        args: [address as '0x${string}'],
+        functionName: "userInfo"
+    } as const;
+
     //// READ OPERATIONS
     const { data: ownedNfts } = useReadContract({
         ...nftOwnerContractConfig,
@@ -68,6 +84,14 @@ const Nfts: NextPage = () => {
     const { data: allowanceAmount } = useReadContract({
         ...allowanceContractConfig,
         functionName: "allowance"
+    });
+
+    const { data: totalStaked } = useReadContract({
+        ...totalStakedContractConfig,
+    });
+
+    const { data: userStaked } = useReadContract({
+        ...userStakedContractConfig,
     });
 
 
@@ -97,6 +121,18 @@ const Nfts: NextPage = () => {
         }
     }, [totalSupplyData]);
 
+    React.useEffect(() => {
+        if (totalStaked) {
+            setTotalStakedState(totalStaked);
+        }
+    }, [totalStaked]);
+
+    React.useEffect(() => {
+        if (userStaked) {
+            setUserStakedState(userStaked[0]);
+        }
+    }, [userStaked]);
+
     // update state with the read results
     React.useEffect(() => {
         if (allowanceAmount && !hasRenderedOnce) {
@@ -125,7 +161,30 @@ const Nfts: NextPage = () => {
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
             <Typography className="container" variant="h2">NFT Zone</Typography>
-            <Typography className="container">NFTs in circulation: {Number(totalMinted)}</Typography>
+            <div className='container'>
+                <TableContainer>
+                    <Table>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>NFTs in circulation:</TableCell>
+                                <TableCell>{Number(totalMinted)}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Total level 5NFTs staked:</TableCell>
+                                <TableCell>{Number(totalStakedState)}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Level 5 NFTs staked by 0x{String(address).slice(-4)}:</TableCell>
+                                <TableCell>{Number(userStakedState)}</TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
+            <div className='container'>
+                <Typography variant="h3" sx={{ marginTop: "12px" }}>Approve and Mint</Typography>
+
+            </div>
             <div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
                 <Typography>Number of NFTS to mint and/or level up: </Typography>
                 <Box sx={{ border: '1px solid', borderColor: 'secondary.main', borderRadius: '4px', p: 1 }}>

@@ -219,6 +219,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
 
     React.useEffect(() => {
         if (!isMaxLoading && isMaxStarted) {
+            console.log("executed")
             setStateAllowanceAmount(prevAllowanceAmount => prevAllowanceAmount - (BigInt(Number(toWei(400000 * (5 - Number(tokenTier)), "ether")))));
         }
     }, [isMaxLoading, isMaxStarted]);

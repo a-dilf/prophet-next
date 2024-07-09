@@ -140,14 +140,19 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
     }, [isActionLoading, isActionStarted]);
 
     // TODO - fix rewards amount?? look for the 1 / 1000000 statement
+    /*
+onClick={() =>
+                                setStateAllowanceAmount(NaN)
+                            }
+    */
 
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
-                    <Typography sx={{marginTop: 1, fontWeight: 'bold'}} >Tokens must be approved</Typography>
-                    <Typography sx={{fontWeight: 'bold'}}>for mint and burn operations!</Typography>
+                    <Typography sx={{ marginTop: 1, fontWeight: 'bold' }} >Tokens must be approved</Typography>
+                    <Typography sx={{ fontWeight: 'bold' }}>for mint and burn operations!</Typography>
 
                     {actionError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>
@@ -210,9 +215,9 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
                                 priority
                             />
                             <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>{amountMintable} mintable!</Typography>
-                                <Typography style={{ marginBottom: 10 }}>
-                                        $PROPHET approved for burn.
-                                </Typography>
+                            <Typography style={{ marginBottom: 10 }}>
+                                $PROPHET approved for burn.
+                            </Typography>
                             <Button
                                 color="primary"
                                 variant="contained"

@@ -108,7 +108,7 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}> Total $PROPHET staked: xxx </Typography>
+                    <Typography sx={{marginTop: "15px"}}></Typography>
 
                     {stakeError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>

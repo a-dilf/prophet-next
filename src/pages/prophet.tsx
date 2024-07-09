@@ -2,7 +2,7 @@
 import React, { ChangeEvent } from 'react';
 import type { NextPage } from 'next';
 
-import { Typography, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
 import { token_abi } from '../../abi_objects/token_abi';
@@ -32,7 +32,9 @@ const Prophet: NextPage = () => {
   const [ethToUseInBuyFloat, setEthToUseInBuyFloat] = React.useState(0);
   const [tokensThatCanBeBoughtWithCurrentEthState, setTokensThatCanBeBoughtWithCurrentEthState] = React.useState(0n);
   const [tokensRemaining, setTokensRemaining] = React.useState([0n]);
-  
+  const [userStakedTokensState, setUserStakedTokensState] = React.useState(0n)
+  const [totalStakedTokensState, setTotalStakedTokensState] = React.useState(0n)
+
   const { address, isConnected } = useAccount();
 
   const { data: currentEthBalance } = useBalance({
@@ -71,6 +73,19 @@ const Prophet: NextPage = () => {
     functionName: 'totalSold',
   } as const;
 
+  const totalTokenStakingContractConfig = {
+    address: process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}',
+    abi: staking_token_abi,
+    functionName: 'totalStakedAmount'
+  } as const;
+
+  const userTokenStakingContractConfig = {
+    address: process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}',
+    abi: staking_token_abi,
+    args: [address as '0x${string}'],
+    functionName: 'stakedAmounts'
+  } as const;
+
   //// READ OPERATIONS
   const { data: currentBalance } = useReadContract({
     ...balanceOfContractConfig,
@@ -86,6 +101,14 @@ const Prophet: NextPage = () => {
 
   const { data: tokensSold } = useReadContract({
     ...tokensRemainingContractConfig,
+  });
+
+  const { data: totalStakedProphet } = useReadContract({
+    ...totalTokenStakingContractConfig,
+  });
+
+  const { data: userStakedProphet } = useReadContract({
+    ...userTokenStakingContractConfig,
   });
 
   //// WRITE OPERATIONS
@@ -117,10 +140,29 @@ const Prophet: NextPage = () => {
   }, [currentBalance]);
 
   React.useEffect(() => {
+    if (userStakedProphet) {
+      setUserStakedTokensState(userStakedProphet[0]);
+    }
+  }, [userStakedProphet]);
+
+  React.useEffect(() => {
+    if (totalStakedProphet) {
+      setTotalStakedTokensState(totalStakedProphet);
+    }
+  }, [totalStakedProphet]);
+
+  React.useEffect(() => {
     if (tokenAmount) {
       setTokensThatCanBeBoughtWithCurrentEthState(tokenAmount);
     }
   }, [tokenAmount]);
+
+  React.useEffect(() => {
+    if (!isBuyLoading && isBuyStarted) {
+      setCurrentTokenBalanceState(prevBalance => prevBalance + tokensThatCanBeBoughtWithCurrentEthState);
+    
+    }
+  }, [isBuyLoading, isBuyStarted]);
 
   React.useEffect(() => {
     if (tokensSold) {
@@ -132,7 +174,7 @@ const Prophet: NextPage = () => {
 
       while (tokensLeftInVault > 0) {
         let tokensToAdd = BigInt(Math.min(maxTokensPerVault, Number(tokensLeftInVault)));
-        
+
         vaults[vaultIndex] = tokensToAdd;
         tokensLeftInVault -= tokensToAdd;
         vaultIndex++;
@@ -166,7 +208,26 @@ const Prophet: NextPage = () => {
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
       <Typography className="container" variant="h2">$PROPHET Zone</Typography>
-      <Typography className="container" sx={{ fontWeight: "bold" }}>$PROPHET in 0x{address?.slice(-4)}: {Math.floor(Number(toWei(Number(currentTokenBalanceState), "wei")) / 1000000000000000000)}</Typography>
+      <div className='container'>
+        <TableContainer>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>$PROPHET tokens owned by 0x{String(address).slice(-4)}:</TableCell>
+                <TableCell>{Math.floor(Number(toWei(Number(currentTokenBalanceState), "wei")) / 1000000000000000000)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Total $PROPHET tokens staked:</TableCell>
+                <TableCell>{Number(totalStakedTokensState)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>$PROPHET staked by 0x{String(address).slice(-4)}:</TableCell>
+                <TableCell>{Number(userStakedTokensState)}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
       <div className="container">
         <Button
           color="secondary"
@@ -194,7 +255,7 @@ const Prophet: NextPage = () => {
         />
       </div>
       <div className='container'>
-        <Typography>will result in {Number(tokensThatCanBeBoughtWithCurrentEthState)} $PROPHET tokens!</Typography>
+        <Typography>will result in approx. {Math.floor(Number(toWei(Number(tokensThatCanBeBoughtWithCurrentEthState), "wei")) / 1000000000000000000)} $PROPHET tokens!</Typography>
       </div>
       <div className='container'>
         <Button
@@ -255,7 +316,7 @@ const Prophet: NextPage = () => {
         <ProphetApproveAndStakeCard mounted={mounted} isConnected={isConnected} cardTitle='Stake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndStakeCard>
       </div>
       <div className='container'>
-      <ProphetApproveAndUnstakeCard mounted={mounted} isConnected={isConnected} cardTitle='Unstake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndUnstakeCard>
+        <ProphetApproveAndUnstakeCard mounted={mounted} isConnected={isConnected} cardTitle='Unstake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndUnstakeCard>
       </div>
       <div className="container" style={{ marginTop: "20px" }}>
         <Typography variant="h3">Stages</Typography>
