@@ -3,6 +3,9 @@ import React, { ReactNode } from 'react';
 import { AppBar, Toolbar, IconButton, Link, Drawer, List, ListItemText, ListItemButton, Grid, Button, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons';
+
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 interface NavbarProps {
@@ -22,10 +25,21 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
                             </IconButton>
                         </Grid>
                         <Grid item>
-                            <ConnectButton/>
+                            <ConnectButton />
                         </Grid>
                         <Grid item>
-                            <Button variant="contained" color="secondary">BUY</Button>
+                            <div>
+                                <a href="https://discord.gg/dRYtVaS43A" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>
+                                    <FontAwesomeIcon icon={faDiscord} size="lg" />
+                                </a>
+                            </div>
+                        </Grid>
+                        <Grid item>
+                            <div>
+                                <a href="https://twitter.com/Prophet_lady" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>
+                                    <FontAwesomeIcon icon={faTwitter} size="lg" />
+                                </a>
+                            </div>
                         </Grid>
                     </Grid>
                 </Toolbar>

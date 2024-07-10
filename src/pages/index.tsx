@@ -5,8 +5,9 @@ import type { NextPage } from 'next';
 import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box, Grid, Link, Button, List, ListItem, ListItemText, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Test from '../../components/Test';
-
+import { token_abi } from '../../abi_objects/token_abi';
+import { ido_vault_abi } from '../../abi_objects/ido_abi';
+import { toWei } from 'web3-utils';
 
 // rainbowkit+ imports
 import {
@@ -28,14 +29,86 @@ const addressesForAccordian = [
 
 const Home: NextPage = () => {
   const [mounted, setMounted] = React.useState(false);
-  const [testState, setTestState] = React.useState(0)
+  const [burnedTokenBalanceState, setBurnedTokenBalance] = React.useState(0n);
+  const [taxRewardsState, setTaxRewardsState] = React.useState(0);
+  const [tokensInCirculation, setTokensInCirculation] = React.useState(0n);
 
+  const { address } = useAccount();
+
+  const burnBalanceOfContractConfig = {
+    address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+    abi: token_abi,
+    args: ["0x0000000000000000000000000000000000000000"],
+    functionName: "balanceOf"
+  } as const;
+
+  const tokensRemainingInValtContractConfig = {
+    address: process.env.NEXT_PUBLIC_IDO_ADDRESS as '0x${string}',
+    abi: ido_vault_abi,
+    functionName: 'totalSold',
+  } as const;
+
+  const rewardsAmountContractConfig = {
+    address: process.env.NEXT_PUBLIC_IDO_ADDRESS as '0x${string}',
+    abi: ido_vault_abi,
+    functionName: 'taxFromParticipation',
+  } as const;
+
+  const { data: burnedTokenBalance } = useReadContract({
+    ...burnBalanceOfContractConfig,
+  });
+
+  const { data: vaultTokensLeft } = useReadContract({
+    ...tokensRemainingInValtContractConfig,
+  });
+
+  const { data: taxRewardsAmount } = useReadContract({
+    ...rewardsAmountContractConfig,
+  });
+
+  React.useEffect(() => {
+    if (burnedTokenBalance) {
+      setBurnedTokenBalance(BigInt(Math.floor(Number(burnedTokenBalance) / 1000000000000000000)));
+    }
+  }, [burnedTokenBalance]);
+
+  React.useEffect(() => {
+    if (taxRewardsAmount) {
+      const taxRewardsAmountInEth = toWei(taxRewardsAmount, "ether")
+      setTaxRewardsState(25 / 1000000000000000000);
+      // setTaxRewardsState(BigInt(Number(taxRewardsAmount) / 1000000000000000000));
+      // setTaxRewardsState("1000000000000000000" + taxRewardsAmount.toString());
+    }
+  }, [taxRewardsAmount]);
+
+  React.useEffect(() => {
+    if (vaultTokensLeft) {
+      let convertedVaultTokens = Number(BigInt(Math.floor(Number(vaultTokensLeft) / 1000000000000000000)))
+      
+      const startDate = new Date('2024-06-08T00:37:12Z'); // 'Z' indicates UTC
+      const currentDate = new Date();
+      const differenceInTime = currentDate.getTime() - startDate.getTime();
+      const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // Convert milliseconds to days
+      const pool_one_tokens =  differenceInDays * 15000000
+      
+      const differenceInMonths = Math.floor(differenceInTime / (1000 * 3600 * 24 * 30)); // Approximation assuming 30 days per month
+      const pool_two_tokens = Math.min(differenceInMonths, 12) * 250000000; // 250 million per month
+      const pool_three_tokens = Math.min(differenceInMonths, 24) * 833333333; // 833333333 per month
+
+      let total_tokens = convertedVaultTokens + pool_one_tokens + pool_two_tokens + pool_three_tokens; 
+      
+      // console.log("!!! ", convertedVaultTokens, pool_one_tokens, total_tokens)
+      setTokensInCirculation(BigInt(total_tokens));
+    }
+  }, [vaultTokensLeft]);
+
+  // 2297933441
+  // 2792933441
 
   React.useEffect(() => setMounted(true), []);
 
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '35px' }}>
-
       <Typography className="container" variant="h2">$PROPHET</Typography>
       <Typography className="container" variant="h4">The Prophecy: A Milady inspired NFT derivative gambling #based ecosystem</Typography>
 
@@ -103,22 +176,22 @@ const Home: NextPage = () => {
 
       <div className="container">
         <Typography variant="h6" component="div" sx={{ mb: 2 }}> {/* Customize the title here */}
-          Total Rewards Distributed:
+          $PROPHET stats:
         </Typography>
         <TableContainer>
           <Table>
             <TableBody>
               <TableRow>
                 <TableCell>Total rewards distributed:</TableCell>
-                <TableCell>X</TableCell>
+                <TableCell>{Number(taxRewardsState)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Tokens in circulation:</TableCell>
-                <TableCell>X</TableCell>
+                <TableCell>{Number(tokensInCirculation)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell># of tokens burnt:</TableCell>
-                <TableCell>X</TableCell>
+                <TableCell>{Number(burnedTokenBalanceState)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Apr</TableCell>
@@ -235,27 +308,27 @@ const Home: NextPage = () => {
             <TableBody>
               <TableRow>
                 <TableCell>20,000,000,000</TableCell>
-                <TableCell>at .0000125</TableCell>
+                <TableCell>at .000000003125 ETH</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>20,000,000,000</TableCell>
-                <TableCell>at .000025</TableCell>
+                <TableCell>at .000000006250 ETH</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>20,000,000,000</TableCell>
-                <TableCell>at .00005</TableCell>
+                <TableCell>at .000000012500 ETH</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>20,000,000,000</TableCell>
-                <TableCell>at .0001</TableCell>
+                <TableCell>at .000000025000 ETH</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>20,000,000,000</TableCell>
-                <TableCell>at .0002</TableCell>
+                <TableCell>at .000000050000 ETH</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>20,000,000,000</TableCell>
-                <TableCell>at .0004</TableCell>
+                <TableCell>at .000000100000 ETH</TableCell>
               </TableRow>
             </TableBody>
           </Table>

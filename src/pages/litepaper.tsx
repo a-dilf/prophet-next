@@ -118,7 +118,7 @@ const Litepaper: NextPage = () => {
                         <TableBody>
                             <TableRow>
                                 <TableCell>No NFT</TableCell>
-                                <TableCell>0%</TableCell>
+                                <TableCell>13%</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Tier 1</TableCell>
