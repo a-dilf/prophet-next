@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
+import ErrorAlert from '../ErrorAlert';
 
 import { Typography, Button } from '@mui/material';
 
@@ -158,10 +159,43 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
             console.log("state change here")
         }
     }, [isStakeStarted]);
-    
+
+       // error handling
+       const [errorMessage, setErrorMessage] = React.useState('');
+
+       React.useEffect(() => {
+           if (stakeError) {
+               setErrorMessage(stakeError["message"]);
+               // setOpen(true);
+           }
+       }, [stakeError]);
+   
+       React.useEffect(() => {
+           if (txError) {
+               setErrorMessage(txError["message"]);
+               // setOpen(true);
+           }
+       }, [txError]);
+   
+       React.useEffect(() => {
+           if (approveError) {
+               setErrorMessage(approveError["message"]);
+               // setOpen(true);
+           }
+       }, [approveError]);
+   
+       React.useEffect(() => {
+           if (approveTxError) {
+               setErrorMessage(approveTxError["message"]);
+               // setOpen(true);
+           }
+       }, [approveTxError]);
+   
+
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
+            <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField
@@ -173,17 +207,6 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
                     />
 
                     <Typography sx={{marginTop: "15px"}}></Typography>
-
-                    {stakeError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {stakeError.message}
-                        </p>
-                    )}
-                    {txError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {txError.message}
-                        </p>
-                    )}
 
                     {mounted && isConnected && (
                         <Button

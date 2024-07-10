@@ -4,6 +4,7 @@ import Image from 'next/legacy/image';
 
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
+import ErrorAlert from '../ErrorAlert';
 
 import { Typography, Button } from '@mui/material';
 
@@ -139,6 +140,37 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
         }
     }, [isActionLoading, isActionStarted]);
 
+        // error handling
+        const [errorMessage, setErrorMessage] = React.useState('');
+
+        React.useEffect(() => {
+            if (actionError) {
+                setErrorMessage(actionError["message"]);
+                // setOpen(true);
+            }
+        }, [actionError]);
+    
+        React.useEffect(() => {
+            if (actionTxError) {
+                setErrorMessage(actionTxError["message"]);
+                // setOpen(true);
+            }
+        }, [actionTxError]);
+    
+        React.useEffect(() => {
+            if (approveError) {
+                setErrorMessage(approveError["message"]);
+                // setOpen(true);
+            }
+        }, [approveError]);
+    
+        React.useEffect(() => {
+            if (approveTxError) {
+                setErrorMessage(approveTxError["message"]);
+                // setOpen(true);
+            }
+        }, [approveTxError]);
+
     // TODO - fix rewards amount?? look for the 1 / 1000000 statement
     /*
 onClick={() =>
@@ -149,21 +181,11 @@ onClick={() =>
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
+                 <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <Typography sx={{ marginTop: 1, fontWeight: 'bold' }} >Tokens must be approved</Typography>
                     <Typography sx={{ fontWeight: 'bold' }}>for mint and burn operations!</Typography>
-
-                    {actionError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {actionError.message}
-                        </p>
-                    )}
-                    {actionTxError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {actionTxError.message}
-                        </p>
-                    )}
 
                     {mounted && isConnected && (
                         <Button

@@ -6,6 +6,7 @@ import Image from 'next/legacy/image';
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
 
 import { Typography, Button } from '@mui/material';
+import ErrorAlert from '../ErrorAlert';
 
 // rainbowkit+ imports
 import {
@@ -230,36 +231,91 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
     // perhaps unstake is a button on the backside of the card!
     // TODO - make level up and MAX button actually do something
 
+    // error handling
+    const [errorMessage, setErrorMessage] = React.useState('');
+
+    React.useEffect(() => {
+        if (stakeError) {
+            setErrorMessage(stakeError["message"]);
+            // setOpen(true);
+        }
+    }, [stakeError]);
+
+    React.useEffect(() => {
+        if (txError) {
+            setErrorMessage(txError["message"]);
+            // setOpen(true);
+        }
+    }, [txError]);
+
+    React.useEffect(() => {
+        if (levelError) {
+            setErrorMessage(levelError["message"]);
+            // setOpen(true);
+        }
+    }, [levelError]);
+
+    React.useEffect(() => {
+        if (levelTxError) {
+            setErrorMessage(levelTxError["message"]);
+            // setOpen(true);
+        }
+    }, [levelTxError]);
+
+    React.useEffect(() => {
+        if (mintError) {
+            setErrorMessage(mintError["message"]);
+            // setOpen(true);
+        }
+    }, [mintError]);
+
+    React.useEffect(() => {
+        if (txError) {
+            setErrorMessage(txError["message"]);
+            // setOpen(true);
+        }
+    }, [txError]);
+
+    React.useEffect(() => {
+        if (maxError) {
+            setErrorMessage(maxError["message"]);
+            // setOpen(true);
+        }
+    }, [maxError]);
+
+    React.useEffect(() => {
+        if (maxTxError) {
+            setErrorMessage(maxTxError["message"]);
+            // setOpen(true);
+        }
+    }, [maxTxError]);
+
+    React.useEffect(() => {
+        if (unstakeError) {
+            setErrorMessage(unstakeError["message"]);
+            // setOpen(true);
+        }
+    }, [unstakeError]);
+
+    React.useEffect(() => {
+        if (unstakeTxError) {
+            setErrorMessage(unstakeTxError["message"]);
+            // setOpen(true);
+        }
+    }, [unstakeTxError]);
+
+    // import ErrorAlert from '../ErrorAlert';
+    // <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
 
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
+                <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">Prophet Lady: {Number(tokenId)}</Typography>
                     <Typography style={{ margin: '12px 0 24px' }}>
                         Tier: {Number(tokenTier)}
                     </Typography>
-
-                    {mintError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {mintError.message}
-                        </p>
-                    )}
-                    {levelError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {levelError.message}
-                        </p>
-                    )}
-                    {maxError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {maxError.message}
-                        </p>
-                    )}
-                    {stakeError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {stakeError.message}
-                        </p>
-                    )}
 
                     {mounted && isConnected && (
                         <Button
@@ -277,7 +333,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                             }
                         >
                             {!isLevelLoading && !isLevelStarted && 'Lvl'}
-                            {isLevelLoading && 'Executing'}
+                            {isLevelLoading && 'exe'}
                             {!isMintStarted && isLevelStarted && 'complete'}
                         </Button>
                     )}
@@ -297,11 +353,11 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                             }
                         >
                             {!isMaxLoading && !isMaxStarted && 'MAX - ' + (5 - Number(tokenTier))}
-                            {isMaxLoading && 'Executing'}
+                            {isMaxLoading && 'exe'}
                             {!isMaxStarted && isMaxStarted && 'complete'}
                         </Button>
                     )}
-                    
+
                     {mounted && isConnected && (
                         <Button
                             color="secondary"
@@ -317,7 +373,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                             }
                         >
                             {!isStakeLoading && !isStakeStarted && 'MAX - ' + (5 - Number(tokenTier))}
-                            {isStakeLoading && 'Executing'}
+                            {isStakeLoading && 'exe'}
                             {!isStakeStarted && isStakeStarted && 'complete'}
                         </Button>
                     )}

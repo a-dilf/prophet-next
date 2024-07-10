@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
+import ErrorAlert from '../ErrorAlert';
 
 import { Typography, Button } from '@mui/material';
 
@@ -203,34 +204,57 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         }
     }, [isAddStarted]);
 
-    console.log(allowanceAmount)
+        // error handling
+        const [errorMessage, setErrorMessage] = React.useState('');
+
+        React.useEffect(() => {
+            if (addError) {
+                setErrorMessage(addError["message"]);
+                // setOpen(true);
+            }
+        }, [addError]);
+    
+        React.useEffect(() => {
+            if (txError) {
+                setErrorMessage(txError["message"]);
+                // setOpen(true);
+            }
+        }, [txError]);
+    
+        React.useEffect(() => {
+            if (approveError) {
+                setErrorMessage(approveError["message"]);
+                // setOpen(true);
+            }
+        }, [approveError]);
+    
+        React.useEffect(() => {
+            if (approveTxError) {
+                setErrorMessage(approveTxError["message"]);
+                // setOpen(true);
+            }
+        }, [approveTxError]);
+    
+        // import ErrorAlert from '../ErrorAlert';
+        // <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
+    
     
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
+            <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField
-                        label="Token Amount (ETHER)"
+                        label="$PROPHET Amount (ETHER)"
                         type="number"
                         value={Number(tokenAmountToAdd)}
                         onChange={handleChange}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}> {Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET currently</Typography>
-                    <Typography> pegged with {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH </Typography>
-
-                    {addError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {addError.message}
-                        </p>
-                    )}
-                    {txError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {txError.message}
-                        </p>
-                    )}
+                    <Typography sx={{marginTop: "15px"}}> {Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET to</Typography>
+                    <Typography> {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH </Typography>
 
                     {mounted && isConnected && (
                         <Button

@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
+import ErrorAlert from '../ErrorAlert';
 
 import { Typography, Button } from '@mui/material';
 
@@ -44,8 +45,8 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
     const { address } = useAccount();
 
     const tokenBalanceOfContractConfig = {
-        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
-        abi: pair_abi,
+        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+        abi: token_abi,
         args: [address as '0x${string}'],
         functionName: "balanceOf"
     } as const;
@@ -104,10 +105,10 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
 
     React.useEffect(() => {
         if (userBalance) {
-            console.log(userBalance)
             // TODO - check if amount comes in as WEI
             // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
-            const userAmountInWei = BigInt(toWei(Number(userBalance), "wei"))
+            // const userAmountInWei = BigInt(toWei(Number(userBalance), "wei"))
+            const userAmountInWei = BigInt(Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000))
             settokenAmountToRemove(userAmountInWei);
         }
     }, [userBalance]);
@@ -181,34 +182,56 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
         }
     }, [isAddStarted]);
 
-    console.log(allowanceAmount)
+        // error handling
+        const [errorMessage, setErrorMessage] = React.useState('');
+
+        React.useEffect(() => {
+            if (addError) {
+                setErrorMessage(addError["message"]);
+                // setOpen(true);
+            }
+        }, [addError]);
+    
+        React.useEffect(() => {
+            if (txError) {
+                setErrorMessage(txError["message"]);
+                // setOpen(true);
+            }
+        }, [txError]);
+    
+        React.useEffect(() => {
+            if (approveError) {
+                setErrorMessage(approveError["message"]);
+                // setOpen(true);
+            }
+        }, [approveError]);
+    
+        React.useEffect(() => {
+            if (approveTxError) {
+                setErrorMessage(approveTxError["message"]);
+                // setOpen(true);
+            }
+        }, [approveTxError]);
+    
+        // import ErrorAlert from '../ErrorAlert';
+        // <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
+    
     
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
+                <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField
-                        label="Liquidity Amount (WEI)"
+                        label="$PROPHET Amount (ETHER)"
                         type="number"
                         value={Number(tokenAmountToRemove)}
                         onChange={handleChange}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}>Approve the LP tokens for removal from LP</Typography>
-                    <Typography>to receive ETH and $PROPHET added.</Typography>
-
-                    {addError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {addError.message}
-                        </p>
-                    )}
-                    {txError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {txError.message}
-                        </p>
-                    )}
+                    <Typography sx={{marginTop: "15px"}}>Approve $PROPHET for removal</Typography>
 
                     {mounted && isConnected && (
                         <Button

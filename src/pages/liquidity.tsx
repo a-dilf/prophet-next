@@ -60,9 +60,11 @@ const Liquidity: NextPage = () => {
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
             <Typography className="container" variant="h2">Liquidity Zone</Typography>
             <div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+                <LiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Provide Liquidity"}></LiquidityCard>
             </div>
-            <LiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Provide Liquidity"}></LiquidityCard>
-            <RemoveLiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Remove Liquidity"}></RemoveLiquidityCard>
+            <div className='container'>
+                <RemoveLiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Remove Liquidity"}></RemoveLiquidityCard>
+            </div>
             <div className="container" style={{ marginTop: "20px" }}>
                 <Typography variant="h3">Staking</Typography>
             </div>
@@ -72,7 +74,6 @@ const Liquidity: NextPage = () => {
             <div className='container'>
                 <LiquidityApproveAndUnstakeCard mounted={mounted} isConnected={isConnected} cardTitle={"Unstake Liquidity"}></LiquidityApproveAndUnstakeCard>
             </div>
-
         </div>
     );
 };

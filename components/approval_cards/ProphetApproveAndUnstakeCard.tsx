@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
+import ErrorAlert from '../ErrorAlert';
 
 import { Typography, Button } from '@mui/material';
 
@@ -129,9 +130,27 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
         }
     }, [isStakeStarted]);
 
+    // error handling
+    const [errorMessage, setErrorMessage] = React.useState('');
+
+    React.useEffect(() => {
+        if (stakeError) {
+            setErrorMessage(stakeError["message"]);
+            // setOpen(true);
+        }
+    }, [stakeError]);
+
+    React.useEffect(() => {
+        if (txError) {
+            setErrorMessage(txError["message"]);
+            // setOpen(true);
+        }
+    }, [txError]);
+
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
+                <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField
@@ -141,18 +160,6 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
                         onChange={handleChange}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
-
-                    {stakeError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {stakeError.message}
-                        </p>
-                    )}
-
-                    {txError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {txError.message}
-                        </p>
-                    )}
 
                 </div>
             </div>

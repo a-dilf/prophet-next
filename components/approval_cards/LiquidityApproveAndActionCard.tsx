@@ -4,6 +4,7 @@ import Image from 'next/legacy/image';
 
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
+import ErrorAlert from '../ErrorAlert';
 
 import { Typography, Button } from '@mui/material';
 
@@ -30,13 +31,14 @@ interface LiquidityApproveAndActionCardProps {
     mintCount: number;
 }
 
+
 const LiquidityApproveAndActionCard: React.FC<LiquidityApproveAndActionCardProps> = ({ mounted, isConnected, cardTitle, amountToApprove, allowanceAmount, mintCount }) => {
     const [amountMintable, setAmountMintable] = React.useState(0);
 
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [ process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(amountToApprove)]
+        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(amountToApprove)]
     } as const;
 
     const nftMintConfig = {
@@ -98,9 +100,29 @@ const LiquidityApproveAndActionCard: React.FC<LiquidityApproveAndActionCardProps
 
     // TODO - fix rewards amount?? look for the 1 / 1000000 statement
 
+    // error handling
+    const [errorMessage, setErrorMessage] = React.useState('');
+
+    React.useEffect(() => {
+        if (approveError) {
+            setErrorMessage(approveError["message"]);
+            // setOpen(true);
+        }
+    }, [approveError]);
+
+    React.useEffect(() => {
+        if (actionError) {
+            setErrorMessage(actionError["message"]);
+            // setOpen(true);
+        }
+    }, [actionError]);
+
+    // <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
+
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
+                <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
 
