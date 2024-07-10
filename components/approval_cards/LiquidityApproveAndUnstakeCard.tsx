@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
 
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Alert, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 // rainbowkit+ imports
 import {
@@ -94,11 +94,38 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
         const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
         settokenAmountToRemove(BigInt(newValue));
     };
-    
+
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const [open, setOpen] = React.useState(false);
+
+    // Function to handle closing the dialog
+    const handleCloseDialog = () => {
+        setOpen(false);
+        // handleClose(); // Call the passed handleClose prop to notify the parent component
+    };
+
+    React.useEffect(() => {
+        if (stakeError) {
+            setErrorMessage(stakeError["message"]);
+            setOpen(true);
+        }
+    }, [stakeError]);
+
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
                 <div style={{ padding: '24px 24px 24px 0' }}>
+
+                    <Dialog open={open} onClose={handleCloseDialog}>
+                        <DialogTitle>Error</DialogTitle>
+                        <DialogContent>
+                            <Alert severity="error">{errorMessage}</Alert>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCloseDialog}>Close</Button>
+                        </DialogActions>
+                    </Dialog>
+
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField
                         label="Liquidity Amount (WEI)"
@@ -108,7 +135,7 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}></Typography>
+                    <Typography sx={{ marginTop: "15px" }}></Typography>
 
                     {stakeError && (
                         <p style={{ marginTop: 24, color: '#FF6257' }}>
@@ -150,7 +177,7 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
                                 priority
                             />
                             <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Staked LP Detected!</Typography>
-                            <Typography style={{ marginBottom: 4}}>
+                            <Typography style={{ marginBottom: 4 }}>
                                 Unstake here.
                             </Typography>
                             <Button

@@ -7,14 +7,17 @@ import {
   walletConnectWallet,
   braveWallet, // Ensure all necessary imports are here
   metaMaskWallet,
+  coinbaseWallet,
   rabbyWallet,
+  okxWallet,
+  bitgetWallet
 } from '@rainbow-me/rainbowkit/wallets';
 
 const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [metaMaskWallet, rabbyWallet, braveWallet, walletConnectWallet],
+      wallets: [metaMaskWallet, rabbyWallet, coinbaseWallet, braveWallet, walletConnectWallet, okxWallet, bitgetWallet],
     },
   ],
   { appName: 'RainbowKit App', projectId: 'YOUR_PROJECT_ID' },
