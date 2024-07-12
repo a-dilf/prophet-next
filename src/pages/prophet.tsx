@@ -2,7 +2,7 @@
 import React, { ChangeEvent } from 'react';
 import type { NextPage } from 'next';
 
-import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Button } from '@mui/material';
+import { TableHead, CircularProgress, Table, TableBody, TableCell, TableContainer, TableRow, Typography, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
 import { token_abi } from '../../abi_objects/token_abi';
@@ -20,7 +20,6 @@ import {
   useBalance
 } from 'wagmi';
 
-import TokenCountCard from '../../components/cards/TokenCountCard';
 import ProphetApproveAndStakeCard from '../../components/approval_cards/ProphetApproveAndStake';
 import ProphetApproveAndUnstakeCard from '../../components/approval_cards/ProphetApproveAndUnstakeCard';
 
@@ -160,7 +159,7 @@ const Prophet: NextPage = () => {
   React.useEffect(() => {
     if (!isBuyLoading && isBuyStarted) {
       setCurrentTokenBalanceState(prevBalance => prevBalance + tokensThatCanBeBoughtWithCurrentEthState);
-    
+
     }
   }, [isBuyLoading, isBuyStarted]);
 
@@ -313,31 +312,93 @@ const Prophet: NextPage = () => {
       </div>
       <div className="container" style={{ marginTop: "20px" }}>
         <Typography variant="h3">Staking</Typography>
-        <ProphetApproveAndStakeCard mounted={mounted} isConnected={isConnected} cardTitle='Stake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndStakeCard>
       </div>
-      <div className='container'>
+      <div>
+        <ProphetApproveAndStakeCard mounted={mounted} isConnected={isConnected} cardTitle='Stake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndStakeCard>
         <ProphetApproveAndUnstakeCard mounted={mounted} isConnected={isConnected} cardTitle='Unstake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndUnstakeCard>
       </div>
       <div className="container" style={{ marginTop: "20px" }}>
         <Typography variant="h3">Stages</Typography>
       </div>
       <div className="container">
-        <TokenCountCard cardTitle='Stage 1' tokensLeft={String(tokensRemaining[5])} ethPerTokenRate='.000000003125' stageNumber='1'></TokenCountCard>
-      </div>
-      <div className="container">
-        <TokenCountCard cardTitle='Stage 2' tokensLeft={String(tokensRemaining[4])} ethPerTokenRate='.000000006250' stageNumber='1'></TokenCountCard>
-      </div>
-      <div className="container">
-        <TokenCountCard cardTitle='Stage 3' tokensLeft={String(tokensRemaining[3])} ethPerTokenRate='.000000012500' stageNumber='1'></TokenCountCard>
-      </div>
-      <div className="container">
-        <TokenCountCard cardTitle='Stage 4' tokensLeft={String(tokensRemaining[2])} ethPerTokenRate='.000000025000' stageNumber='1'></TokenCountCard>
-      </div>
-      <div className="container">
-        <TokenCountCard cardTitle='Stage 5' tokensLeft={String(tokensRemaining[1])} ethPerTokenRate='.000000050000' stageNumber='1'></TokenCountCard>
-      </div>
-      <div className="container">
-        <TokenCountCard cardTitle='Stage 6' tokensLeft={String(tokensRemaining[0])} ethPerTokenRate='.000000100000' stageNumber='1'></TokenCountCard>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ETH per token</TableCell>
+                <TableCell>Tokens left</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>.000000003125</TableCell>
+                <TableCell>{String(tokensRemaining[5])}</TableCell>
+                <TableCell>
+                  <CircularProgress color="secondary"
+                    sx={{
+                      height: 25, // Adjust the height as needed
+                      width: '100%', // Make the bar wider
+                    }} variant="determinate" value={(Number(tokensRemaining[5]) / 20000000000) * 100} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>.000000006250</TableCell>
+                <TableCell>{String(tokensRemaining[4])}</TableCell>
+                <TableCell>
+                  <CircularProgress color="secondary"
+                    sx={{
+                      height: 25, // Adjust the height as needed
+                      width: '100%', // Make the bar wider
+                    }} variant="determinate" value={(Number(tokensRemaining[4]) / 20000000000) * 100} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>.000000012500</TableCell>
+                <TableCell>{String(tokensRemaining[3])}</TableCell>
+                <TableCell>
+                  <CircularProgress color="secondary"
+                    sx={{
+                      height: 25, // Adjust the height as needed
+                      width: '100%', // Make the bar wider
+                    }} variant="determinate" value={(Number(tokensRemaining[3]) / 20000000000) * 100} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>.000000025000</TableCell>
+                <TableCell>{String(tokensRemaining[2])}</TableCell>
+                <TableCell>
+                  <CircularProgress color="secondary"
+                    sx={{
+                      height: 25, // Adjust the height as needed
+                      width: '100%', // Make the bar wider
+                    }} variant="determinate" value={(Number(tokensRemaining[2]) / 20000000000) * 100} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>.000000050000</TableCell>
+                <TableCell>{String(tokensRemaining[1])}</TableCell>
+                <TableCell>
+                  <CircularProgress color="secondary"
+                    sx={{
+                      height: 25, // Adjust the height as needed
+                      width: '100%', // Make the bar wider
+                    }} variant="determinate" value={(Number(tokensRemaining[1]) / 20000000000) * 100} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>.000000100000</TableCell>
+                <TableCell>{String(tokensRemaining[0])}</TableCell>
+                <TableCell>
+                  <CircularProgress color="secondary"
+                    sx={{
+                      height: 25, // Adjust the height as needed
+                      width: '100%', // Make the bar wider
+                    }} variant="determinate" value={(Number(tokensRemaining[0]) / 20000000000) * 100} />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     </div>
   );

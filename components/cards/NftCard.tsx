@@ -5,11 +5,12 @@ import Image from 'next/legacy/image';
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
 
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Box } from '@mui/material';
 import ErrorAlert from '../ErrorAlert';
 
 // rainbowkit+ imports
 import {
+    useAccount,
     useReadContract,
     useWaitForTransactionReceipt,
     useWriteContract,
@@ -27,12 +28,16 @@ interface NftCardProps {
 
 import { nft_abi } from '../../abi_objects/nft_abi';
 import { staking_nft_abi } from '../../abi_objects/staking_nft_abi';
+import { token_abi } from '../../abi_objects/token_abi';
 
 const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, currentAllowanceState, setStateAllowanceAmount }) => {
     // state values
     const [tokenTier, setTokenTier] = React.useState(BigInt(0));
     const [tokenImageUrl, setTokenImageUrl] = React.useState("");
     const [tokenStakeStatusForButton, setTokenStakeStatusForButton] = React.useState(false);
+    const [currentTokenBalanceState, setCurrentTokenBalanceState] = React.useState(0n);
+
+    const { address } = useAccount();
 
     console.log("asdf: ", currentAllowanceState)
     console.log("qwert: ", (5 - Number(tokenTier)), Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000), (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000)
@@ -75,6 +80,13 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
         args: [BigInt(tokenId)]
     } as const;
 
+    const balanceOfContractConfig = {
+        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+        abi: token_abi,
+        args: [address as '0x${string}'],
+        functionName: 'balanceOf',
+    } as const;
+
     // read operations
     const { data: tokenTierLevel } = useReadContract({
         ...nftContractConfig2,
@@ -84,6 +96,10 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
     const { data: tokenStakeStatus } = useReadContract({
         ...nftContractConfig2,
         functionName: 'stakedTokens'
+    });
+
+    const { data: currentBalance } = useReadContract({
+        ...balanceOfContractConfig,
     });
 
     //// WRITE
@@ -222,8 +238,15 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
         if (!isMaxLoading && isMaxStarted) {
             console.log("executed")
             setStateAllowanceAmount(prevAllowanceAmount => prevAllowanceAmount - (BigInt(Number(toWei(400000 * (5 - Number(tokenTier)), "ether")))));
+            setTokenTier(BigInt(5))
         }
     }, [isMaxLoading, isMaxStarted]);
+
+    React.useEffect(() => {
+        if (currentBalance) {
+            setCurrentTokenBalanceState(currentBalance);
+        }
+    }, [currentBalance]);
 
     // TODO - update and test the NFT functions!
     // TODO - make the card flip based on stake status
@@ -317,65 +340,139 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                         Tier: {Number(tokenTier)}
                     </Typography>
 
-                    {mounted && isConnected && (
-                        <Button
-                            color="secondary"
-                            variant="contained"
-                            style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!level || isLevelLoading || isLevelStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < 1}
-                            data-mint-started={isLevelLoading && !isLevelStarted}
-                            data-mint-complete={!isLevelLoading && isLevelStarted}
-                            onClick={() =>
-                                level?.({
-                                    ...nftContractConfig2,
-                                    functionName: 'upgradeTier',
-                                })
-                            }
-                        >
-                            {!isLevelLoading && !isLevelStarted && 'Lvl'}
-                            {isLevelLoading && 'exe'}
-                            {!isMintStarted && isLevelStarted && 'complete'}
-                        </Button>
+                    {mounted && isConnected && (currentTokenBalanceState >= 400000 && Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000) >= 400000) && (
+                        <>
+                            {mounted && isConnected && (
+                                <Button
+                                    color="secondary"
+                                    variant="contained"
+                                    style={{ marginTop: 24, marginLeft: 15 }}
+                                    disabled={!level || isLevelLoading || isLevelStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < 1}
+                                    data-mint-started={isLevelLoading && !isLevelStarted}
+                                    data-mint-complete={!isLevelLoading && isLevelStarted}
+                                    onClick={() =>
+                                        level?.({
+                                            ...nftContractConfig2,
+                                            functionName: 'upgradeTier',
+                                        })
+                                    }
+                                >
+                                    {!isLevelLoading && !isLevelStarted && 'Lvl'}
+                                    {isLevelLoading && 'exe'}
+                                    {!isMintStarted && isLevelStarted && 'complete'}
+                                </Button>
+                            )}
+
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                style={{ marginTop: 24, marginLeft: 15 }}
+                                disabled={!maxLevel || isMaxLoading || isMaxStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < (5 - Number(tokenTier))}
+                                data-mint-started={isMaxLoading && !isMaxStarted}
+                                data-mint-complete={!isMaxLoading && isMaxStarted}
+                                onClick={() =>
+                                    maxLevel?.({
+                                        ...nftLevelMaxContractConfig
+                                    })
+                                }
+                            >
+                                {!isMaxLoading && !isMaxStarted && 'MAX - ' + (5 - Number(tokenTier))}
+                                {isMaxLoading && 'exe'}
+                                {!isMaxStarted && isMaxStarted && 'complete'}
+                            </Button>
+
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                style={{ marginTop: 24, marginLeft: 15 }}
+                                disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
+                                data-mint-started={isStakeStarted && !isStakeLoading}
+                                data-mint-complete={!isStakeLoading && isStakeStarted}
+                                onClick={() =>
+                                    stake?.({
+                                        ...stakeNftContractConfig,
+                                    })
+                                }
+                            >
+                                {!isStakeLoading && !isStakeStarted && "stake"}
+                                {isStakeLoading && 'exe'}
+                                {!isStakeStarted && isStakeStarted && 'complete'}
+                            </Button>
+                        </>
                     )}
 
-                    {mounted && isConnected && (
-                        <Button
-                            color="secondary"
-                            variant="contained"
-                            style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!maxLevel || isMaxLoading || isMaxStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < (5 - Number(tokenTier))}
-                            data-mint-started={isMaxLoading && !isMaxStarted}
-                            data-mint-complete={!isMaxLoading && isMaxStarted}
-                            onClick={() =>
-                                maxLevel?.({
-                                    ...nftLevelMaxContractConfig
-                                })
-                            }
-                        >
-                            {!isMaxLoading && !isMaxStarted && 'MAX - ' + (5 - Number(tokenTier))}
-                            {isMaxLoading && 'exe'}
-                            {!isMaxStarted && isMaxStarted && 'complete'}
-                        </Button>
+                    {mounted && isConnected && currentTokenBalanceState > 400000 && Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000) < 400000 && (
+                        <Box display="flex" alignItems="center">
+                            <div style={{ paddingRight: "10px" }}>
+                                <Typography ml={1}>Approve</Typography>
+                                <Typography ml={1}>1+ NFT</Typography>
+                                <Typography ml={1}>level up</Typography>
+                            </div>
+                            <Image
+                                layout="fixed"
+                                src="/gigachad_emoji.png"
+                                width="50"
+                                height="50"
+                                alt="NFT Image"
+                                priority
+                                objectFit="cover" // or 'contain' depending on your preference
+                                quality={100}
+                            />
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                style={{ marginTop: 24, marginLeft: 15 }}
+                                disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
+                                data-mint-started={isStakeStarted && !isStakeLoading}
+                                data-mint-complete={!isStakeLoading && isStakeStarted}
+                                onClick={() =>
+                                    stake?.({
+                                        ...stakeNftContractConfig,
+                                    })
+                                }
+                            >
+                                {!isStakeLoading && !isStakeStarted && "stake"}
+                                {isStakeLoading && 'exe'}
+                                {!isStakeStarted && isStakeStarted && 'complete'}
+                            </Button>
+                        </Box>
                     )}
 
-                    {mounted && isConnected && (
-                        <Button
-                            color="secondary"
-                            variant="contained"
-                            style={{ marginTop: 24, marginLeft: 15 }}
-                            disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
-                            data-mint-loading={isStakeLoading}
-                            data-mint-started={isStakeStarted}
-                            onClick={() =>
-                                stake?.({
-                                    ...stakeNftContractConfig,
-                                })
-                            }
-                        >
-                            {!isStakeLoading && !isStakeStarted && 'MAX - ' + (5 - Number(tokenTier))}
-                            {isStakeLoading && 'exe'}
-                            {!isStakeStarted && isStakeStarted && 'complete'}
-                        </Button>
+                    {mounted && isConnected && currentTokenBalanceState < 400000 && (
+                        <Box display="flex" alignItems="center">
+                            <div style={{ paddingRight: "10px" }}>
+                                <Typography ml={1}>Buy</Typography>
+                                <Typography ml={1}>400,000+</Typography>
+                                <Typography ml={1}>$PROPHET</Typography>
+                            </div>
+                            <Image
+                                layout="fixed"
+                                src="/gigachad_emoji.png"
+                                width="50"
+                                height="50"
+                                alt="NFT Image"
+                                priority
+                                objectFit="cover" // or 'contain' depending on your preference
+                                quality={100}
+                            />
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                style={{ marginTop: 24, marginLeft: 15 }}
+                                disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
+                                data-mint-started={isStakeStarted && !isStakeLoading}
+                                data-mint-complete={!isStakeLoading && isStakeStarted}
+                                onClick={() =>
+                                    stake?.({
+                                        ...stakeNftContractConfig,
+                                    })
+                                }
+                            >
+                                {!isStakeLoading && !isStakeStarted && "stake"}
+                                {isStakeLoading && 'exe'}
+                                {!isStakeStarted && isStakeStarted && 'complete'}
+                            </Button>
+                        </Box>
                     )}
 
                 </div>
@@ -418,8 +515,8 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                                 color="primary"
                                 variant="contained"
                                 style={{ marginBottom: 5, marginLeft: 15 }}
-                                data-mint-loading={isUnstakeLoading}
-                                data-mint-started={isUnstakeStarted}
+                                data-mint-started={isUnstakeStarted && !isUnstakeLoading}
+                                data-mint-complete={!isUnstakeLoading && isUnstakeStarted}
                                 onClick={() =>
                                     unstake?.({
                                         ...unstakeNftContractConfig,

@@ -253,8 +253,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}> {Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET to</Typography>
-                    <Typography> {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH </Typography>
+                    <Typography sx={{marginTop: "15px"}}>Approve $PROPHET for addition</Typography>
 
                     {mounted && isConnected && (
                         <Button

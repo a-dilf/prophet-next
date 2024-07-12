@@ -193,7 +193,7 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
    
 
     return (
-        <div className="container">
+        <div className="container" style={{ marginTop: "20px" }}>
             <div style={{ flex: '1 1 auto' }}>
             <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>

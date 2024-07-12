@@ -34,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
                                 </a>
                             </div>
                         </Grid>
-                        <Grid item>
+                        <Grid item sx={{ paddingRight: '15px' }}>
                             <div>
                                 <a href="https://twitter.com/Prophet_lady" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>
                                     <FontAwesomeIcon icon={faTwitter} size="lg" />
