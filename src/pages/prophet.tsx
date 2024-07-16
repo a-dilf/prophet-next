@@ -1,6 +1,7 @@
 // next and react imports
 import React, { ChangeEvent } from 'react';
 import type { NextPage } from 'next';
+import styles from '../styles/Prophet.module.css';
 
 import { TableHead, CircularProgress, Table, TableBody, TableCell, TableContainer, TableRow, Typography, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';

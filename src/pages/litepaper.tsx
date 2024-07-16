@@ -1,6 +1,8 @@
 // next and react imports
 import React from 'react';
 import type { NextPage } from 'next';
+import styles from '../styles/Litepaper.module.css';
+
 
 import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box, Grid, Link, Button, List, ListItem, ListItemText, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 

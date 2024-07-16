@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-align: center;
 }
 
 body {
@@ -9,6 +10,9 @@ body {
   font-family: SFRounded, ui-rounded, "SF Pro Rounded", -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: violet;
+  background-color: rgb(7, 0, 4);
+
 }
 
 .page {
@@ -18,6 +22,7 @@ body {
   min-height: 100vh;
   max-width: 700px;
   margin: 0 auto;
+
 }
 
 .container {
@@ -25,6 +30,8 @@ body {
   flex-wrap: wrap;
   width: 100%;
   padding: 0 30px;
+  justify-content: center;
+  text-shadow: 2px 2px 4px rgb(225, 123, 225);
 }
 
 .button {
@@ -62,32 +69,47 @@ button[data-mint-started="true"] {
   position: relative;
 }
 
-  button[data-mint-started="true"]::after {
-    animation-name: pulse;
-    animation-duration: 500ms;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    background-color: #ee82ee;
-    border-radius: inherit;
-    bottom: 0;
-    content: ' ';
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-button[data-mint-done="true"] {
-   opacity: 0;
-   transform: scale(0.85);
+button[data-mint-started="true"]::after {
+  animation-name: pulse;
+  animation-duration: 500ms;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  background-color: #ee82ee;
+  border-radius: inherit;
+  bottom: 0;
+  content: ' ';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
-h1 { font-size: 24px; }
-h2 { font-size: 18px; }
-a { color: inherit }
+button[data-mint-done="true"] {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+h1 {
+  font-size: 24px;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 50px;
+  justify-content: center;
+}
+
+a {
+  color: inherit
+}
 
 @keyframes pulse {
-  0% { opacity: 0 }
-  100% { opacity: '100%' }
+  0% {
+    opacity: 0
+  }
+
+  100% {
+    opacity: '100%'
+  }
 }
