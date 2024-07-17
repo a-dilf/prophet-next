@@ -1,7 +1,6 @@
 // next and react imports
 import React from 'react';
 import type { NextPage } from 'next';
-import styles from '../styles/Rewards.module.css';
 
 // rainbowkit+ imports
 import {

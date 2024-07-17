@@ -1,8 +1,6 @@
 // next and react imports
 import React from 'react';
 import type { NextPage } from 'next';
-import styles from '../styles/Litepaper.module.css';
-
 
 import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box, Grid, Link, Button, List, ListItem, ListItemText, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 
@@ -119,28 +117,28 @@ const Litepaper: NextPage = () => {
                     <Table>
                         <TableBody>
                             <TableRow>
-                                <TableCell>No NFT</TableCell>
-                                <TableCell>13%</TableCell>
+                                <TableCell className={styles.table}>No NFT</TableCell>
+                                <TableCell className={styles.table}>13%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Tier 1</TableCell>
-                                <TableCell>11%</TableCell>
+                                <TableCell className={styles.table}>Tier 1</TableCell>
+                                <TableCell className={styles.table}>11%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Tier 2</TableCell>
-                                <TableCell>9%</TableCell>
+                                <TableCell className={styles.table}>Tier 2</TableCell>
+                                <TableCell className={styles.table}>9%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Tier 3</TableCell>
-                                <TableCell>7%</TableCell>
+                                <TableCell className={styles.table}>Tier 3</TableCell>
+                                <TableCell className={styles.table}>7%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Tier 4</TableCell>
-                                <TableCell>5%</TableCell>
+                                <TableCell className={styles.table}>Tier 4</TableCell>
+                                <TableCell className={styles.table}>5%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Tier 5</TableCell>
-                                <TableCell>3%</TableCell>
+                                <TableCell className={styles.table}>Tier 5</TableCell>
+                                <TableCell className={styles.table}>3%</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

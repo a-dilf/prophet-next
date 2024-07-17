@@ -13,12 +13,12 @@ const theme = createTheme({
       default: '#ffffff', // White background
     },
     text: {
-      primary: '#7F00FF', // Black text
-      secondary: '#7F00FF', // Grey text
+      primary: '#000000', // Black text
+      secondary: '#757575', // Grey text
     },
   },
   typography: {
-    fontFamily: 'helvetica, sans-serif', // Use Roboto font
+    fontFamily: '"Roboto", sans-serif', // Use Roboto font
   },
 });
 
