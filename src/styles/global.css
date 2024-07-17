@@ -34,6 +34,45 @@ body {
   text-shadow: 2px 2px 4px rgb(225, 123, 225);
 }
 
+.homepagetop {
+  background: radial-gradient(circle, black, rgb(31, 3, 31));
+  margin: 2%;
+  padding: 5%;
+  border: 4px;
+  border-style: double;
+  border-color: violet;
+  width: 99%;
+}
+
+.prophettop {
+  background: radial-gradient(circle, black 25%, rgb(42, 1, 42));
+  margin: 2%;
+  padding: 5%;
+  border: 4px;
+  border-style: double;
+  border-color: violet;
+  width: 99%;
+}
+
+.nfttop {
+  background: radial-gradient(circle, black, rgb(31, 3, 31));
+  margin: 2%;
+  padding: 5%;
+  border: 4px;
+  border-style: double;
+  border-color: violet;
+}
+
+.liquiditytop {
+  background: radial-gradient(circle, black, rgb(31, 3, 31));
+  margin: 2%;
+  padding: 5%;
+  border: 4px;
+  border-style: double;
+  border-color: violet;
+  width: 99%;
+}
+
 .button {
   appearance: none;
   border: none;

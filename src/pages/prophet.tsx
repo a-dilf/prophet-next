@@ -207,22 +207,23 @@ const Prophet: NextPage = () => {
 
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
+      <div className="prophettop">
       <Typography className="container" variant="h2">$PROPHET Zone</Typography>
       <div className='container'>
         <TableContainer>
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell>$PROPHET tokens owned by 0x{String(address).slice(-4)}:</TableCell>
-                <TableCell>{Math.floor(Number(toWei(Number(currentTokenBalanceState), "wei")) / 1000000000000000000)}</TableCell>
+                <TableCell className={styles.table}>$PROPHET tokens owned by 0x{String(address).slice(-4)}:</TableCell>
+                <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(currentTokenBalanceState), "wei")) / 1000000000000000000)}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Total $PROPHET tokens staked:</TableCell>
-                <TableCell>{Number(totalStakedTokensState)}</TableCell>
+                <TableCell className={styles.table}>Total $PROPHET tokens staked:</TableCell>
+                <TableCell className={styles.table}>{Number(totalStakedTokensState)}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>$PROPHET staked by 0x{String(address).slice(-4)}:</TableCell>
-                <TableCell>{Number(userStakedTokensState)}</TableCell>
+                <TableCell className={styles.table}>$PROPHET staked by 0x{String(address).slice(-4)}:</TableCell>
+                <TableCell className={styles.table}>{Number(userStakedTokensState)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -246,12 +247,18 @@ const Prophet: NextPage = () => {
           {isBuyLoading && 'Executing...'}
           {!isBuyLoading && isBuyStarted && "complete"}
         </Button>
-        <TextField
+        <TextField className={styles.textbox}
           label="ETH Provided"
           type="number"
           value={ethToUseInBuyFloat}
           onChange={handleChange}
-          style={{ marginTop: 15, marginLeft: 15 }}
+          InputLabelProps={{
+            style: {color: 'violet', transform: 'translateY(-20px'}
+          }}
+          InputProps={{
+            style: {color : 'black'}
+          }}
+          style={{ marginTop: 20, marginLeft: 15 }}
         />
       </div>
       <div className='container'>
@@ -311,6 +318,7 @@ const Prophet: NextPage = () => {
           MAX
         </Button>
       </div>
+      </div>
       <div className="container" style={{ marginTop: "20px" }}>
         <Typography variant="h3">Staking</Typography>
       </div>
@@ -326,14 +334,14 @@ const Prophet: NextPage = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ETH per token</TableCell>
-                <TableCell>Tokens left</TableCell>
+                <TableCell className={styles.table}>ETH per token</TableCell>
+                <TableCell className={styles.table}>Tokens left</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>.000000003125</TableCell>
-                <TableCell>{String(tokensRemaining[5])}</TableCell>
+                <TableCell className={styles.table}>.000000003125</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[5])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -343,8 +351,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000006250</TableCell>
-                <TableCell>{String(tokensRemaining[4])}</TableCell>
+                <TableCell className={styles.table}>.000000006250</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[4])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -354,8 +362,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000012500</TableCell>
-                <TableCell>{String(tokensRemaining[3])}</TableCell>
+                <TableCell className={styles.table}>.000000012500</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[3])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -365,8 +373,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000025000</TableCell>
-                <TableCell>{String(tokensRemaining[2])}</TableCell>
+                <TableCell className={styles.table}>.000000025000</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[2])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -376,8 +384,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000050000</TableCell>
-                <TableCell>{String(tokensRemaining[1])}</TableCell>
+                <TableCell className={styles.table}>.000000050000</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[1])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -387,8 +395,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000100000</TableCell>
-                <TableCell>{String(tokensRemaining[0])}</TableCell>
+                <TableCell className={styles.table}>.000000100000</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[0])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
