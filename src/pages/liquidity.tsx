@@ -2,6 +2,8 @@
 import React from 'react';
 import type { NextPage } from 'next';
 
+import styles from '../styles/Liquidity.module.css';
+
 import { Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 
 // rainbowkit+ imports

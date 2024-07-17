@@ -1,6 +1,7 @@
 // next and react imports
 import React from 'react';
 import type { NextPage } from 'next';
+import styles from '../styles/HomePage.module.css';
 
 import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box, Grid, Link, Button, List, ListItem, ListItemText, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 
@@ -13,8 +14,6 @@ import { toWei } from 'web3-utils';
 import {
   useAccount,
   useReadContract,
-  useWaitForTransactionReceipt,
-  useWriteContract,
 } from 'wagmi';
 
 const addressesForAccordian = [
@@ -109,7 +108,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '35px' }}>
-      <Typography className="container" variant="h2">$PROPHET</Typography>
+      <Typography className={styles.container} variant="h2">$PROPHET</Typography>
       <Typography className="container" variant="h4">The Prophecy: A Milady inspired NFT derivative gambling #based ecosystem</Typography>
 
       <div className="container">

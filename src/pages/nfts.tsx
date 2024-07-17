@@ -2,6 +2,8 @@
 import React, { useCallback, useState } from 'react';
 import type { NextPage } from 'next';
 
+import styles from '../styles/Nfts.module.css';
+
 import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box } from '@mui/material';
 
 import IconButton from '@mui/material/IconButton';
