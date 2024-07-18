@@ -2,6 +2,8 @@
 import React, { ChangeEvent } from 'react';
 import Image from 'next/legacy/image';
 
+import styles from '/src/styles/Prophet.module.css';
+
 import { toWei } from 'web3-utils';
 import TextField from '@mui/material/TextField';
 
@@ -153,11 +155,17 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
                 <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
-                    <TextField
+                    <TextField className={styles.textbox}
                         label="$PROPHET Amount (ETHER)"
                         type="number"
                         value={Number(tokenAmountToRemove)}
                         onChange={handleChange}
+                        InputLabelProps={{
+                            style: {color: 'violet', transform: 'translateY(-20px'}
+                          }}
+                          InputProps={{
+                            style: {color : 'black'}
+                          }}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
