@@ -108,7 +108,6 @@ const Home: NextPage = () => {
 
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '35px' }}>
-      <div className="homepagetop">
       <Typography className={styles.container} variant="h2">$PROPHET</Typography>
       <Typography className="container" variant="h4">The Prophecy: A Milady inspired NFT derivative gambling #based ecosystem</Typography>
 
@@ -137,7 +136,6 @@ const Home: NextPage = () => {
             </Box>
           </Grid>
         </Grid>
-      </div>
       </div>
 
       <div className="container">
@@ -183,20 +181,20 @@ const Home: NextPage = () => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className={styles.table}>Total rewards distributed:</TableCell>
-                <TableCell className={styles.table}>{Number(taxRewardsState)}</TableCell>
+                <TableCell>Total rewards distributed:</TableCell>
+                <TableCell>{Number(taxRewardsState)}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Tokens in circulation:</TableCell>
-                <TableCell className={styles.table}>{Number(tokensInCirculation)}</TableCell>
+                <TableCell>Tokens in circulation:</TableCell>
+                <TableCell>{Number(tokensInCirculation)}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}># of tokens burnt:</TableCell>
-                <TableCell className={styles.table}>{Number(burnedTokenBalanceState)}</TableCell>
+                <TableCell># of tokens burnt:</TableCell>
+                <TableCell>{Number(burnedTokenBalanceState)}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Apr</TableCell>
-                <TableCell className={styles.table}>X</TableCell>
+                <TableCell>Apr</TableCell>
+                <TableCell>X</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -236,28 +234,28 @@ const Home: NextPage = () => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className={styles.table}>No NFT</TableCell>
-                <TableCell className={styles.table}>13%</TableCell>
+                <TableCell>No NFT</TableCell>
+                <TableCell>13%</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Tier 1</TableCell>
-                <TableCell className={styles.table}>11%</TableCell>
+                <TableCell>Tier 1</TableCell>
+                <TableCell>11%</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Tier 2</TableCell>
-                <TableCell className={styles.table}>9%</TableCell>
+                <TableCell>Tier 2</TableCell>
+                <TableCell>9%</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Tier 3</TableCell>
-                <TableCell className={styles.table}>7%</TableCell>
+                <TableCell>Tier 3</TableCell>
+                <TableCell>7%</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Tier 4</TableCell>
-                <TableCell className={styles.table}>5%</TableCell>
+                <TableCell>Tier 4</TableCell>
+                <TableCell>5%</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Tier 5</TableCell>
-                <TableCell className={styles.table}>3%</TableCell>
+                <TableCell>Tier 5</TableCell>
+                <TableCell>3%</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -271,24 +269,24 @@ const Home: NextPage = () => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className={styles.table}>Level 1</TableCell>
-                <TableCell className={styles.table}>400,000</TableCell>
+                <TableCell>Level 1</TableCell>
+                <TableCell>400,000</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Level 2</TableCell>
-                <TableCell className={styles.table}>800,000</TableCell>
+                <TableCell>Level 2</TableCell>
+                <TableCell>800,000</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Level 3</TableCell>
-                <TableCell className={styles.table}>1,200,000</TableCell>
+                <TableCell>Level 3</TableCell>
+                <TableCell>1,200,000</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Level 4</TableCell>
-                <TableCell className={styles.table}>1,600,000</TableCell>
+                <TableCell>Level 4</TableCell>
+                <TableCell>1,600,000</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Level 5</TableCell>
-                <TableCell className={styles.table}>2,000,000</TableCell>
+                <TableCell>Level 5</TableCell>
+                <TableCell>2,000,000</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -308,28 +306,28 @@ const Home: NextPage = () => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000003125 ETH</TableCell>
+                <TableCell>20,000,000,000</TableCell>
+                <TableCell>at .000000003125 ETH</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000006250 ETH</TableCell>
+                <TableCell>20,000,000,000</TableCell>
+                <TableCell>at .000000006250 ETH</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000012500 ETH</TableCell>
+                <TableCell>20,000,000,000</TableCell>
+                <TableCell>at .000000012500 ETH</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000025000 ETH</TableCell>
+                <TableCell>20,000,000,000</TableCell>
+                <TableCell>at .000000025000 ETH</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000050000 ETH</TableCell>
+                <TableCell>20,000,000,000</TableCell>
+                <TableCell>at .000000050000 ETH</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000100000 ETH</TableCell>
+                <TableCell>20,000,000,000</TableCell>
+                <TableCell>at .000000100000 ETH</TableCell>
               </TableRow>
             </TableBody>
           </Table>

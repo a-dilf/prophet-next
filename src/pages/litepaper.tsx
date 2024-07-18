@@ -119,28 +119,28 @@ const Litepaper: NextPage = () => {
                     <Table>
                         <TableBody>
                             <TableRow>
-                                <TableCell className={styles.table}>No NFT</TableCell>
-                                <TableCell className={styles.table}>13%</TableCell>
+                                <TableCell>No NFT</TableCell>
+                                <TableCell>13%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 1</TableCell>
-                                <TableCell className={styles.table}>11%</TableCell>
+                                <TableCell>Tier 1</TableCell>
+                                <TableCell>11%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 2</TableCell>
-                                <TableCell className={styles.table}>9%</TableCell>
+                                <TableCell>Tier 2</TableCell>
+                                <TableCell>9%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 3</TableCell>
-                                <TableCell className={styles.table}>7%</TableCell>
+                                <TableCell>Tier 3</TableCell>
+                                <TableCell>7%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 4</TableCell>
-                                <TableCell className={styles.table}>5%</TableCell>
+                                <TableCell>Tier 4</TableCell>
+                                <TableCell>5%</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 5</TableCell>
-                                <TableCell className={styles.table}>3%</TableCell>
+                                <TableCell>Tier 5</TableCell>
+                                <TableCell>3%</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
