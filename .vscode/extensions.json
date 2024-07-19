@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "esbenp.prettier-vscode",
+        "yoavbls.pretty-ts-errors",
+        "naumovs.color-highlight",
+        "mikestead.dotenv"
+    ]
+}
