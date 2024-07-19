@@ -1,0 +1,18 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": false,
+        "**/.hg": false,
+        "**/CVS": false,
+        "**/.DS_Store": false,
+        "**/Thumbs.db": false,
+        ".codesandbox": true,
+        ".devcontainer": true,
+        "abi_objects": true,
+        "LICENSE": true,
+        "**/CHANGELOG.md": true,
+        "frontend_meta_data.json": true,
+        "**/node_modules": true
+    },
+    "explorerExclude.backup": {}
+}

@@ -1,22 +1,24 @@
-https://prophetlady.com/
+[prophetlady.com](https://prophetlady.com/)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 # Getting Started
 
 1. Install Node
-Development currently pinned to v20.14.0. but most versions after should work. 
+   Development currently pinned to v20.14.0. but most versions after should work.
 
 [download link](https://nodejs.org/en/download/package-manager).
 
 2. Install dependencies
-Within the top level of this cloned repo execute:
+   Within the top level of this cloned repo execute:
+
 ```bash
 npm install
 ```
 
 3. Run development server
-Within the top level of this cloned repo execute:
+   Within the top level of this cloned repo execute:
+
 ```bash
 npm run dev
 # or
