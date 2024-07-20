@@ -162,7 +162,7 @@ const Nfts: NextPage = () => {
 
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
-            <div className="nftzone">
+            <div className="nfttop">
             <Typography className="container" variant="h2">NFT Zone</Typography>
             <div className='container'>
                 <TableContainer>
