@@ -406,7 +406,7 @@ const Prophet: NextPage = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={styles.table}>.000000012500</TableCell>
-                <TableCel className={styles.table}l>{String(tokensRemaining[3])}</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[3])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
