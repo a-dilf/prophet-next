@@ -296,7 +296,7 @@ const Prophet: NextPage = () => {
           {isBuyLoading && 'Executing...'}
           {!isBuyLoading && isBuyStarted && "complete"}
         </Button>
-        <TextField className+{styles.textbox}
+        <TextField className={styles.textbox}
           label="ETH Provided"
           type="number"
           value={ethToUseInBuyFloat}
