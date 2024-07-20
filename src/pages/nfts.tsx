@@ -162,22 +162,23 @@ const Nfts: NextPage = () => {
 
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
+            <div className="nfttop">
             <Typography className="container" variant="h2">NFT Zone</Typography>
             <div className='container'>
                 <TableContainer>
                     <Table>
                         <TableBody>
                             <TableRow>
-                                <TableCell>NFTs in circulation:</TableCell>
-                                <TableCell>{Number(totalMinted)}</TableCell>
+                                <TableCell className={styles.table}>NFTs in circulation:</TableCell>
+                                <TableCell className={styles.table}>{Number(totalMinted)}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Total level 5NFTs staked:</TableCell>
-                                <TableCell>{Number(totalStakedState)}</TableCell>
+                                <TableCell className={styles.table}>Total level 5NFTs staked:</TableCell>
+                                <TableCell className={styles.table}>{Number(totalStakedState)}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Level 5 NFTs staked by 0x{String(address).slice(-4)}:</TableCell>
-                                <TableCell>{Number(userStakedState)}</TableCell>
+                                <TableCell className={styles.table}>Level 5 NFTs staked by 0x{String(address).slice(-4)}:</TableCell>
+                                <TableCell className={styles.table}>{Number(userStakedState)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -199,6 +200,7 @@ const Nfts: NextPage = () => {
                     </IconButton>
                 </Box>
             </div>
+            </div>    
             <NftApproveAndActionCard mounted={mounted} isConnected={isConnected} cardTitle={"Approve burning $PROPHET"} amountToApprove={(Number(toWei(mintCount, "ether")) * 400000.01)} allowanceAmount={Number(currentAllowanceState)} mintCount={mintCount} totalMinted={totalMinted} setTotalMinted={setTotalMinted} setOwnedNftCardProps={setOwnedNftCardProps} setStateAllowanceAmount={setStateAllowanceAmount}></NftApproveAndActionCard>
             <Typography className="container" variant="h3">NFTs at 0x{String(address).slice(-4)}</Typography>
             {ownedNftCardProps.map((cardData, index) => (
