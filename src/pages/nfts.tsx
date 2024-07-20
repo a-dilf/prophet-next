@@ -162,6 +162,7 @@ const Nfts: NextPage = () => {
 
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
+            <div className="nftzone">
             <Typography className="container" variant="h2">NFT Zone</Typography>
             <div className='container'>
                 <TableContainer>
@@ -199,6 +200,7 @@ const Nfts: NextPage = () => {
                     </IconButton>
                 </Box>
             </div>
+            </div>    
             <NftApproveAndActionCard mounted={mounted} isConnected={isConnected} cardTitle={"Approve burning $PROPHET"} amountToApprove={(Number(toWei(mintCount, "ether")) * 400000.01)} allowanceAmount={Number(currentAllowanceState)} mintCount={mintCount} totalMinted={totalMinted} setTotalMinted={setTotalMinted} setOwnedNftCardProps={setOwnedNftCardProps} setStateAllowanceAmount={setStateAllowanceAmount}></NftApproveAndActionCard>
             <Typography className="container" variant="h3">NFTs at 0x{String(address).slice(-4)}</Typography>
             {ownedNftCardProps.map((cardData, index) => (
