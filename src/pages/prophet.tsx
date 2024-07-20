@@ -256,22 +256,23 @@ const Prophet: NextPage = () => {
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
               <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
+      <div className="prophettop">
       <Typography className="container" variant="h2">$PROPHET Zone</Typography>
       <div className='container'>
         <TableContainer>
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell>$PROPHET tokens owned by 0x{String(address).slice(-4)}:</TableCell>
-                <TableCell>{Math.floor(Number(toWei(Number(currentTokenBalanceState), "wei")) / 1000000000000000000)}</TableCell>
+                <TableCell className={styles.table}>$PROPHET tokens owned by 0x{String(address).slice(-4)}:</TableCell>
+                <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(currentTokenBalanceState), "wei")) / 1000000000000000000)}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Total $PROPHET tokens staked:</TableCell>
-                <TableCell>{Number(totalStakedTokensState)}</TableCell>
+                <TableCell className={styles.table}>Total $PROPHET tokens staked:</TableCell>
+                <TableCell className={styles.table}>{Number(totalStakedTokensState)}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>$PROPHET staked by 0x{String(address).slice(-4)}:</TableCell>
-                <TableCell>{Number(userStakedTokensState)}</TableCell>
+                <TableCell className={styles.table}>$PROPHET staked by 0x{String(address).slice(-4)}:</TableCell>
+                <TableCell className={styles.table}>{Number(userStakedTokensState)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -360,6 +361,7 @@ const Prophet: NextPage = () => {
           MAX
         </Button>
       </div>
+      </div>  
       <div className="container" style={{ marginTop: "20px" }}>
         <Typography variant="h3">Staking</Typography>
       </div>
