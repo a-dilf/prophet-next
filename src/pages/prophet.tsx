@@ -377,14 +377,14 @@ const Prophet: NextPage = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ETH per token</TableCell>
-                <TableCell>Tokens left</TableCell>
+                <TableCell className={styles.table}>ETH per token</TableCell>
+                <TableCell className={styles.table}>Tokens left</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>.000000003125</TableCell>
-                <TableCell>{String(tokensRemaining[5])}</TableCell>
+                <TableCell className={styles.table}>.000000003125</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[5])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -394,8 +394,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000006250</TableCell>
-                <TableCell>{String(tokensRemaining[4])}</TableCell>
+                <TableCell className={styles.table}>.000000006250</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[4])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -405,8 +405,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000012500</TableCell>
-                <TableCell>{String(tokensRemaining[3])}</TableCell>
+                <TableCell className={styles.table}>.000000012500</TableCell>
+                <TableCel className={styles.table}l>{String(tokensRemaining[3])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -416,8 +416,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000025000</TableCell>
-                <TableCell>{String(tokensRemaining[2])}</TableCell>
+                <TableCell className={styles.table}>.000000025000</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[2])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -427,8 +427,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000050000</TableCell>
-                <TableCell>{String(tokensRemaining[1])}</TableCell>
+                <TableCell className={styles.table}>.000000050000</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[1])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
@@ -438,8 +438,8 @@ const Prophet: NextPage = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>.000000100000</TableCell>
-                <TableCell>{String(tokensRemaining[0])}</TableCell>
+                <TableCell className={styles.table}>.000000100000</TableCell>
+                <TableCell className={styles.table}>{String(tokensRemaining[0])}</TableCell>
                 <TableCell>
                   <CircularProgress color="secondary"
                     sx={{
