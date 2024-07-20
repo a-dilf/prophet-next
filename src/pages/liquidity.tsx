@@ -129,31 +129,33 @@ const Liquidity: NextPage = () => {
 
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
+            <div className="liquiditytop">
             <Typography className="container" variant="h2">Liquidity Zone</Typography>
             <div className='container'>
                 <TableContainer>
                     <Table>
                         <TableBody>
                             <TableRow>
-                                <TableCell>Current pool ratio:</TableCell>
-                                <TableCell>{Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET to {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH</TableCell>
+                                <TableCell className={styles.table}>Current pool ratio:</TableCell>
+                                <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET to {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Liquidity tokens owned by 0x{String(address).slice(-4)}:</TableCell>
-                                <TableCell>{Math.floor(Number(toWei(Number(userLPTBalanceState), "wei")) / 1000000000000000000)}</TableCell>
+                                <TableCell className={styles.table}>Liquidity tokens owned by 0x{String(address).slice(-4)}:</TableCell>
+                                <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(userLPTBalanceState), "wei")) / 1000000000000000000)}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Total liquidity tokens staked:</TableCell>
-                                <TableCell>{Number(totalStakedTokens)}</TableCell>
+                                <TableCell className={styles.table}>Total liquidity tokens staked:</TableCell>
+                                <TableCell className={styles.table}>{Number(totalStakedTokens)}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Liquidity tokens staked by 0x{String(address).slice(-4)}:</TableCell>
-                                <TableCell>{Number(currentlyStakedTokens)}</TableCell>
+                                <TableCell className={styles.table}>Liquidity tokens staked by 0x{String(address).slice(-4)}:</TableCell>
+                                <TableCell className={styles.table}>{Number(currentlyStakedTokens)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
             </div>
+            </div>    
             <div className='container'>
                 <Typography sx={{ paddingTop: "15px" }}>Contribute liquidity to the uniswap pool in the form of a pegged $PROPHET:ETH pair to earn UNI-V2 liquidity tokens.</Typography>
                 <Typography sx={{ paddingTop: "15px" }}>Stake UNI-V2 liquidity tokens to earn a percentage of the daily 7,500,000 $PROPHET reward pool!</Typography>
