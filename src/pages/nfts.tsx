@@ -217,5 +217,19 @@ const Nfts: NextPage = () => {
 
 // TODO - make it so staked NFTs use the flip card with unstake on it
 // TODO - disable the stake button as well!
+/*
+<div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+                <Typography>Number of NFTS to mint and/or level up: </Typography>
+                <Box sx={{ border: '1px solid', borderColor: 'secondary.main', borderRadius: '4px', p: 1 }}>
+                    <IconButton onClick={decrementCount}>
+                        <DecrementIcon />
+                    </IconButton>
+                    <span>{mintCount}</span>
+                    <IconButton onClick={incrementCount}>
+                        <IncrementIcon />
+                    </IconButton>
+                </Box>
+            </div>
+*/
 
 export default Nfts;

@@ -4,6 +4,7 @@ import type { NextPage } from 'next';
 import styles from '../styles/Prophet.module.css';
 
 import { TableHead, CircularProgress, Table, TableBody, TableCell, TableContainer, TableRow, Typography, Button } from '@mui/material';
+import ErrorAlert from '../../components/ErrorAlert';
 import TextField from '@mui/material/TextField';
 
 import { token_abi } from '../../abi_objects/token_abi';
@@ -34,6 +35,7 @@ const Prophet: NextPage = () => {
   const [tokensRemaining, setTokensRemaining] = React.useState([0n]);
   const [userStakedTokensState, setUserStakedTokensState] = React.useState(0n)
   const [totalStakedTokensState, setTotalStakedTokensState] = React.useState(0n)
+  const [maxApprovalAmount, setMaxApprovalAmount] = React.useState(0n)
 
   const { address, isConnected } = useAccount();
 
@@ -136,6 +138,7 @@ const Prophet: NextPage = () => {
   React.useEffect(() => {
     if (currentBalance) {
       setCurrentTokenBalanceState(currentBalance);
+      setMaxApprovalAmount(currentBalance)
     }
   }, [currentBalance]);
 
@@ -188,11 +191,39 @@ const Prophet: NextPage = () => {
     }
   }, [tokensSold]);
 
+  function toThreeSignificantFigures(num: number): number {
+    // Calculate the factor needed to shift the decimal point
+    let factor = Math.pow(10, Math.floor(Math.log10(Math.abs(num))) + (1 - 3));
+    
+    // Round the number to three significant figures
+    let roundedNum = Math.round(num / factor) * factor;
+  
+    // Reduce the rounded number by 2%
+    let adjustedRoundedNum = roundedNum * 0.98;
+  
+    // Convert to string, remove trailing digits beyond the third significant figure
+    let str = adjustedRoundedNum.toString();
+    // Match any characters after the third significant digit following the decimal point
+    str = str.replace(/(\.\d{1,3})(\d+)/, '$1');
+  
+    return parseFloat(str);
+  }
+
   React.useEffect(() => {
     if (currentEthBalance) {
       const converted_value = Number(currentEthBalance["value"]) / 1000000000000000000
-      setEthToUseInBuyFloat(converted_value);
-      setEthToUseInBuyWei(currentEthBalance["value"])
+      setEthToUseInBuyFloat(toThreeSignificantFigures(converted_value));
+
+      /*
+      const converted_value = Number(currentEthBalance["value"]) / 1000000000000000000
+      const converted_value_with_removed_amount = converted_value * 98
+      setEthToUseInBuyFloat(parseFloat(converted_value_with_removed_amount.toPrecision(7)));
+      */
+     
+      const ethBalanceWithMinimumAmountRemoved = Number(currentEthBalance["value"]) * .97
+      console.log(ethBalanceWithMinimumAmountRemoved)
+      setEthToUseInBuyWei(BigInt(toWei(ethBalanceWithMinimumAmountRemoved, "wei")));
+      
       setCurrentETHBalanceState(BigInt(toWei(currentEthBalance["value"], "wei")));
     }
   }, [currentEthBalance]);
@@ -205,8 +236,26 @@ const Prophet: NextPage = () => {
     // setTokensThatCanBeBoughtWithCurrentEthState(BigInt(tokenAmount))
   };
 
+      // error handling
+      const [errorMessage, setErrorMessage] = React.useState('');
+
+      React.useEffect(() => {
+          if (buyError) {
+              setErrorMessage(buyError["message"]);
+              // setOpen(true);
+          }
+      }, [buyError]);
+  
+      React.useEffect(() => {
+          if (buyTxError) {
+              setErrorMessage(buyTxError["message"]);
+              // setOpen(true);
+          }
+      }, [buyTxError]);
+
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
+              <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
       <Typography className="container" variant="h2">$PROPHET Zone</Typography>
       <div className='container'>
         <TableContainer>
@@ -303,8 +352,8 @@ const Prophet: NextPage = () => {
           style={{ marginTop: 24, marginLeft: 15 }}
           disabled={!buy || isBuyLoading || isBuyStarted}
           onClick={() => {
-            setEthToUseInBuyFloat(Number(currentETHBalanceState) / 1000000000000000000)
-            setEthToUseInBuyWei(BigInt(Number(currentETHBalanceState)))
+            setEthToUseInBuyFloat(toThreeSignificantFigures(Number(currentETHBalanceState) / 1000000000000000000))
+            setEthToUseInBuyWei(BigInt(Number(currentETHBalanceState) * .97))
           }
           }
         >
@@ -315,7 +364,7 @@ const Prophet: NextPage = () => {
         <Typography variant="h3">Staking</Typography>
       </div>
       <div>
-        <ProphetApproveAndStakeCard mounted={mounted} isConnected={isConnected} cardTitle='Stake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndStakeCard>
+        <ProphetApproveAndStakeCard mounted={mounted} isConnected={isConnected} cardTitle='Stake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState} maxApprovalAmount={maxApprovalAmount}></ProphetApproveAndStakeCard>
         <ProphetApproveAndUnstakeCard mounted={mounted} isConnected={isConnected} cardTitle='Unstake $PROPHET' currentTokenBalanceState={currentTokenBalanceState} setCurrentTokenBalanceState={setCurrentTokenBalanceState}></ProphetApproveAndUnstakeCard>
       </div>
       <div className="container" style={{ marginTop: "20px" }}>

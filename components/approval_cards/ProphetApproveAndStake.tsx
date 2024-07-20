@@ -30,11 +30,12 @@ interface ProphetApproveAndStakeCardProps {
     cardTitle: string;
     currentTokenBalanceState: bigint;
     setCurrentTokenBalanceState: React.Dispatch<React.SetStateAction<bigint>>;
+    maxApprovalAmount: bigint;
 }
 
 // TODO - revert these type changes??
 
-const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({ mounted, isConnected, cardTitle, currentTokenBalanceState, setCurrentTokenBalanceState }) => {
+const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({ mounted, isConnected, cardTitle, currentTokenBalanceState, setCurrentTokenBalanceState, maxApprovalAmount }) => {
 
     // TODO - get this from user input!
     const [tokenAmountToAdd, setTokenAmountToAdd] = React.useState(0n);
@@ -61,8 +62,9 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToAdd), "ether"))]
+        args: [process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}', BigInt(maxApprovalAmount)]
     } as const;
+    // args: [process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToAdd), "ether"))]
 
     // stake tokens function
     const stakeTokensContractConfig = {
@@ -223,7 +225,7 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
                                 })
                             }
                         >
-                            {!isApproveLoading && !isApproveStarted && "approve " + tokenAmountToAdd}
+                            {!isApproveLoading && !isApproveStarted && "approve"}
                             {isApproveLoading && 'Executing...'}
                             {!isApproveLoading && isApproveStarted && "complete"}
                         </Button>

@@ -4,6 +4,7 @@ import Image from 'next/legacy/image';
 
 // component imports
 import FlipCard, { BackCard, FrontCard } from '../FlipCard';
+import ErrorAlert from '../ErrorAlert';
 
 import { Typography, Button } from '@mui/material';
 
@@ -54,22 +55,29 @@ const LpRewardCard: React.FC<LpRewardCardProps> = ({ mounted, cardTitle, rewards
         args: [address as '0x${string}']
     } as const;
 
+    // error handling
+    const [errorMessage, setErrorMessage] = React.useState('');
+
+    React.useEffect(() => {
+        if (mintError) {
+            setErrorMessage(mintError["message"]);
+            // setOpen(true);
+        }
+    }, [mintError]);
+
+    React.useEffect(() => {
+        if (txError) {
+            setErrorMessage(txError["message"]);
+            // setOpen(true);
+        }
+    }, [txError]);
+
     return (
         <div className="container">
+            <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
             <div style={{ flex: '1 1 auto' }}>
                 <div style={{ padding: '24px 24px 24px 0'}}>
                     <Typography variant="h5">{cardTitle}</Typography>
-
-                    {mintError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {mintError.message}
-                        </p>
-                    )}
-                    {txError && (
-                        <p style={{ marginTop: 24, color: '#FF6257' }}>
-                            Error: {txError.message}
-                        </p>
-                    )}
 
                     {mounted && isConnected && !(!isClaimLoading && isClaimStarted) && (
                         <Button

@@ -11,7 +11,6 @@ import ErrorAlert from '../ErrorAlert';
 
 import { Typography, Button } from '@mui/material';
 
-import { router_abi } from '../../abi_objects/router_abi';
 import { untaxed_abi } from '../../abi_objects/untaxed_abi';
 import { token_abi } from '../../abi_objects/token_abi';
 import { pair_abi } from '../../abi_objects/pair_abi';
@@ -37,6 +36,7 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
 
     // TODO - get this from user input!
     const [tokenAmountToRemove, settokenAmountToRemove] = React.useState(0n);
+    const [maxAllowance, setMaxAllowance] = React.useState(0n);
     const [ethAmountToAddInWei, setEthAmountToAdd] = React.useState(0n);
     const [reservesProphet, setReservesProphet] = React.useState(0n);
     const [reservesEth, setReservesEth] = React.useState(0n);
@@ -63,7 +63,7 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToRemove), "ether"))]
+        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(toWei(Number(maxAllowance), "ether"))]
     } as const;
 
     // use ETH quote amount and token amount in proper peg ratio
@@ -110,6 +110,7 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
             // const userAmountInWei = BigInt(toWei(Number(userBalance), "wei"))
             const userAmountInWei = BigInt(Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000))
             settokenAmountToRemove(userAmountInWei);
+            setMaxAllowance(userAmountInWei)
         }
     }, [userBalance]);
     
@@ -248,7 +249,7 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
                                 })
                             }
                         >
-                            {!isApproveLoading && !isApproveStarted && "approve " + tokenAmountToRemove}
+                            {!isApproveLoading && !isApproveStarted && "approve"}
                             {isApproveLoading && 'Executing...'}
                             {!isApproveLoading && isApproveStarted && "complete"}
                         </Button>

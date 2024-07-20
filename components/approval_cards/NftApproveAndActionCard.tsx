@@ -50,7 +50,7 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}', BigInt(amountToApprove)]
+        args: [process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}', BigInt(currentTokenBalanceState)]
     } as const;
 
     const nftMintConfig = {
@@ -141,19 +141,21 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
             console.log("yes")
             setTotalMinted((prevCount) => BigInt(prevCount + BigInt(mintCount)));
 
+            /*
             const cardsToAdd = []
             for (let i = Number(totalMinted); i < Number(mintCount + Number(totalMinted)); i++) {
                 cardsToAdd.push(i)
             }
-
+            
             const nftCardsData = cardsToAdd.map(tokenId => ({
                 mounted: mounted, // Example value, replace with actual logic if needed
                 isConnected: isConnected, // Example value, replace with actual logic if needed
                 tokenId,
                 nftContractConfig: nftContractConfig, // Example value, replace with actual logic if needed
             }));
-
+            
             setOwnedNftCardProps((prevCards) => [...prevCards, ...nftCardsData]);
+            */
         }
     }, [isActionLoading, isActionStarted]);
 
@@ -194,13 +196,6 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
         }
     }, [currentBalance]);
 
-    // TODO - fix rewards amount?? look for the 1 / 1000000 statement
-    /*
-onClick={() =>
-                                setStateAllowanceAmount(NaN)
-                            }
-    */
-
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
@@ -225,7 +220,7 @@ onClick={() =>
                                 })
                             }
                         >
-                            {!isApproveLoading && !isApproveStarted && "approve " + mintCount}
+                            {!isApproveLoading && !isApproveStarted && "approve"}
                             {isApproveLoading && 'Executing...'}
                             {!isApproveLoading && isApproveStarted && "complete"}
                         </Button>
@@ -279,7 +274,7 @@ onClick={() =>
                                 style={{ borderRadius: 8 }}
                                 priority
                             />
-                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>{amountMintable} mintable!</Typography>
+                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>{Math.floor(amountMintable)} mintable!</Typography>
                             <Typography style={{ marginBottom: 10 }}>
                                 $PROPHET approved for burn.
                             </Typography>

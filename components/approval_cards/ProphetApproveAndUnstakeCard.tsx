@@ -160,7 +160,6 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
                         onChange={handleChange}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
-
                 </div>
             </div>
 

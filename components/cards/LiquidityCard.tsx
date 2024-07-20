@@ -38,11 +38,11 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
 
     // TODO - get this from user input!
     const [tokenAmountToAdd, setTokenAmountToAdd] = React.useState(0n);
+    const [maxAllowance, setMaxAllowance] = React.useState(0n);
     const [ethAmountToAddInWei, setEthAmountToAdd] = React.useState(0n);
     const [reservesProphet, setReservesProphet] = React.useState(0n);
     const [reservesEth, setReservesEth] = React.useState(0n);
     const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
-    const [rerender, triggerReRender] = React.useState(false);
 
     const { address } = useAccount();
 
@@ -65,7 +65,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
-        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToAdd), "ether"))]
+        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(toWei(Number(maxAllowance), "ether"))]
     } as const;
 
     // collect token amount from user and get an ETH quote
@@ -131,6 +131,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
             // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
             const userAmountInWei = BigInt(toWei(Number(userBalance), "wei"))
             setTokenAmountToAdd(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
+            setMaxAllowance(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
         }
     }, [userBalance]);
 
@@ -270,7 +271,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                                 })
                             }
                         >
-                            {!isApproveLoading && !isApproveStarted && "approve " + tokenAmountToAdd}
+                            {!isApproveLoading && !isApproveStarted && "approve"}
                             {isApproveLoading && 'Executing...'}
                             {!isApproveLoading && isApproveStarted && "complete"}
                         </Button>
