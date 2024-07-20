@@ -206,7 +206,7 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
                         value={Number(tokenAmountToAdd)}
                         onChange={handleChange}
                         InputLabelProps={{
-                            style: {color: 'violet', transform: 'translateY(-20)'}
+                            style: {color: 'violet', transform: 'translateY(-18px)'}
                         }}
                         InputProps={{
                             style: {color: "black"}
