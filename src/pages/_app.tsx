@@ -1,6 +1,7 @@
 import '../styles/global.css';
 
 import '@rainbow-me/rainbowkit/styles.css';
+import React from "react";
 import type { AppProps } from 'next/app';
 
 import { ThemeProvider } from '@mui/material/styles';

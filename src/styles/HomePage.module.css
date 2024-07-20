@@ -6,3 +6,13 @@
     justify-content: center;
     text-shadow: 2px 2px 4px rgb(225, 123, 225);
 }
+
+.table {
+    color: aliceblue;
+    font-size: large;
+}
+
+.button {
+    color: rgb(25, 33, 41);
+    background-color: violet;
+}
