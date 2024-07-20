@@ -2,6 +2,8 @@
 import React, { ChangeEvent } from 'react';
 import Image from 'next/legacy/image';
 
+import styles from '/src/styles/Prophet.module.css';
+
 import { toWei } from 'web3-utils';
 import TextField from '@mui/material/TextField';
 
@@ -203,6 +205,12 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
                         type="number"
                         value={Number(tokenAmountToAdd)}
                         onChange={handleChange}
+                        InputLabelProps={{
+                            style: {color: 'violet', transform: 'translateY(-20)'}
+                        }}
+                        InputProps={{
+                            style: {color: "black"}
+                        }}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
