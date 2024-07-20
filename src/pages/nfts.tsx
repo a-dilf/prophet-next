@@ -168,16 +168,16 @@ const Nfts: NextPage = () => {
                     <Table>
                         <TableBody>
                             <TableRow>
-                                <TableCell>NFTs in circulation:</TableCell>
-                                <TableCell>{Number(totalMinted)}</TableCell>
+                                <TableCell className={styles.table}>NFTs in circulation:</TableCell>
+                                <TableCell className={styles.table}>{Number(totalMinted)}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Total level 5NFTs staked:</TableCell>
-                                <TableCell>{Number(totalStakedState)}</TableCell>
+                                <TableCell className={styles.table}>Total level 5NFTs staked:</TableCell>
+                                <TableCell className={styles.table}>{Number(totalStakedState)}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Level 5 NFTs staked by 0x{String(address).slice(-4)}:</TableCell>
-                                <TableCell>{Number(userStakedState)}</TableCell>
+                                <TableCell className={styles.table}>Level 5 NFTs staked by 0x{String(address).slice(-4)}:</TableCell>
+                                <TableCell className={styles.table}>{Number(userStakedState)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
