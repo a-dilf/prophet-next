@@ -301,6 +301,12 @@ const Prophet: NextPage = () => {
           type="number"
           value={ethToUseInBuyFloat}
           onChange={handleChange}
+           InputLabelProps={{
+            style: {color: 'violet', transform: 'translateY(-18px)'}
+        }}
+        InputProps={{
+            style: {color: "black"}
+        }}
           style={{ marginTop: 15, marginLeft: 15 }}
         />
       </div>
