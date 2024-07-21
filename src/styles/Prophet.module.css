@@ -17,6 +17,8 @@
     color:aliceblue;
     text-shadow: none;
     font-size: large;
+    height:40px; 
+    transform: translateY(8px);
 }
 
 .button {
