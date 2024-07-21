@@ -21,9 +21,6 @@
     transform: translateY(8px);
 }
 
-.button {
-    color: black;
-    background: radial-gradient(circle, rgb(227, 59, 227), violet);
-    font-size: large;
-
+.comment {
+    transform: translateY(10px);
 }
