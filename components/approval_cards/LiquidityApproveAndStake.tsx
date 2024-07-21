@@ -201,12 +201,12 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField className={styles.textbox}
-                        label=" UNI-V2 amount (ETHER)"
+                        label=" UNI-V2 amount"
                         type="number"
                         value={Number(tokenAmountToAdd)}
                         onChange={handleChange}
                         InputLabelProps={{
-                            style: {color: 'violet', transform: 'translateY(-18px)'}
+                            style: {color: 'violet', transform: 'translateY(-20px)'}
                         }}
                         InputProps={{
                             style: {color: "black"}
