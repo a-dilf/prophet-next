@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/node": "^18.19.3",
     "@types/react": "^18.3.0",
+    "tailwindcss": "^3.4.6",
     "typescript": "5.4.2"
   },
   "description": "Contract here: https://gist.github.com/peduarte/b48fbf6ff35de431207d68250679a05b",

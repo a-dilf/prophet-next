@@ -16,7 +16,6 @@ import React from "react";
 
 import { faDiscord, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 interface NavbarProps {
@@ -74,38 +73,45 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
-        <List>
-          <Box component={Link} href="/" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="Home">
-              <ListItemText primary="Home" />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/litepaper" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="litepaper">
-              <ListItemText primary="Litepaper" />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/prophet" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="prophet">
-              <ListItemText primary="$Prophet" />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/nfts" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="NFTs">
-              <ListItemText primary="NFTs" />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/liquidity" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="Liquidity">
-              <ListItemText primary="Liquidity" />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/rewards" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="Rewards">
-              <ListItemText primary="Rewards" />
-            </ListItemButton>
-          </Box>
+      <Drawer
+        anchor="left"
+        open={open}
+        onClose={() => setOpen(false)}
+        PaperProps={{
+          sx: {
+            width: 250,
+            backgroundColor: "#1a1a1a",
+            color: "white",
+          },
+        }}
+      >
+        <List sx={{ paddingTop: "20px" }}>
+          {[
+            { text: "Home", href: "/" },
+            { text: "Litepaper", href: "/litepaper" },
+            { text: "$Prophet", href: "/prophet" },
+            { text: "NFTs", href: "/nfts" },
+            { text: "Liquidity", href: "/liquidity" },
+            { text: "Rewards", href: "/rewards" },
+          ].map((item) => (
+            <Box component={Link} href={item.href} underline="none" key={item.text}>
+              <ListItemButton
+                onClick={() => setOpen(false)}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "rgba(238, 130, 238, 0.1)",
+                  },
+                }}
+              >
+                <ListItemText
+                  primary={item.text}
+                  primaryTypographyProps={{
+                    sx: { color: "white", fontWeight: "medium" },
+                  }}
+                />
+              </ListItemButton>
+            </Box>
+          ))}
         </List>
       </Drawer>
     </>
