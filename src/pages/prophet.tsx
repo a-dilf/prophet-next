@@ -302,7 +302,7 @@ const Prophet: NextPage = () => {
           value={ethToUseInBuyFloat}
           onChange={handleChange}
            InputLabelProps={{
-            style: {color: 'violet', transform: 'translateY(-18px)'}
+            style: {color: 'violet', transform: 'translateY(-22px)'}
         }}
         InputProps={{
             style: {color: "black"}
