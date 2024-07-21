@@ -311,7 +311,7 @@ const Prophet: NextPage = () => {
         />
       </div>
       <div className='container'>
-        <Typography>will result in approx. {Math.floor(Number(toWei(Number(tokensThatCanBeBoughtWithCurrentEthState), "wei")) / 1000000000000000000)} $PROPHET tokens!</Typography>
+        <Typography className={styles.comment}>will result in approx. {Math.floor(Number(toWei(Number(tokensThatCanBeBoughtWithCurrentEthState), "wei")) / 1000000000000000000)} $PROPHET tokens!</Typography>
       </div>
       <div className='container'>
         <Button
