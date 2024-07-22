@@ -252,10 +252,9 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={(allowanceAmount && Math.floor(Number(toWei(Number(allowanceAmount), "wei")) / 100000000000000000) > 1) || (!isApproveLoading && isApproveStarted)}>
-                        Rewards to claim: {1 / 1000000000000000000}
                         <Image
                             layout="fill"
-                            src="/nft.png"
+                            src="/final logo small.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
@@ -267,7 +266,7 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
                     <BackCard isCardFlipped={(allowanceAmount && Math.floor(Number(toWei(Number(allowanceAmount), "wei")) / 100000000000000000) > 1) || (!isApproveLoading && isApproveStarted)}>
                         <div style={{ padding: 24 }}>
                             <Image
-                                src="/nft.png"
+                                src="/final logo small.png"
                                 width="80"
                                 height="80"
                                 alt="RainbowKit Demo NFT"

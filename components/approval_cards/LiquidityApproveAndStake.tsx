@@ -260,7 +260,7 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
                         provide an allowance to proceed
                         <Image
                             layout="fill"
-                            src="/nft.png"
+                            src="/final logo small.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
@@ -272,7 +272,7 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
                     <BackCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
                         <div style={{ padding: 24 }}>
                             <Image
-                                src="/nft.png"
+                                src="/final logo small.png"
                                 width="80"
                                 height="80"
                                 alt="RainbowKit Demo NFT"

@@ -104,7 +104,7 @@ const Home: NextPage = () => {
             <FrontCard isCardFlipped={isMinted}>
               <Image
                 layout="responsive"
-                src="/nft.png"
+                src="/final logo small.png"
                 width="500"
                 height="500"
                 alt="RainbowKit Demo NFT"
@@ -116,7 +116,7 @@ const Home: NextPage = () => {
             <BackCard isCardFlipped={isMinted}>
               <div style={{ padding: 24 }}>
                 <Image
-                  src="/nft.png"
+                  src="/final logo small.png"
                   width="80"
                   height="80"
                   alt="RainbowKit Demo NFT"
