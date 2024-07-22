@@ -208,7 +208,6 @@ const Nfts: NextPage = () => {
             </div>
             <div className='container'>
                 <Typography variant="h3" sx={{ marginTop: "12px" }}>Approve and Mint</Typography>
-
             </div>
             <div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
                 <Typography>Number of NFTS to mint and/or level up: </Typography>
