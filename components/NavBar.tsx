@@ -44,32 +44,28 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
               </IconButton>
             </Grid>
             <Grid item>
-              <ConnectButton />
+              <Box sx={{ display: "flex", gap: "20px" }}>
+                <div>
+                  <ConnectButton />
+                </div>
+                <div style={{paddingTop:"7px"}}>
+                  <a
+                    href="https://arbitrum.io/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "inherit", textDecoration: "none" }} // Adjust styles as needed
+                  >
+                    {/* Embedding SVG directly */}
+                    { /* Replace 'path/to/arbitrum-logo.svg' with the actual path to your logo */}
+                    <img src="/arb small.png" alt="Arbitrum One Logo" style={{ height: "24px", width: "auto"}} />
+                  </a>
+                </div>
+              </Box>
             </Grid>
             <Grid item>
               <Box sx={{ display: "flex", gap: "20px" }}>
                 {" "}
                 {/* Add this Box component */}
-                <div>
-                <a
-                    href="https://discord.gg/dRYtVaS43A"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "white" }}
-                  >
-                    <FontAwesomeIcon icon={faDiscord} size="lg" />
-                  </a>
-                  <Image
-                    layout="fill"
-                    src="/arb small.png"
-                    width="5"
-                    height="5"
-                    alt="NFT Image"
-                    priority
-                    objectFit="cover" // or 'contain' depending on your preference
-                    quality={100}
-                  />
-                </div>
                 <div>
                   <a
                     href="https://discord.gg/dRYtVaS43A"

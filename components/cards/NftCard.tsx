@@ -441,8 +441,8 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                     {mounted && isConnected && currentTokenBalanceState < 400000 && (
                         <Box display="flex" alignItems="center">
                             <div style={{ paddingRight: "10px" }}>
-                                <Typography ml={1}>Buy</Typography>
-                                <Typography ml={1}>400,000+</Typography>
+                                <Typography ml={1}>Buy at least</Typography>
+                                <Typography ml={1}>{400000 - Number(currentTokenBalanceState)} more</Typography>
                                 <Typography ml={1}>$PROPHET</Typography>
                             </div>
                             <Image

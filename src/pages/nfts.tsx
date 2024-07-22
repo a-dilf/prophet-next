@@ -36,6 +36,7 @@ const Nfts: NextPage = () => {
     const [mintCount, setMintCount] = React.useState(1);
     const [currentAllowanceState, setStateAllowanceAmount] = React.useState(0n);
     const [ownedNftCardProps, setOwnedNftCardProps] = React.useState(new Array);
+    const [currentTokenBalanceState, setCurrentTokenBalanceState] = React.useState(0n);
 
     const { address, isConnected } = useAccount();
 
@@ -72,7 +73,18 @@ const Nfts: NextPage = () => {
         functionName: "userInfo"
     } as const;
 
+    const balanceOfContractConfig = {
+        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
+        abi: token_abi,
+        args: [address as '0x${string}'],
+        functionName: 'balanceOf',
+    } as const;
+
     //// READ OPERATIONS
+    const { data: currentBalance } = useReadContract({
+        ...balanceOfContractConfig,
+    });
+
     const { data: ownedNfts } = useReadContract({
         ...nftOwnerContractConfig,
         functionName: 'tokensOfOwner',
@@ -144,6 +156,12 @@ const Nfts: NextPage = () => {
         }
     }, [allowanceAmount, hasRenderedOnce]);
 
+    React.useEffect(() => {
+        if (currentBalance) {
+            setCurrentTokenBalanceState(currentBalance);
+        }
+    }, [currentBalance]);
+
     // state management for user to select number of NFTs to mint
     const incrementCount = () => {
         setMintCount(mintCount + 1);
@@ -179,6 +197,10 @@ const Nfts: NextPage = () => {
                             <TableRow>
                                 <TableCell className={styles.table}>Level 5 NFTs staked by 0x{String(address).slice(-4)}:</TableCell>
                                 <TableCell className={styles.table}>{Number(userStakedState)}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={styles.table}>$PROPHET tokens owned 0x{String(address).slice(-4)}:</TableCell>
+                                <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(currentTokenBalanceState), "wei")) / 1000000000000000000)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
