@@ -628,26 +628,6 @@ video {
   border-width: 1px;
 }
 
-.border-violet-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(139 92 246 / var(--tw-border-opacity));
-}
-
-.border-violet-100 {
-  --tw-border-opacity: 1;
-  border-color: rgb(237 233 254 / var(--tw-border-opacity));
-}
-
-.border-amber-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(253 230 138 / var(--tw-border-opacity));
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
 .underline {
   text-decoration-line: underline;
 }
