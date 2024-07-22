@@ -281,7 +281,6 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
-                        provide an allowance to proceed
                         <Image
                             layout="fill"
                             src="/final logo small.png"

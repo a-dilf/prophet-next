@@ -150,7 +150,6 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={currentlyStakedTokens}>
-                        provide an allowance to proceed
                         <Image
                             layout="fill"
                             src="/final logo small.png"
