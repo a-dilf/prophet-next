@@ -192,11 +192,11 @@ const Nfts: NextPage = () => {
                 <Typography>Number of NFTS to mint and/or level up: </Typography>
                 <Box sx={{ border: '1px solid', borderColor: 'secondary.main', borderRadius: '4px', p: 1 }}>
                     <IconButton onClick={decrementCount}>
-                        <DecrementIcon />
+                        <DecrementIcon className={styles.symbol} />
                     </IconButton>
                     <span>{mintCount}</span>
                     <IconButton onClick={incrementCount}>
-                        <IncrementIcon />
+                        <IncrementIcon className={styles.symbol} />
                     </IconButton>
                 </Box>
             </div>
