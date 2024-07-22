@@ -6,7 +6,7 @@ import type { AppProps } from "next/app";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../styles/theme"; // Adjust the path according to your file structure
 
-import { midnightTheme, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { darkTheme, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 
@@ -21,7 +21,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
-          theme={midnightTheme({ ...midnightTheme.accentColors.pink, borderRadius: "small", fontStack: "system" })}
+          theme={darkTheme({
+            ...darkTheme.accentColors.pink,
+            borderRadius: "medium",
+            fontStack: "rounded",
+            overlayBlur: "small",
+          })}
         >
           <ThemeProvider theme={theme}>
             <Layout>
