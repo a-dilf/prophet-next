@@ -144,11 +144,15 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
         },
     });
 
-    // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        setCurrentTokenBalanceState(BigInt(newValue))
-        setTokenAmountToAdd(BigInt(newValue));
+        if (Number(event.target.value) > 0) {
+            const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
+            setCurrentTokenBalanceState(BigInt(newValue))
+            setTokenAmountToAdd(BigInt(newValue));
+        } else {
+            setCurrentTokenBalanceState(BigInt(1))
+            setTokenAmountToAdd(BigInt(1))
+        }
     };
 
     React.useEffect(() => {
@@ -164,42 +168,42 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
         }
     }, [isStakeStarted]);
 
-       // error handling
-       const [errorMessage, setErrorMessage] = React.useState('');
+    // error handling
+    const [errorMessage, setErrorMessage] = React.useState('');
 
-       React.useEffect(() => {
-           if (stakeError) {
-               setErrorMessage(stakeError["message"]);
-               // setOpen(true);
-           }
-       }, [stakeError]);
-   
-       React.useEffect(() => {
-           if (txError) {
-               setErrorMessage(txError["message"]);
-               // setOpen(true);
-           }
-       }, [txError]);
-   
-       React.useEffect(() => {
-           if (approveError) {
-               setErrorMessage(approveError["message"]);
-               // setOpen(true);
-           }
-       }, [approveError]);
-   
-       React.useEffect(() => {
-           if (approveTxError) {
-               setErrorMessage(approveTxError["message"]);
-               // setOpen(true);
-           }
-       }, [approveTxError]);
-   
+    React.useEffect(() => {
+        if (stakeError) {
+            setErrorMessage(stakeError["message"]);
+            // setOpen(true);
+        }
+    }, [stakeError]);
+
+    React.useEffect(() => {
+        if (txError) {
+            setErrorMessage(txError["message"]);
+            // setOpen(true);
+        }
+    }, [txError]);
+
+    React.useEffect(() => {
+        if (approveError) {
+            setErrorMessage(approveError["message"]);
+            // setOpen(true);
+        }
+    }, [approveError]);
+
+    React.useEffect(() => {
+        if (approveTxError) {
+            setErrorMessage(approveTxError["message"]);
+            // setOpen(true);
+        }
+    }, [approveTxError]);
+
 
     return (
         <div className="container" style={{ marginTop: "20px" }}>
             <div style={{ flex: '1 1 auto' }}>
-            <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
+                <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField className={styles.textbox}
@@ -207,16 +211,17 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
                         type="number"
                         value={Number(tokenAmountToAdd)}
                         onChange={handleChange}
-                         InputLabelProps={{
-                            style: {color: 'violet', transform: 'translateY(-20px)'}
+                        InputLabelProps={{
+                            style: { color: 'violet', transform: 'translateY(-20px)' }
                         }}
                         InputProps={{
-                            style: {color: "black"}
+                            style: { color: "black" }
                         }}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}></Typography>
+
+                    <Typography sx={{ marginTop: "15px" }}></Typography>
 
                     {mounted && isConnected && (
                         <Button
@@ -268,7 +273,7 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
                                 priority
                             />
                             <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Liquidity prepared!</Typography>
-                            <Typography style={{ marginBottom: 4}}>
+                            <Typography style={{ marginBottom: 4 }}>
                                 Stake here.
                             </Typography>
                             <Button

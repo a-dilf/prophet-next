@@ -119,11 +119,15 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
         },
     });
 
-    // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        setCurrentTokenBalanceState(BigInt(newValue))
-        settokenAmountToRemove(BigInt(newValue));
+        if (Number(event.target.value) > 0) {
+            const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
+            setCurrentTokenBalanceState(BigInt(newValue))
+            settokenAmountToRemove(BigInt(newValue));
+        } else {
+            setCurrentTokenBalanceState(BigInt(1))
+            settokenAmountToRemove(BigInt(1))
+        }
     };
 
     React.useEffect(() => {

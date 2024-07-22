@@ -141,10 +141,13 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
         },
     });
 
-    // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        setTokenAmountToAdd(BigInt(newValue));
+        if (Number(event.target.value) > 0) {
+            const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
+            setTokenAmountToAdd(BigInt(newValue))
+        } else {
+            setTokenAmountToAdd(BigInt(1))
+        }
     };
 
     React.useEffect(() => {
