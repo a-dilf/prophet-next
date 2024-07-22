@@ -13,6 +13,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import React from "react";
+import Image from 'next/legacy/image';
 
 import { faDiscord, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -49,6 +50,26 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
               <Box sx={{ display: "flex", gap: "20px" }}>
                 {" "}
                 {/* Add this Box component */}
+                <div>
+                <a
+                    href="https://discord.gg/dRYtVaS43A"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "white" }}
+                  >
+                    <FontAwesomeIcon icon={faDiscord} size="lg" />
+                  </a>
+                  <Image
+                    layout="fill"
+                    src="/arb small.png"
+                    width="5"
+                    height="5"
+                    alt="NFT Image"
+                    priority
+                    objectFit="cover" // or 'contain' depending on your preference
+                    quality={100}
+                  />
+                </div>
                 <div>
                   <a
                     href="https://discord.gg/dRYtVaS43A"

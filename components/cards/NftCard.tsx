@@ -376,7 +376,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                                     })
                                 }
                             >
-                                {!isMaxLoading && !isMaxStarted && 'MAX - ' + (5 - Number(tokenTier))}
+                                {!isMaxLoading && !isMaxStarted && "Tier 5"}
                                 {isMaxLoading && 'exe'}
                                 {!isMaxStarted && isMaxStarted && 'complete'}
                             </Button>
