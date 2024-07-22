@@ -47,7 +47,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
 
     const { address } = useAccount();
-    console.log(Number(tokenAmountToAdd) * 1000000000000000000)
+
     const tokenBalanceOfContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
         abi: token_abi,
@@ -316,7 +316,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                                 style={{ borderRadius: 8 }}
                                 priority
                             />
-                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Liquidity prepared!</Typography>
+                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>$PROPHET prepared!</Typography>
                             <Typography style={{ marginBottom: 4 }}>
                                 {Number(tokenAmountToAdd)} $PROPHET requires {Number(toWei(Number(ethAmountToAddInWei), "wei")) / 1000000000000000000} ETH.
                             </Typography>

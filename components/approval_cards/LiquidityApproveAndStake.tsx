@@ -91,9 +91,9 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
     }, [userBalance]);
 
     // update state with the read results
+    // TODO redflag here!!
     React.useEffect(() => {
         if (allowanceAmount) {
-            console.log("&&& : ", currentAllowance)
             setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
         }
     }, [allowanceAmount]);
@@ -204,7 +204,7 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField className={styles.textbox}
-                        label=" UNI-V2 amount"
+                        label=" UNI-V2 Amount (ETHER)"
                         type="number"
                         value={Number(tokenAmountToAdd)}
                         onChange={handleChange}

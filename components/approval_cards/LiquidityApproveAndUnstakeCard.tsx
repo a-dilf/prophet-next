@@ -129,7 +129,7 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
 
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField className={styles.textbox}
-                        label=" UNI-V2 amount"
+                        label=" UNI-V2 Amount (ETHER)"
                         type="number"
                         value={Number(tokenAmountToRemove)}
                         onChange={handleChange}
