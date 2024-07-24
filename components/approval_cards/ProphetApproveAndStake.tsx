@@ -72,7 +72,7 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
     const stakeTokensContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}',
         abi: staking_token_abi,
-        args: [BigInt(tokenAmountToAdd)],
+        args: [BigInt((Number(tokenAmountToAdd) * 1000000000000000000))],
         functionName: "stake",
     } as const;
 
