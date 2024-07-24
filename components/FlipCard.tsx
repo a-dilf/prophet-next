@@ -52,6 +52,15 @@ export function FrontCard({ isCardFlipped, children }: any) {
     <AnimatedCardFace
       variants={flipVariants}
       animate={isCardFlipped ? 'frontFlipped' : 'shown'}
+      style={
+        isCardFlipped
+          ? {
+              backgroundColor: '#1c011c',
+              backgroundImage: 'linear-gradient(-370deg, #1c011c, #ee82ee)',
+              color: 'white',
+            }
+          : {}
+      }
     >
       {children}
     </AnimatedCardFace>
