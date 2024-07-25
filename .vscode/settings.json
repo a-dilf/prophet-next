@@ -14,7 +14,8 @@
         "frontend_meta_data.json": true,
         "**/node_modules": true,
         ".next": true,
-        "**/next.config.js": false,
+        "**/next.config.js": true,
+        "package-lock.json": true,
     },
     "explorerExclude.backup": {},
     "cSpell.words": [

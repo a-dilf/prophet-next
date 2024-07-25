@@ -6,13 +6,15 @@ interface LayoutProps {
   children: ReactNode;
 }
 
+
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [open, setOpen] = React.useState(true); // State management for NavBar
+
 
   return (
     <>
       <NavBar open={open} setOpen={setOpen} />
-      <main style={{ marginBottom: "100px", marginTop: "100px" }}>{children}</main>
+      <main style={{ marginBottom: "100px", marginTop: "100px", border:'' }}>{children}</main>
     </>
   );
 };
