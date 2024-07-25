@@ -119,11 +119,15 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
         },
     });
 
-    // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        setCurrentTokenBalanceState(BigInt(newValue))
-        settokenAmountToRemove(BigInt(newValue));
+        if (Number(event.target.value) > 0) {
+            const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
+            setCurrentTokenBalanceState(BigInt(newValue))
+            settokenAmountToRemove(BigInt(newValue));
+        } else {
+            setCurrentTokenBalanceState(BigInt(1))
+            settokenAmountToRemove(BigInt(1))
+        }
     };
 
     React.useEffect(() => {
@@ -176,7 +180,7 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
                     <FrontCard isCardFlipped={currentlyStakedTokens}>
                         <Image
                             layout="fill"
-                            src="/nft.png"
+                            src="/final logo small.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
@@ -188,7 +192,7 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
                     <BackCard isCardFlipped={currentlyStakedTokens}>
                         <div style={{ padding: 24 }}>
                             <Image
-                                src="/nft.png"
+                                src="/final logo small.png"
                                 width="80"
                                 height="80"
                                 alt="RainbowKit Demo NFT"

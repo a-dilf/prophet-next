@@ -141,7 +141,7 @@ const Liquidity: NextPage = () => {
                             </TableRow>
                             <TableRow>
                                 <TableCell className={styles.table}>Liquidity tokens owned by 0x{String(address).slice(-4)}:</TableCell>
-                                <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(userLPTBalanceState), "wei")) / 1000000000000000000)}</TableCell>
+                                <TableCell className={styles.table}>{Number(toWei(Number(userLPTBalanceState), "wei")) / 1000000000000000000}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={styles.table}>Total liquidity tokens staked:</TableCell>
@@ -164,7 +164,7 @@ const Liquidity: NextPage = () => {
                 <LiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Provide Liquidity"}></LiquidityCard>
             </div>
             <div>
-                <RemoveLiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Remove Liquidity"}></RemoveLiquidityCard>
+                <RemoveLiquidityCard mounted={mounted} isConnected={isConnected} cardTitle={"Remove Liquidity"} currentLPBalance={userLPTBalanceState} setUserLPTBalanceState={setUserLPTBalanceState}></RemoveLiquidityCard>
             </div>
             <div className="container" style={{ marginTop: "20px" }}>
                 <Typography variant="h3">Staking</Typography>

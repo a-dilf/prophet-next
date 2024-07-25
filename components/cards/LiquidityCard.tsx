@@ -74,7 +74,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const routerContractConfig = {
         address: process.env.NEXT_PUBLIC_ROUTER_ADDRESS as '0x${string}',
         abi: router_abi,
-        args: [BigInt(currentAllowance), reservesProphet, reservesEth],
+        args: [BigInt(Number(tokenAmountToAdd) * 1000000000000000000), reservesProphet, reservesEth],
         functionName: 'quote',
     } as const;
 
@@ -82,7 +82,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const untaxedContractConfig = {
         address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
         abi: untaxed_abi,
-        args: [BigInt(currentAllowance)],
+        args: [BigInt(Number(tokenAmountToAdd) * 1000000000000000000)],
         value: BigInt(ethAmountToAddInWei),
         functionName: "addLiquidityETHUntaxed",
     } as const;
@@ -140,7 +140,8 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     // update state with the read results
     React.useEffect(() => {
         if (allowanceAmount) {
-            setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
+            // setStateAllowanceAmount(BigInt(toWei(allowanceAmount, "ether")))
+            setStateAllowanceAmount(allowanceAmount)
         }
     }, [allowanceAmount]);
 
@@ -187,10 +188,13 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         },
     });
 
-    // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        setTokenAmountToAdd(BigInt(newValue));
+        if (Number(event.target.value) > 0) {
+            const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
+            setTokenAmountToAdd(BigInt(newValue))
+        } else {
+            setTokenAmountToAdd(BigInt(1))
+        }
     };
 
     React.useEffect(() => {
@@ -207,45 +211,44 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
         }
     }, [isAddStarted]);
 
-        // error handling
-        const [errorMessage, setErrorMessage] = React.useState('');
+    // error handling
+    const [errorMessage, setErrorMessage] = React.useState('');
 
-        React.useEffect(() => {
-            if (addError) {
-                setErrorMessage(addError["message"]);
-                // setOpen(true);
-            }
-        }, [addError]);
-    
-        React.useEffect(() => {
-            if (txError) {
-                setErrorMessage(txError["message"]);
-                // setOpen(true);
-            }
-        }, [txError]);
-    
-        React.useEffect(() => {
-            if (approveError) {
-                setErrorMessage(approveError["message"]);
-                // setOpen(true);
-            }
-        }, [approveError]);
-    
-        React.useEffect(() => {
-            if (approveTxError) {
-                setErrorMessage(approveTxError["message"]);
-                // setOpen(true);
-            }
-        }, [approveTxError]);
-    
-        // import ErrorAlert from '../ErrorAlert';
-        // <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
-    
-    
+    React.useEffect(() => {
+        if (addError) {
+            setErrorMessage(addError["message"]);
+            // setOpen(true);
+        }
+    }, [addError]);
+
+    React.useEffect(() => {
+        if (txError) {
+            setErrorMessage(txError["message"]);
+            // setOpen(true);
+        }
+    }, [txError]);
+
+    React.useEffect(() => {
+        if (approveError) {
+            setErrorMessage(approveError["message"]);
+            // setOpen(true);
+        }
+    }, [approveError]);
+
+    React.useEffect(() => {
+        if (approveTxError) {
+            setErrorMessage(approveTxError["message"]);
+            // setOpen(true);
+        }
+    }, [approveTxError]);
+
+    // import ErrorAlert from '../ErrorAlert';
+    // <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
+
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
-            <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
+                <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField className={styles.textbox}
@@ -254,15 +257,15 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                         value={Number(tokenAmountToAdd)}
                         onChange={handleChange}
                         InputLabelProps={{
-                            style: {color: 'violet', transform: 'translateY(-20px)'}
+                            style: { color: 'violet', transform: 'translateY(-20px)' }
                         }}
                         InputProps={{
-                            style: {color: "black"}
+                            style: { color: "black" }
                         }}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}>Approve $PROPHET for addition</Typography>
+                    <Typography sx={{ marginTop: "15px" }}>Approve $PROPHET for addition</Typography>
 
                     {mounted && isConnected && (
                         <Button
@@ -291,10 +294,9 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
-                        provide an allowance to proceed
                         <Image
                             layout="fill"
-                            src="/nft.png"
+                            src="/final logo small.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
@@ -306,16 +308,16 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                     <BackCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
                         <div style={{ padding: 24 }}>
                             <Image
-                                src="/nft.png"
+                                src="/final logo small.png"
                                 width="80"
                                 height="80"
                                 alt="RainbowKit Demo NFT"
                                 style={{ borderRadius: 8 }}
                                 priority
                             />
-                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Liquidity prepared!</Typography>
-                            <Typography style={{ marginBottom: 4}}>
-                                {Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 1000000000000000000)} $PROPHET requires {Number(toWei(Number(ethAmountToAddInWei), "wei")) / 1000000000000000000} ETH.
+                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>$PROPHET prepared!</Typography>
+                            <Typography style={{ marginBottom: 4 }}>
+                                {Number(tokenAmountToAdd)} $PROPHET requires {Number(toWei(Number(ethAmountToAddInWei), "wei")) / 1000000000000000000} ETH.
                             </Typography>
                             <Button
                                 color="primary"
@@ -352,6 +354,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
 };
 
 /* TODO make !isMintLoading && isMintStarted the flip condition! and report the reward amount    
+{Math.floor(Number(toWei(Number(tokenAmountToAdd), "wei")) / 1000000000000000000)} $PROPHET requires {Number(toWei(Number(ethAmountToAddInWei), "wei")) / 1000000000000000000} ETH.
 */
 
 export default LiquidityCard;

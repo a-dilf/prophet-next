@@ -230,10 +230,15 @@ const Prophet: NextPage = () => {
 
   // TODO: make tier dynamic?
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEthToUseInBuyFloat(parseFloat(event.target.value));
-    const ethInWei = BigInt(Number(event.target.value) * 1000000000000000000)
-    setEthToUseInBuyWei(ethInWei)
-    // setTokensThatCanBeBoughtWithCurrentEthState(BigInt(tokenAmount))
+    if (Number(event.target.value) > 0) {
+      setEthToUseInBuyFloat(parseFloat(event.target.value));
+      const ethInWei = BigInt(Number(event.target.value) * 1000000000000000000)
+      setEthToUseInBuyWei(ethInWei)
+      // setTokensThatCanBeBoughtWithCurrentEthState(BigInt(tokenAmount))
+    } else {
+      setEthToUseInBuyFloat(0.1)
+      setEthToUseInBuyWei(BigInt(0.1 * 1000000000000000000))
+    }
   };
 
       // error handling

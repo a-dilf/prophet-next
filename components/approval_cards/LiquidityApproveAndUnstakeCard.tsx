@@ -92,10 +92,13 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
         },
     });
 
-    // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        settokenAmountToRemove(BigInt(newValue));
+        if (Number(event.target.value) > 0) {
+            const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
+            settokenAmountToRemove(BigInt(newValue))
+        } else {
+            settokenAmountToRemove(BigInt(1))
+        }
     };
 
     // error handling
@@ -126,7 +129,7 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
 
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField className={styles.textbox}
-                        label=" UNI-V2 amount"
+                        label=" UNI-V2 Amount (ETHER)"
                         type="number"
                         value={Number(tokenAmountToRemove)}
                         onChange={handleChange}
@@ -147,10 +150,9 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={currentlyStakedTokens}>
-                        provide an allowance to proceed
                         <Image
                             layout="fill"
-                            src="/nft.png"
+                            src="/final logo small.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
@@ -162,7 +164,7 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
                     <BackCard isCardFlipped={currentlyStakedTokens}>
                         <div style={{ padding: 24 }}>
                             <Image
-                                src="/nft.png"
+                                src="/final logo small.png"
                                 width="80"
                                 height="80"
                                 alt="RainbowKit Demo NFT"

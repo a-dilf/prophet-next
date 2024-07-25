@@ -30,19 +30,27 @@ interface RemoveLiquidityCardProps {
     mounted: boolean;
     isConnected: boolean;
     cardTitle: string;
+    currentLPBalance: bigint;
+    setUserLPTBalanceState: React.Dispatch<React.SetStateAction<bigint>>;
 }
 
 // TODO - revert these type changes??
 
-const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isConnected, cardTitle }) => {
+const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isConnected, cardTitle, currentLPBalance, setUserLPTBalanceState }) => {
+    console.log("!!!", Number(toWei(Number(currentLPBalance), "wei")) / 1000000000000000000)
+    console.log("!!!", currentLPBalance)
 
     // TODO - get this from user input!
     const [tokenAmountToRemove, settokenAmountToRemove] = React.useState(0n);
+    const [tokenAmountToRemoveInFloat, settokenAmountToRemoveInFloat] = React.useState<number>(1);
     const [maxAllowance, setMaxAllowance] = React.useState(0n);
     const [ethAmountToAddInWei, setEthAmountToAdd] = React.useState(0n);
     const [reservesProphet, setReservesProphet] = React.useState(0n);
     const [reservesEth, setReservesEth] = React.useState(0n);
     const [currentAllowance, setStateAllowanceAmount] = React.useState(0n);
+
+    console.log(tokenAmountToRemoveInFloat)
+    console.log(currentAllowance)
 
     const { address } = useAccount();
 
@@ -58,21 +66,24 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
     const allowanceContractConfig = {
         address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
         abi: lp_abi,
-        args: [address as '0x${string}', process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}']
+        args: [address as '0x${string}', process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}'],
+        functionName: "allowance"
     } as const;
+    // console.log(Number(tokenAmountToAdd) * 1000000000000000000)
 
     // approval of proxy contracts
-    const approvingContractConfig = {
-        address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
-        abi: token_abi,
-        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(toWei(Number(maxAllowance), "ether"))]
+    const approvingContractConfig2 = {
+        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
+        abi: lp_abi,
+        args: [process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}', BigInt(currentLPBalance)],
+        functionName: "approve",
     } as const;
 
     // use ETH quote amount and token amount in proper peg ratio
     const untaxedContractConfig = {
         address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
         abi: untaxed_abi,
-        args: [BigInt(currentAllowance)],
+        args: [BigInt(Number(tokenAmountToRemoveInFloat) * 1000000000000000000)],
         functionName: "removeLiquidityETHUntaxed",
     } as const;
 
@@ -92,8 +103,7 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
     });
 
     const { data: allowanceAmount } = useReadContract({
-        ...allowanceContractConfig,
-        functionName: "allowance"
+        ...allowanceContractConfig
     });
 
     React.useEffect(() => {
@@ -115,11 +125,12 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
             setMaxAllowance(userAmountInWei)
         }
     }, [userBalance]);
-    
+
     // update state with the read results
     React.useEffect(() => {
         if (allowanceAmount) {
-            setStateAllowanceAmount(BigInt(toWei(tokenAmountToRemove, "ether")))
+            // settokenAmountToRemove(BigInt(currentLPBalance))
+            setStateAllowanceAmount(BigInt(toWei(allowanceAmount, "ether")))
         }
     }, [allowanceAmount]);
 
@@ -166,10 +177,16 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
         },
     });
 
-    // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        settokenAmountToRemove(BigInt(newValue));
+        if (Number(event.target.value) > 0) {
+            const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
+            settokenAmountToRemoveInFloat(parseFloat(event.target.value));
+            const lpInWei = BigInt(Number(event.target.value) * 1000000000000000000)
+            settokenAmountToRemove(BigInt(lpInWei))
+        } else {
+            settokenAmountToRemove(BigInt(1))
+            settokenAmountToRemoveInFloat(1)
+        }
     };
 
     React.useEffect(() => {
@@ -185,41 +202,37 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
         }
     }, [isAddStarted]);
 
-        // error handling
-        const [errorMessage, setErrorMessage] = React.useState('');
+    // error handling
+    const [errorMessage, setErrorMessage] = React.useState('');
 
-        React.useEffect(() => {
-            if (addError) {
-                setErrorMessage(addError["message"]);
-                // setOpen(true);
-            }
-        }, [addError]);
-    
-        React.useEffect(() => {
-            if (txError) {
-                setErrorMessage(txError["message"]);
-                // setOpen(true);
-            }
-        }, [txError]);
-    
-        React.useEffect(() => {
-            if (approveError) {
-                setErrorMessage(approveError["message"]);
-                // setOpen(true);
-            }
-        }, [approveError]);
-    
-        React.useEffect(() => {
-            if (approveTxError) {
-                setErrorMessage(approveTxError["message"]);
-                // setOpen(true);
-            }
-        }, [approveTxError]);
-    
-        // import ErrorAlert from '../ErrorAlert';
-        // <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
-    
-    
+    React.useEffect(() => {
+        if (addError) {
+            setErrorMessage(addError["message"]);
+            // setOpen(true);
+        }
+    }, [addError]);
+
+    React.useEffect(() => {
+        if (txError) {
+            setErrorMessage(txError["message"]);
+            // setOpen(true);
+        }
+    }, [txError]);
+
+    React.useEffect(() => {
+        if (approveError) {
+            setErrorMessage(approveError["message"]);
+            // setOpen(true);
+        }
+    }, [approveError]);
+
+    React.useEffect(() => {
+        if (approveTxError) {
+            setErrorMessage(approveTxError["message"]);
+            // setOpen(true);
+        }
+    }, [approveTxError]);
+
     return (
         <div className="container">
             <div style={{ flex: '1 1 auto' }}>
@@ -227,20 +240,20 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField className={styles.textbox}
-                        label="$PROPHET Amount"
+                        label="UNI-V2 Amount (ETHER)"
                         type="number"
-                        value={Number(tokenAmountToRemove)}
+                        value={Number(tokenAmountToRemoveInFloat)}
                         onChange={handleChange}
                         InputLabelProps={{
-                            style: {color: 'violet', transform: 'translateY(-20px)'}
+                            style: { color: 'violet', transform: 'translateY(-20px)' }
                         }}
                         InputProps={{
-                            style: {color: "black"}
+                            style: { color: "black" }
                         }}
                         style={{ marginTop: 15, marginLeft: 15 }}
                     />
 
-                    <Typography sx={{marginTop: "15px"}}>Approve $PROPHET for removal</Typography>
+                    <Typography sx={{ marginTop: "15px" }}>Approve UNI-V2 for removal</Typography>
 
                     {mounted && isConnected && (
                         <Button
@@ -252,8 +265,7 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
                             data-mint-complete={!isApproveLoading && isApproveStarted}
                             onClick={() =>
                                 approve?.({
-                                    ...approvingContractConfig,
-                                    functionName: "approve",
+                                    ...approvingContractConfig2
                                 })
                             }
                         >
@@ -269,10 +281,9 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
-                        provide an allowance to proceed
                         <Image
                             layout="fill"
-                            src="/nft.png"
+                            src="/final logo small.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
@@ -284,16 +295,16 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
                     <BackCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
                         <div style={{ padding: 24 }}>
                             <Image
-                                src="/nft.png"
+                                src="/final logo small.png"
                                 width="80"
                                 height="80"
                                 alt="RainbowKit Demo NFT"
                                 style={{ borderRadius: 8 }}
                                 priority
                             />
-                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>Liquidity prepared!</Typography>
-                            <Typography style={{ marginBottom: 4}}>
-                                {Math.floor(Number(toWei(Number(currentAllowance), "wei")) / 1000000000000000000)} $PROPHET requires {Number(toWei(Number(ethAmountToAddInWei), "wei")) / 1000000000000000000} ETH.
+                            <Typography variant="h5" style={{ marginTop: 24, marginBottom: 6 }}>UNI-V2 prepared!</Typography>
+                            <Typography style={{ marginBottom: 4 }}>
+                                -
                             </Typography>
                             <Button
                                 color="primary"
@@ -308,7 +319,7 @@ const RemoveLiquidityCard: React.FC<RemoveLiquidityCardProps> = ({ mounted, isCo
                                     })
                                 }
                             >
-                                {!isAddLoading && !isAddStarted && "add approved liquidity"}
+                                {!isAddLoading && !isAddStarted && "remove approved liquidity"}
                                 {isAddLoading && 'Executing...'}
                                 {!isAddLoading && isAddStarted && 'complete'}
                             </Button>

@@ -91,9 +91,9 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
     }, [userBalance]);
 
     // update state with the read results
+    // TODO redflag here!!
     React.useEffect(() => {
         if (allowanceAmount) {
-            console.log("&&& : ", currentAllowance)
             setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
         }
     }, [allowanceAmount]);
@@ -141,10 +141,13 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
         },
     });
 
-    // TODO - all input fields should pull user token counts!
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
-        setTokenAmountToAdd(BigInt(newValue));
+        if (Number(event.target.value) > 0) {
+            const newValue = parseInt(event.target.value, 10); // Parse the input value to a number
+            setTokenAmountToAdd(BigInt(newValue))
+        } else {
+            setTokenAmountToAdd(BigInt(1))
+        }
     };
 
     React.useEffect(() => {
@@ -201,7 +204,7 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
                 <div style={{ padding: '24px 24px 24px 0' }}>
                     <Typography variant="h5">{cardTitle}</Typography>
                     <TextField className={styles.textbox}
-                        label=" UNI-V2 amount"
+                        label=" UNI-V2 Amount (ETHER)"
                         type="number"
                         value={Number(tokenAmountToAdd)}
                         onChange={handleChange}
@@ -254,10 +257,9 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
-                        provide an allowance to proceed
                         <Image
                             layout="fill"
-                            src="/nft.png"
+                            src="/final logo small.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
@@ -269,7 +271,7 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
                     <BackCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
                         <div style={{ padding: 24 }}>
                             <Image
-                                src="/nft.png"
+                                src="/final logo small.png"
                                 width="80"
                                 height="80"
                                 alt="RainbowKit Demo NFT"

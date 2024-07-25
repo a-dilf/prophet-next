@@ -106,10 +106,9 @@ const LpRewardCard: React.FC<LpRewardCardProps> = ({ mounted, cardTitle, rewards
             <div style={{ flex: '0 0 auto' }}>
                 <FlipCard>
                     <FrontCard isCardFlipped={!isClaimLoading && isClaimStarted}>
-                        Rewards to claim: {Number(rewardsAmount) / 1000000000000000000}
                         <Image
                             layout="fill"
-                            src="/nft.png"
+                            src="/final logo small.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
@@ -121,7 +120,7 @@ const LpRewardCard: React.FC<LpRewardCardProps> = ({ mounted, cardTitle, rewards
                     <BackCard isCardFlipped={!isClaimLoading && isClaimStarted}>
                         <div style={{ padding: 24 }}>
                             <Image
-                                src="/nft.png"
+                                src="/final logo small.png"
                                 width="80"
                                 height="80"
                                 alt="RainbowKit Demo NFT"

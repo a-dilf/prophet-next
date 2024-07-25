@@ -42,7 +42,23 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
               </IconButton>
             </Grid>
             <Grid item>
-              <ConnectButton />
+              <Box sx={{ display: "flex", gap: "20px" }}>
+                <div>
+                  <ConnectButton />
+                </div>
+                <div style={{paddingTop:"7px"}}>
+                  <a
+                    href="https://arbitrum.io/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "inherit", textDecoration: "none" }} // Adjust styles as needed
+                  >
+                    {/* Embedding SVG directly */}
+                    { /* Replace 'path/to/arbitrum-logo.svg' with the actual path to your logo */}
+                    <img src="/arb small.png" alt="Arbitrum One Logo" style={{ height: "24px", width: "auto"}} />
+                  </a>
+                </div>
+              </Box>
             </Grid>
             <Grid item>
               <Box sx={{ display: "flex", gap: "20px" }}>
@@ -73,47 +89,99 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <Drawer
-        anchor="left"
-        open={open}
-        onClose={() => setOpen(false)}
+      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}
         PaperProps={{
           sx: {
-            width: 250,
-            backgroundColor: "#1a1a1a",
-            color: "white",
-          },
-        }}
-      >
-        <List sx={{ paddingTop: "20px" }}>
-          {[
-            { text: "Home", href: "/" },
-            { text: "Litepaper", href: "/litepaper" },
-            { text: "$Prophet", href: "/prophet" },
-            { text: "NFTs", href: "/nfts" },
-            { text: "Liquidity", href: "/liquidity" },
-            { text: "Rewards", href: "/rewards" },
-          ].map((item) => (
-            <Box component={Link} href={item.href} underline="none" key={item.text}>
-              <ListItemButton
-                onClick={() => setOpen(false)}
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "rgba(238, 130, 238, 0.1)",
-                  },
-                }}
-              >
-                <ListItemText
-                  primary={item.text}
-                  primaryTypographyProps={{
-                    sx: { color: "white", fontWeight: "medium" },
-                  }}
-                />
-              </ListItemButton>
-            </Box>
-          ))}
+            backgroundColor: "black", // Replace with your desired background color
+          }
+        }}>
+        <List>
+          <Box component={Link} href="/" underline="none">
+            <ListItemButton onClick={() => setOpen(false)} key="Home"
+              sx={{
+                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
+                borderRadius: '4px', // Optional: adds rounded corners to the border
+                '&:hover': {
+                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
+                  borderColor: 'violet', // Ensures the border remains violet on hover
+                },
+              }}
+            >
+              <ListItemText primary="Home" sx={{ color: 'violet' }} />
+            </ListItemButton>
+          </Box>
+          <Box component={Link} href="/litepaper" underline="none">
+            <ListItemButton onClick={() => setOpen(false)} key="Litepaper"
+              sx={{
+                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
+                borderRadius: '4px', // Optional: adds rounded corners to the border
+                '&:hover': {
+                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
+                  borderColor: 'violet', // Ensures the border remains violet on hover
+                },
+              }}
+            >
+              <ListItemText primary="Litepaper" sx={{ color: 'violet' }} />
+            </ListItemButton>
+          </Box>
+          <Box component={Link} href="/prophet" underline="none">
+            <ListItemButton onClick={() => setOpen(false)} key="$PROPHET"
+              sx={{
+                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
+                borderRadius: '4px', // Optional: adds rounded corners to the border
+                '&:hover': {
+                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
+                  borderColor: 'violet', // Ensures the border remains violet on hover
+                },
+              }}
+            >
+              <ListItemText primary="$PROPHET" sx={{ color: 'violet' }} />
+            </ListItemButton>
+          </Box>
+          <Box component={Link} href="/nfts" underline="none">
+            <ListItemButton onClick={() => setOpen(false)} key="NFTs"
+              sx={{
+                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
+                borderRadius: '4px', // Optional: adds rounded corners to the border
+                '&:hover': {
+                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
+                  borderColor: 'violet', // Ensures the border remains violet on hover
+                },
+              }}
+            >
+              <ListItemText primary="NFTs" sx={{ color: 'violet' }} />
+            </ListItemButton>
+          </Box>
+          <Box component={Link} href="/liquidity" underline="none">
+            <ListItemButton onClick={() => setOpen(false)} key="Liquidity"
+              sx={{
+                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
+                borderRadius: '4px', // Optional: adds rounded corners to the border
+                '&:hover': {
+                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
+                  borderColor: 'violet', // Ensures the border remains violet on hover
+                },
+              }}
+            >
+              <ListItemText primary="Liquidity" sx={{ color: 'violet' }} />
+            </ListItemButton>
+          </Box>
+          <Box component={Link} href="/rewards" underline="none">
+            <ListItemButton onClick={() => setOpen(false)} key="Rewards"
+              sx={{
+                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
+                borderRadius: '4px', // Optional: adds rounded corners to the border
+                '&:hover': {
+                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
+                  borderColor: 'violet', // Ensures the border remains violet on hover
+                },
+              }}
+            >
+              <ListItemText primary="Rewards" sx={{ color: 'violet' }} />
+            </ListItemButton>
+          </Box>
         </List>
-      </Drawer>
+      </Drawer >
     </>
   );
 };
