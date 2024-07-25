@@ -97,7 +97,7 @@ const ProphetApproveAndStakeCard: React.FC<ProphetApproveAndStakeCardProps> = ({
     // update state with the read results
     React.useEffect(() => {
         if (allowanceAmount) {
-            setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
+            setStateAllowanceAmount(BigInt(toWei(allowanceAmount, "ether")))
         }
     }, [allowanceAmount]);
 
