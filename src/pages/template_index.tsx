@@ -104,7 +104,7 @@ const Home: NextPage = () => {
             <FrontCard isCardFlipped={isMinted}>
               <Image
                 layout="responsive"
-                src="/final logo small.png"
+                src="/gradient_card.png"
                 width="500"
                 height="500"
                 alt="RainbowKit Demo NFT"

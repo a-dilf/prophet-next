@@ -101,7 +101,7 @@ const RewardCard: React.FC<RewardCardProps> = ({ mounted, isConnected, cardTitle
                     <FrontCard isCardFlipped={!isClaimLoading && isClaimStarted}>
                         <Image
                             layout="fill"
-                            src="/final logo small.png"
+                            src="/gradient_card.png"
                             width="500"
                             height="500"
                             alt="NFT Image"

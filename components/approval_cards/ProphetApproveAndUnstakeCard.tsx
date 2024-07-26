@@ -180,7 +180,7 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
                     <FrontCard isCardFlipped={currentlyStakedTokens}>
                         <Image
                             layout="fill"
-                            src="/final logo small.png"
+                            src="/gradient_card.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
