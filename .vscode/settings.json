@@ -1,29 +1,20 @@
 {
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        "**/.vs": true,
-        "**/bin": true,
-        "**/node_modules": true,
-        "**/obj": true,
-        "**/TestResults": true,
-        "LICENSE": true,
-        "**/CHANGELOG.md": true,
-        "package-lock.json": true,
-        ".codesandbox": true,
-        ".devcontainer": true,
-        "abi_objects": true,
-        "frontend_meta_data.json": true,
-        ".next": true,
-        "**/next.config.js": true
-    },
-    "explorerExclude.backup": {},
-    "cSpell.words": [
-        "rabby",
-        "wagmi"
-    ]
+  "files.exclude": {
+    ".codesandbox": false,
+    ".devcontainer": false,
+    ".next": true,
+    "**/.DS_Store": false,
+    "**/.git": true,
+    "**/.hg": false,
+    "**/.svn": false,
+    "**/CHANGELOG.md": true,
+    "**/CVS": false,
+    "**/node_modules": true,
+    "**/Thumbs.db": false,
+    "abi_objects": false,
+    "frontend_meta_data.json": true,
+    "LICENSE": true
+  },
+  "explorerExclude.backup": {},
+  "cSpell.words": ["rabby", "wagmi"]
 }
