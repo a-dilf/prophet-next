@@ -11,8 +11,7 @@ import {
   List,
   ListItemButton,
   ListItemText,
-  Toolbar,
-  Typography,
+  Toolbar
 } from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
@@ -28,73 +27,61 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
       <AppBar
         position="sticky"
         sx={{
-          background: "linear-gradient(to right, #000000, #1a001a)",
-          boxShadow: "0 4px 6px rgba(238, 130, 238, 0.1)",
-          borderBottom: "2px solid #ee82ee",
+          paddingTop: "16px",
+          paddingBottom: "16px",
+          border: "1px solid #ee82ee",
         }}
       >
         <Toolbar>
           <Grid container justifyContent="space-between" alignItems="center" sx={{ width: "100%" }}>
-            <Grid item>
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                onClick={() => setOpen(true)}
-                sx={{
-                  color: "violet",
-                  '&:hover': {
-                    backgroundColor: 'rgba(238, 130, 238, 0.1)',
-                  },
-                }}
-              >
+            <Grid item sx={{ paddingLeft: "15px" }}>
+              <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setOpen(true)}>
                 <MenuIcon />
               </IconButton>
             </Grid>
             <Grid item>
-              <Typography variant="h6" sx={{ color: "violet", fontWeight: "bold", letterSpacing: "1px" }}>
-                ProphetLady
-              </Typography>
+              <Box sx={{ display: "flex", gap: "20px" }}>
+                <div>
+                  <ConnectButton />
+                </div>
+                <div style={{paddingTop:"7px"}}>
+                  <a
+                    href="https://arbitrum.io/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "inherit", textDecoration: "none" }} // Adjust styles as needed
+                  >
+                    {/* Embedding SVG directly */}
+                    { /* Replace 'path/to/arbitrum-logo.svg' with the actual path to your logo */}
+                    <img src="/arb small.png" alt="Arbitrum One Logo" style={{ height: "24px", width: "auto"}} />
+                  </a>
+                </div>
+              </Box>
             </Grid>
             <Grid item>
-              <Box sx={{ display: "flex", gap: "20px", alignItems: "center" }}>
-                <ConnectButton />
-                <a
-                  href="https://arbitrum.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  <img src="/arb small.png" alt="Arbitrum One Logo" style={{ height: "24px", width: "auto" }} />
-                </a>
-                <Box sx={{ display: "flex", gap: "15px" }}>
-                  <IconButton
+              <Box sx={{ display: "flex", gap: "20px" }}>
+                {" "}
+                {/* Add this Box component */}
+                <div>
+                  <a
                     href="https://discord.gg/dRYtVaS43A"
                     target="_blank"
                     rel="noopener noreferrer"
-                    sx={{
-                      color: "violet",
-                      '&:hover': {
-                        backgroundColor: 'rgba(238, 130, 238, 0.1)',
-                      },
-                    }}
+                    style={{ color: "white" }}
                   >
                     <FontAwesomeIcon icon={faDiscord} size="lg" />
-                  </IconButton>
-                  <IconButton
+                  </a>
+                </div>
+                <div>
+                  <a
                     href="https://twitter.com/Prophet_lady"
                     target="_blank"
                     rel="noopener noreferrer"
-                    sx={{
-                      color: "violet",
-                      '&:hover': {
-                        backgroundColor: 'rgba(238, 130, 238, 0.1)',
-                      },
-                    }}
+                    style={{ color: "white" }}
                   >
                     <FontAwesomeIcon icon={faTwitter} size="lg" />
-                  </IconButton>
-                </Box>
+                  </a>
+                </div>
               </Box>
             </Grid>
           </Grid>
