@@ -11,7 +11,7 @@ import {
   List,
   ListItemButton,
   ListItemText,
-  Toolbar
+  Toolbar,
 } from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
@@ -44,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
                 <div>
                   <ConnectButton />
                 </div>
-                <div style={{paddingTop:"7px"}}>
+                <div style={{ paddingTop: "7px" }}>
                   <a
                     href="https://arbitrum.io/"
                     target="_blank"
@@ -52,8 +52,8 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
                     style={{ color: "inherit", textDecoration: "none" }} // Adjust styles as needed
                   >
                     {/* Embedding SVG directly */}
-                    { /* Replace 'path/to/arbitrum-logo.svg' with the actual path to your logo */}
-                    <img src="/arb small.png" alt="Arbitrum One Logo" style={{ height: "24px", width: "auto"}} />
+                    {/* Replace 'path/to/arbitrum-logo.svg' with the actual path to your logo */}
+                    <img src="/arb small.png" alt="Arbitrum One Logo" style={{ height: "24px", width: "auto" }} />
                   </a>
                 </div>
               </Box>
@@ -87,48 +87,62 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <Drawer
-        anchor="left"
-        open={open}
-        onClose={() => setOpen(false)}
-        PaperProps={{
-          sx: {
-            backgroundColor: "#0a0a0a",
-            width: 250,
-          }
-        }}
-      >
-        <List sx={{ padding: "20px 0" }}>
-          {["Home", "Litepaper", "$PROPHET", "NFTs", "Liquidity", "Rewards"].map((text, index) => (
-            <Box key={text} component={Link} href={`/${text.toLowerCase() === 'home' ? '' : text.toLowerCase()}`} underline="none">
-              <ListItemButton
-                onClick={() => setOpen(false)}
+      <Sidebar open={open} setOpen={setOpen} />
+    </>
+  );
+};
+
+export const Sidebar: React.FC<NavbarProps> = ({ open, setOpen }) => {
+  const navigationItems = [
+    { name: "Home", path: "/" },
+    { name: "Litepaper", path: "/litepaper" },
+    { name: "$PROPHET", path: "/prophet" },
+    { name: "NFTs", path: "/nfts" },
+    { name: "Liquidity", path: "/liquidity" },
+    { name: "Rewards", path: "/rewards" },
+  ];
+  return (
+    <Drawer
+      anchor="left"
+      open={open}
+      onClose={() => setOpen(false)}
+      PaperProps={{
+        sx: {
+          backgroundColor: "#0a0a0a",
+          width: 250,
+        },
+      }}
+    >
+      <List sx={{ padding: "20px 0" }}>
+        {navigationItems.map((item) => (
+          <Box key={item.name} component={Link} href={item.path} underline="none">
+            <ListItemButton
+              onClick={() => setOpen(false)}
+              sx={{
+                borderBottom: "1px solid #4a0e4a",
+                margin: "8px 16px",
+                borderRadius: "8px",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  backgroundColor: "rgba(238, 130, 238, 0.1)",
+                  transform: "translateX(5px)",
+                },
+              }}
+            >
+              <ListItemText
+                primary={item.name}
                 sx={{
-                  borderBottom: '1px solid #4a0e4a',
-                  margin: '8px 16px',
-                  borderRadius: '8px',
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    backgroundColor: 'rgba(238, 130, 238, 0.1)',
-                    transform: 'translateX(5px)',
+                  color: "violet",
+                  "& .MuiListItemText-primary": {
+                    fontWeight: "bold",
                   },
                 }}
-              >
-                <ListItemText
-                  primary={text}
-                  sx={{
-                    color: 'violet',
-                    '& .MuiListItemText-primary': {
-                      fontWeight: 'bold',
-                    },
-                  }}
-                />
-              </ListItemButton>
-            </Box>
-          ))}
-        </List>
-      </Drawer>
-    </>
+              />
+            </ListItemButton>
+          </Box>
+        ))}
+      </List>
+    </Drawer>
   );
 };
 
