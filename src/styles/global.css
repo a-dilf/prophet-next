@@ -6,8 +6,7 @@
 
 body {
   margin: 0;
-  font-family: SFRounded, ui-rounded, "SF Pro Rounded", -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: SFRounded, ui-rounded, "SF Pro Rounded", -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
@@ -73,7 +72,7 @@ body {
   appearance: none;
   border: none;
   font-family: SFRounded, ui-rounded, "SF Pro Rounded";
-  background-image: linear-gradient(to right, #3898ff, #7a70ff);
+  background-image: linear-gradient(to right, #3898FF, #7A70FF);
   display: inline-flex;
   line-height: 1;
   font-size: 16px;
@@ -87,7 +86,7 @@ body {
 }
 
 button:not(:disabled):hover {
-  transform: scale(1.04);
+  transform: scale(1.04)
 }
 
 button[data-mint-loading="true"] {
@@ -104,42 +103,32 @@ button[data-mint-started="true"] {
   position: relative;
 }
 
-button[data-mint-started="true"]::after {
-  animation-name: pulse;
-  animation-duration: 500ms;
-  animation-direction: alternate;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  background-color: #ee82ee;
-  border-radius: inherit;
-  bottom: 0;
-  content: " ";
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
+  button[data-mint-started="true"]::after {
+    animation-name: pulse;
+    animation-duration: 500ms;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    background-color: #ee82ee;
+    border-radius: inherit;
+    bottom: 0;
+    content: ' ';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 
 button[data-mint-done="true"] {
-  opacity: 0;
-  transform: scale(0.85);
+   opacity: 0;
+   transform: scale(0.85);
 }
 
-h1 {
-  font-size: 24px;
-}
-h2 {
-  font-size: 18px;
-}
-a {
-  color: inherit;
-}
+h1 { font-size: 24px; }
+h2 { font-size: 18px; }
+a { color: inherit }
 
 @keyframes pulse {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: "100%";
-  }
+  0% { opacity: 0 }
+  100% { opacity: '100%' }
 }
