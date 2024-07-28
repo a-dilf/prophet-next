@@ -107,7 +107,7 @@ const TokenRewardCard: React.FC<TokenRewardCardProps> = ({ mounted, cardTitle, r
                     <FrontCard isCardFlipped={!isClaimLoading && isClaimStarted}>
                         <Image
                             layout="fill"
-                            src="/final logo small.png"
+                            src="/flipcard_sized.png"
                             width="500"
                             height="500"
                             alt="NFT Image"

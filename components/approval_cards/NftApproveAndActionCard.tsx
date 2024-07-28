@@ -254,7 +254,7 @@ const NftApproveAndActionCard: React.FC<NftApproveAndActionCardProps> = ({ mount
                     <FrontCard isCardFlipped={(allowanceAmount && Math.floor(Number(toWei(Number(allowanceAmount), "wei")) / 100000000000000000) > 1) || (!isApproveLoading && isApproveStarted)}>
                         <Image
                             layout="fill"
-                            src="/final logo small.png"
+                            src="/gradient_card.png"
                             width="500"
                             height="500"
                             alt="NFT Image"

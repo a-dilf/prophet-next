@@ -296,7 +296,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
                     <FrontCard isCardFlipped={currentAllowance || (!isApproveLoading && isApproveStarted)}>
                         <Image
                             layout="fill"
-                            src="/final logo small.png"
+                            src="/gradient_card.png"
                             width="500"
                             height="500"
                             alt="NFT Image"
