@@ -1,6 +1,6 @@
 
 import "../styles/global.css";
-import React from 'react';
+import "../styles/tailwind.css";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";

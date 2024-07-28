@@ -1,4 +1,5 @@
-// components/navigation/Navbar.tsx
+import { faDiscord, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
@@ -11,12 +12,10 @@ import {
   ListItemButton,
   ListItemText,
   Toolbar,
+  Typography,
 } from "@mui/material";
-import React from "react";
-
-import { faDiscord, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import React from "react";
 
 interface NavbarProps {
   open: boolean;
@@ -29,159 +28,119 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
       <AppBar
         position="sticky"
         sx={{
-          paddingTop: "16px",
-          paddingBottom: "16px",
-          border: "1px solid #ee82ee",
+          background: "linear-gradient(to right, #000000, #1a001a)",
+          boxShadow: "0 4px 6px rgba(238, 130, 238, 0.1)",
+          borderBottom: "2px solid #ee82ee",
         }}
       >
         <Toolbar>
           <Grid container justifyContent="space-between" alignItems="center" sx={{ width: "100%" }}>
-            <Grid item sx={{ paddingLeft: "15px" }}>
-              <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setOpen(true)}>
+            <Grid item>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={() => setOpen(true)}
+                sx={{
+                  color: "violet",
+                  '&:hover': {
+                    backgroundColor: 'rgba(238, 130, 238, 0.1)',
+                  },
+                }}
+              >
                 <MenuIcon />
               </IconButton>
             </Grid>
             <Grid item>
-              <Box sx={{ display: "flex", gap: "20px" }}>
-                <div>
-                  <ConnectButton />
-                </div>
-                <div style={{paddingTop:"7px"}}>
-                  <a
-                    href="https://arbitrum.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "inherit", textDecoration: "none" }} // Adjust styles as needed
-                  >
-                    {/* Embedding SVG directly */}
-                    { /* Replace 'path/to/arbitrum-logo.svg' with the actual path to your logo */}
-                    <img src="/arb small.png" alt="Arbitrum One Logo" style={{ height: "24px", width: "auto"}} />
-                  </a>
-                </div>
-              </Box>
+              <Typography variant="h6" sx={{ color: "violet", fontWeight: "bold", letterSpacing: "1px" }}>
+                ProphetLady
+              </Typography>
             </Grid>
             <Grid item>
-              <Box sx={{ display: "flex", gap: "20px" }}>
-                {" "}
-                {/* Add this Box component */}
-                <div>
-                  <a
+              <Box sx={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                <ConnectButton />
+                <a
+                  href="https://arbitrum.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <img src="/arb small.png" alt="Arbitrum One Logo" style={{ height: "24px", width: "auto" }} />
+                </a>
+                <Box sx={{ display: "flex", gap: "15px" }}>
+                  <IconButton
                     href="https://discord.gg/dRYtVaS43A"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: "white" }}
+                    sx={{
+                      color: "violet",
+                      '&:hover': {
+                        backgroundColor: 'rgba(238, 130, 238, 0.1)',
+                      },
+                    }}
                   >
                     <FontAwesomeIcon icon={faDiscord} size="lg" />
-                  </a>
-                </div>
-                <div>
-                  <a
+                  </IconButton>
+                  <IconButton
                     href="https://twitter.com/Prophet_lady"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: "white" }}
+                    sx={{
+                      color: "violet",
+                      '&:hover': {
+                        backgroundColor: 'rgba(238, 130, 238, 0.1)',
+                      },
+                    }}
                   >
                     <FontAwesomeIcon icon={faTwitter} size="lg" />
-                  </a>
-                </div>
+                  </IconButton>
+                </Box>
               </Box>
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
-      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}
+      <Drawer
+        anchor="left"
+        open={open}
+        onClose={() => setOpen(false)}
         PaperProps={{
           sx: {
-            backgroundColor: "black", // Replace with your desired background color
+            backgroundColor: "#0a0a0a",
+            width: 250,
           }
-        }}>
-        <List>
-          <Box component={Link} href="/" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="Home"
-              sx={{
-                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
-                borderRadius: '4px', // Optional: adds rounded corners to the border
-                '&:hover': {
-                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
-                  borderColor: 'violet', // Ensures the border remains violet on hover
-                },
-              }}
-            >
-              <ListItemText primary="Home" sx={{ color: 'violet' }} />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/litepaper" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="Litepaper"
-              sx={{
-                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
-                borderRadius: '4px', // Optional: adds rounded corners to the border
-                '&:hover': {
-                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
-                  borderColor: 'violet', // Ensures the border remains violet on hover
-                },
-              }}
-            >
-              <ListItemText primary="Litepaper" sx={{ color: 'violet' }} />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/prophet" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="$PROPHET"
-              sx={{
-                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
-                borderRadius: '4px', // Optional: adds rounded corners to the border
-                '&:hover': {
-                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
-                  borderColor: 'violet', // Ensures the border remains violet on hover
-                },
-              }}
-            >
-              <ListItemText primary="$PROPHET" sx={{ color: 'violet' }} />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/nfts" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="NFTs"
-              sx={{
-                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
-                borderRadius: '4px', // Optional: adds rounded corners to the border
-                '&:hover': {
-                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
-                  borderColor: 'violet', // Ensures the border remains violet on hover
-                },
-              }}
-            >
-              <ListItemText primary="NFTs" sx={{ color: 'violet' }} />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/liquidity" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="Liquidity"
-              sx={{
-                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
-                borderRadius: '4px', // Optional: adds rounded corners to the border
-                '&:hover': {
-                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
-                  borderColor: 'violet', // Ensures the border remains violet on hover
-                },
-              }}
-            >
-              <ListItemText primary="Liquidity" sx={{ color: 'violet' }} />
-            </ListItemButton>
-          </Box>
-          <Box component={Link} href="/rewards" underline="none">
-            <ListItemButton onClick={() => setOpen(false)} key="Rewards"
-              sx={{
-                borderBottom: '1px solid violet', // Applies a violet border only to the bottom
-                borderRadius: '4px', // Optional: adds rounded corners to the border
-                '&:hover': {
-                  backgroundColor: 'rgba(238, 130, 238, 0.1)', // Light violet background on hover
-                  borderColor: 'violet', // Ensures the border remains violet on hover
-                },
-              }}
-            >
-              <ListItemText primary="Rewards" sx={{ color: 'violet' }} />
-            </ListItemButton>
-          </Box>
+        }}
+      >
+        <List sx={{ padding: "20px 0" }}>
+          {["Home", "Litepaper", "$PROPHET", "NFTs", "Liquidity", "Rewards"].map((text, index) => (
+            <Box key={text} component={Link} href={`/${text.toLowerCase() === 'home' ? '' : text.toLowerCase()}`} underline="none">
+              <ListItemButton
+                onClick={() => setOpen(false)}
+                sx={{
+                  borderBottom: '1px solid #4a0e4a',
+                  margin: '8px 16px',
+                  borderRadius: '8px',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    backgroundColor: 'rgba(238, 130, 238, 0.1)',
+                    transform: 'translateX(5px)',
+                  },
+                }}
+              >
+                <ListItemText
+                  primary={text}
+                  sx={{
+                    color: 'violet',
+                    '& .MuiListItemText-primary': {
+                      fontWeight: 'bold',
+                    },
+                  }}
+                />
+              </ListItemButton>
+            </Box>
+          ))}
         </List>
-      </Drawer >
+      </Drawer>
     </>
   );
 };
