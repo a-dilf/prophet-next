@@ -13,6 +13,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@heroicons/react": "^2.1.5",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
     "@rainbow-me/rainbowkit": "^2.1.2",
@@ -28,6 +29,10 @@
   "devDependencies": {
     "@types/node": "^18.19.3",
     "@types/react": "^18.3.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.0.0",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "tailwindcss": "^3.4.6",
     "typescript": "5.4.2"
   },
   "description": "Contract here: https://gist.github.com/peduarte/b48fbf6ff35de431207d68250679a05b",

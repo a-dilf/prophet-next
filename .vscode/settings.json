@@ -1,22 +1,20 @@
 {
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": false,
-        "**/.hg": false,
-        "**/CVS": false,
-        "**/.DS_Store": false,
-        "**/Thumbs.db": false,
-        ".codesandbox": false,
-        ".devcontainer": false,
-        "abi_objects": false,
-        "LICENSE": true,
-        "**/CHANGELOG.md": true,
-        "frontend_meta_data.json": true,
-        "**/node_modules": true,
-        ".next": true
-    },
-    "explorerExclude.backup": {},
-    "cSpell.words": [
-        "Wagmi"
-    ]
+  "files.exclude": {
+    ".codesandbox": false,
+    ".devcontainer": false,
+    ".next": true,
+    "**/.DS_Store": false,
+    "**/.git": true,
+    "**/.hg": false,
+    "**/.svn": false,
+    "**/CHANGELOG.md": true,
+    "**/CVS": false,
+    "**/node_modules": true,
+    "**/Thumbs.db": false,
+    "abi_objects": false,
+    "frontend_meta_data.json": true,
+    "LICENSE": true
+  },
+  "explorerExclude.backup": {},
+  "cSpell.words": ["rabby", "wagmi"]
 }
