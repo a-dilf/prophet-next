@@ -74,7 +74,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const routerContractConfig = {
         address: process.env.NEXT_PUBLIC_ROUTER_ADDRESS as '0x${string}',
         abi: router_abi,
-        args: [BigInt(Number(tokenAmountToAdd) * 1000000000000000000), reservesProphet, reservesEth],
+        args: [BigInt(Number(tokenAmountToAdd)), reservesProphet, reservesEth],
         functionName: 'quote',
     } as const;
 
@@ -82,10 +82,27 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     const untaxedContractConfig = {
         address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
         abi: untaxed_abi,
-        args: [BigInt(Number(tokenAmountToAdd) * 1000000000000000000)],
+        args: [BigInt(Number(tokenAmountToAdd))],
         value: BigInt(ethAmountToAddInWei),
         functionName: "addLiquidityETHUntaxed",
     } as const;
+
+    // args: [BigInt(1)],
+    // value: BigInt(6620423905),
+    
+    // require(msg.value >= _tokenAmount * ethReserve / tokenReserve, "Not enough ETH sent");
+
+    /*
+        // amount of eth needed
+        (uint256 ethReserve, uint256 tokenReserve,) = realPair.getReserves();
+        uint256 amountETH = uniswapV2Router.quote(tokenAmountForLiquidity, tokenReserve, ethReserve);
+
+        vm.startPrank(topHolder);
+        realToken.approve(address(realUnLiq), tokenAmountForLiquidity);
+        realUnLiq.addLiquidityETHUntaxed{value: amountETH}(tokenAmountForLiquidity);
+    */
+
+    console.log("&&& amount to add, eth amount to add - ", Number(tokenAmountToAdd), ethAmountToAddInWei)
 
     const pairContractConfig = {
         address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
@@ -113,6 +130,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
 
     React.useEffect(() => {
         if (reserves) {
+            console.log(reserves)
             // TODO - check if amount comes in as WEI
             // setEthAmountToAdd(BigInt(toWei(Number(ethAmount), "wei")));
             setReservesEth(reserves[0])
@@ -123,6 +141,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     //// READ OPERATIONS
     React.useEffect(() => {
         if (ethAmount) {
+            // setEthAmountToAdd((BigInt(Math.floor(Number(ethAmount) / 1000000000000000000))));
             setEthAmountToAdd(ethAmount);
         }
     }, [ethAmount]);
