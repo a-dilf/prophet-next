@@ -79,10 +79,21 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     } as const;
 
     // use ETH quote amount and token amount in proper peg ratio
+    // token provided as arg should be in 10**18 denomination
+    const untaxedEthEstimateContractConfig = {
+        address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
+        abi: untaxed_abi,
+        args: [BigInt(Number(tokenAmountToAdd) * 1000000000000000000)],
+        functionName: "getEthAmountNeededForTokenAmount",
+    } as const;
+
+    console.log(tokenAmountToAdd)
+
+    // use ETH quote amount and token amount in proper peg ratio
     const untaxedContractConfig = {
         address: process.env.NEXT_PUBLIC_UNTAXED_LIQUIDITY_ADDRESS as '0x${string}',
         abi: untaxed_abi,
-        args: [BigInt(Number(tokenAmountToAdd))],
+        args: [BigInt(Number(tokenAmountToAdd) * 1000000000000000000)],
         value: BigInt(ethAmountToAddInWei),
         functionName: "addLiquidityETHUntaxed",
     } as const;
@@ -120,7 +131,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     });
 
     const { data: ethAmount } = useReadContract({
-        ...routerContractConfig,
+        ...untaxedEthEstimateContractConfig,
     });
 
     const { data: allowanceAmount } = useReadContract({
@@ -142,6 +153,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
     React.useEffect(() => {
         if (ethAmount) {
             // setEthAmountToAdd((BigInt(Math.floor(Number(ethAmount) / 1000000000000000000))));
+            console.log("$$$ ", ethAmount)
             setEthAmountToAdd(ethAmount);
         }
     }, [ethAmount]);
