@@ -11,8 +11,6 @@ import { Typography, Button, Box } from '@mui/material';
 import { token_abi } from '../../abi_objects/token_abi';
 import { nft_abi } from '../../abi_objects/nft_abi';
 
-console.log("nft_abi: ", nft_abi)
-
 import { toWei } from 'web3-utils';
 
 // rainbowkit+ imports

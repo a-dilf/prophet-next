@@ -144,7 +144,7 @@ const Prophet: NextPage = () => {
 
   React.useEffect(() => {
     if (userStakedProphet) {
-      setUserStakedTokensState(userStakedProphet[0]);
+      setUserStakedTokensState(userStakedProphet);
     }
   }, [userStakedProphet]);
 

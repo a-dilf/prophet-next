@@ -85,8 +85,8 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
 
     React.useEffect(() => {
         if (stakedAmount) {
-            settokenAmountToRemove(BigInt(stakedAmount[0]));
-            setCurrentlyStakedTokens(BigInt(stakedAmount[0]))
+            settokenAmountToRemove(BigInt(stakedAmount));
+            setCurrentlyStakedTokens(BigInt(stakedAmount))
         }
     }, [stakedAmount]);
 
