@@ -67,7 +67,7 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
     const stakeTokensContractConfig = {
         address: process.env.NEXT_PUBLIC_LP_STAKING_ADDRESS as '0x${string}',
         abi: staking_lp_abi,
-        args: [BigInt(tokenAmountToAdd), address as '0x${string}'],
+        args: [BigInt(Number(tokenAmountToAdd) * 1000000000000000000), address as '0x${string}'],
         functionName: "deposit",
     } as const;
 

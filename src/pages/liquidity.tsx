@@ -15,6 +15,7 @@ import {
 // abi objects
 import { pair_abi } from '../../abi_objects/pair_abi';
 import { staking_lp_abi } from '../../abi_objects/staking_lp_abi';
+import { lp_abi } from 'abi_objects/lp_abi';
 
 // component imports
 import LiquidityCard from '../../components/cards/LiquidityCard';
@@ -57,10 +58,13 @@ const Liquidity: NextPage = () => {
     } as const;
 
     const totalStakingBalanceOfContractConfig = {
-        address: process.env.NEXT_PUBLIC_LP_STAKING_ADDRESS as '0x${string}',
-        abi: staking_lp_abi,
-        functionName: "poolInfo"
+        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
+        abi: lp_abi,
+        args: [process.env.NEXT_PUBLIC_LP_STAKING_ADDRESS as '0x${string}'],
+        functionName: "balanceOf"
     } as const;
+
+    //  lpToken.balanceOf(LPFarm)
 
     //// READ OPERATIONS
     const { data: reserves } = useReadContract({
@@ -106,7 +110,7 @@ const Liquidity: NextPage = () => {
             // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
             // settokenAmountToRemove(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
             const userAmountInWei = BigInt(toWei(Number(stakingBalance[0]), "wei"))
-            setCurrentlyStakedTokens(BigInt( BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000))))
+            setCurrentlyStakedTokens(BigInt(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000))))
         }
     }, [stakingBalance]);
 
@@ -115,9 +119,9 @@ const Liquidity: NextPage = () => {
             // TODO - check if amount comes in as WEI
             // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
             // settokenAmountToRemove(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
-            const totalStakeAmountInWei = BigInt(toWei(Number(totalStakingBalance[0]), "wei"))
-            // setTotalStakedTokens(BigInt( BigInt(Math.floor(Number(totalStakeAmountInWei) / 1000000000000000000))))
-            setTotalStakedTokens(BigInt(totalStakeAmountInWei))
+            // const totalStakeAmountInWei = BigInt(toWei(Number(totalStakingBalance), "wei") * 1000000000000000000)
+            setTotalStakedTokens(BigInt(BigInt(Math.floor(Number(totalStakingBalance) * 1000000000000000000))))
+
         }
     }, [totalStakingBalance]);
 
