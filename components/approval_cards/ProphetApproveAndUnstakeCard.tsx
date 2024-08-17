@@ -62,7 +62,7 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
     const stakeTokensContractConfig = {
         address: process.env.NEXT_PUBLIC_TOKEN_STAKING_ADDRESS as '0x${string}',
         abi: staking_token_abi,
-        args: [BigInt(tokenAmountToRemove)],
+        args: [BigInt(Number(tokenAmountToRemove) * 1000000000000000000)],
         functionName: "unstake",
     } as const;
 
@@ -85,7 +85,7 @@ const ProphetApproveAndUnstakeCard: React.FC<ProphetApproveAndUnstakeCardProps> 
 
     React.useEffect(() => {
         if (stakedAmount) {
-            settokenAmountToRemove(BigInt(stakedAmount));
+            settokenAmountToRemove(BigInt(Number(stakedAmount) / 1000000000000000000));
             setCurrentlyStakedTokens(BigInt(stakedAmount))
         }
     }, [stakedAmount]);
