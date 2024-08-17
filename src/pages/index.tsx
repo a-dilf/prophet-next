@@ -194,10 +194,6 @@ const Home: NextPage = () => {
                 <TableCell className={styles.table}># of tokens burnt:</TableCell>
                 <TableCell className={styles.table}>{Number(burnedTokenBalanceState)}</TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Apr</TableCell>
-                <TableCell className={styles.table}>X</TableCell>
-              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
