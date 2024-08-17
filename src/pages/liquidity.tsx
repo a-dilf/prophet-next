@@ -30,6 +30,7 @@ const Liquidity: NextPage = () => {
     const [reservesProphet, setReservesProphet] = React.useState(0n);
     const [reservesEth, setReservesEth] = React.useState(0n);
     const [userLPTBalanceState, setUserLPTBalanceState] = React.useState(0n);
+    const [userLPTBalanceStateDisplay, setUserLPTBalanceStateDisplay] = React.useState(0n);
     const [currentlyStakedTokens, setCurrentlyStakedTokens] = React.useState(0n);
     const [totalStakedTokens, setTotalStakedTokens] = React.useState(0n);
 
@@ -100,6 +101,7 @@ const Liquidity: NextPage = () => {
             const userAmountInWei = BigInt(toWei(Number(userBalance), "wei"))
             console.log("aount: ", userAmountInWei)
             // setUserLPTBalanceState(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
+            setUserLPTBalanceStateDisplay(BigInt(Number(userBalance) * 1000000000000000000))
             setUserLPTBalanceState(BigInt(userBalance));
         }
     }, [userBalance]);
@@ -120,8 +122,8 @@ const Liquidity: NextPage = () => {
             // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
             // settokenAmountToRemove(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
             // const totalStakeAmountInWei = BigInt(toWei(Number(totalStakingBalance), "wei") * 1000000000000000000)
-            setTotalStakedTokens(BigInt(BigInt(Math.floor(Number(totalStakingBalance) * 1000000000000000000))))
-
+            // setTotalStakedTokens(BigInt(BigInt(Math.floor(Number(totalStakingBalance) * 1000000000000000000))))
+            setTotalStakedTokens(BigInt(Number(totalStakingBalance) / 1000000000000000000))
         }
     }, [totalStakingBalance]);
 
