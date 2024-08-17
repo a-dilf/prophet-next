@@ -460,7 +460,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                                 variant="contained"
                                 style={{ marginTop: 24, marginLeft: 15 }}
                                 disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
-                                data-mint-started={isStakeStarted && !isStakeLoading}
+                                data-mint-started={isStakeLoading && !isStakeStarted}
                                 data-mint-complete={!isStakeLoading && isStakeStarted}
                                 onClick={() =>
                                     stake?.({
@@ -470,7 +470,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                             >
                                 {!isStakeLoading && !isStakeStarted && "stake"}
                                 {isStakeLoading && 'exe'}
-                                {!isStakeStarted && isStakeStarted && 'complete'}
+                                {!isStakeLoading && isStakeStarted && 'complete'}
                             </Button>
                         </Box>
                     )}

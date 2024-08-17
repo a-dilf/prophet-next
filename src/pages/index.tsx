@@ -73,8 +73,8 @@ const Home: NextPage = () => {
 
   React.useEffect(() => {
     if (taxRewardsAmount) {
-      const taxRewardsAmountInEth = toWei(taxRewardsAmount, "ether")
-      setTaxRewardsState(25 / 1000000000000000000);
+      const taxRewardsAmountInEth = toWei(taxRewardsAmount, "wei")
+      setTaxRewardsState(Number(taxRewardsAmountInEth) / 1000000000000000000);
       // setTaxRewardsState(BigInt(Number(taxRewardsAmount) / 1000000000000000000));
       // setTaxRewardsState("1000000000000000000" + taxRewardsAmount.toString());
     }

@@ -163,7 +163,7 @@ const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, car
             // TODO - check if amount comes in as WEI
             // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
             const userAmountInWei = BigInt(toWei(Number(userBalance), "wei"))
-            setTokenAmountToAdd(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
+            setTokenAmountToAdd(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)) - BigInt(1));
             setMaxAllowance(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
         }
     }, [userBalance]);
