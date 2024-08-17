@@ -50,7 +50,7 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
     const stakeTokensContractConfig = {
         address: process.env.NEXT_PUBLIC_LP_STAKING_ADDRESS as '0x${string}',
         abi: staking_lp_abi,
-        args: [BigInt(tokenAmountToRemove), address as '0x${string}'],
+        args: [BigInt(Number(tokenAmountToRemove) * 1000000000000000000), address as '0x${string}'],
         functionName: "withdraw",
     } as const;
 
@@ -64,7 +64,7 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
             // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
             const userAmountInWei = BigInt(toWei(Number(userBalance[0]), "wei"))
             // settokenAmountToRemove(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
-            settokenAmountToRemove(BigInt(userBalance[0]));
+            settokenAmountToRemove(BigInt(Number(userBalance[0]) / 1000000000000000000));
             setCurrentlyStakedTokens(BigInt(userBalance[0]))
         }
     }, [userBalance]);

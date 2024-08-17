@@ -52,7 +52,8 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
     const allowanceContractConfig = {
         address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
         abi: lp_abi,
-        args: [address as '0x${string}', process.env.NEXT_PUBLIC_LP_STAKING_ADDRESS as '0x${string}']
+        args: [address as '0x${string}', process.env.NEXT_PUBLIC_LP_STAKING_ADDRESS as '0x${string}'],
+        functionName: "allowance"
     } as const;
 
     // approval of proxy contracts
@@ -60,7 +61,8 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
     const approvingContractConfig = {
         address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
         abi: lp_abi,
-        args: [process.env.NEXT_PUBLIC_LP_STAKING_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToAdd), "ether"))]
+        args: [process.env.NEXT_PUBLIC_LP_STAKING_ADDRESS as '0x${string}', BigInt(toWei(Number(tokenAmountToAdd), "ether"))],
+        functionName: "approve",
     } as const;
 
     // stake tokens function
@@ -77,7 +79,6 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
 
     const { data: allowanceAmount } = useReadContract({
         ...allowanceContractConfig,
-        functionName: "allowance"
     });
 
     React.useEffect(() => {
@@ -94,9 +95,12 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
     // TODO redflag here!!
     React.useEffect(() => {
         if (allowanceAmount) {
+            console.log("allowance: ", currentAllowance)
             setStateAllowanceAmount(BigInt(toWei(tokenAmountToAdd, "ether")))
         }
     }, [allowanceAmount]);
+
+    console.log("allowance2: ", currentAllowance)
 
     //// WRITE OPERATIONS
     // let user approve $PROPHET tokens
@@ -193,7 +197,7 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
             // setOpen(true);
         }
     }, [approveTxError]);
-
+    
     // import ErrorAlert from '../ErrorAlert';
     // <ErrorAlert errorMessage={errorMessage} setErrorMessage={setErrorMessage}></ErrorAlert>
 
@@ -241,7 +245,6 @@ const LiquidityApproveAndStakeCard: React.FC<LiquidityApproveAndStakeCardProps> 
                             onClick={() =>
                                 approve?.({
                                     ...approvingContractConfig,
-                                    functionName: "approve",
                                 })
                             }
                         >
