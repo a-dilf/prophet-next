@@ -123,7 +123,7 @@ const Liquidity: NextPage = () => {
             // settokenAmountToRemove(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
             // const totalStakeAmountInWei = BigInt(toWei(Number(totalStakingBalance), "wei") * 1000000000000000000)
             // setTotalStakedTokens(BigInt(BigInt(Math.floor(Number(totalStakingBalance) * 1000000000000000000))))
-            setTotalStakedTokens(BigInt(Number(totalStakingBalance) / 1000000000000000000))
+            setTotalStakedTokens(BigInt(Math.floor(Number(totalStakingBalance) / 1000000000000000000)))
         }
     }, [totalStakingBalance]);
 
