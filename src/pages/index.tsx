@@ -17,13 +17,13 @@ import {
 } from 'wagmi';
 
 const addressesForAccordian = [
-  { card_title: "token", contract_address: "0x9daa44637Ac3417fBC9198E0464c7F8b5759d5A3" },
-  { card_title: "nft", contract_address: "0xA7b205092cCB9D581CECfA0439b61f2A44605118" },
-  { card_title: "vault", contract_address: "0xF1a806485C311f8bFca232F8ea5058EfC4422cf3" },
-  { card_title: "liquidity pool", contract_address: "0x190685e825c14a8D89672f17035EFC8DB53b12F4" },
-  { card_title: "token staking", contract_address: "0x3Cb43455702BC99ab696670AFCA630C8c66c8005" },
-  { card_title: "nft staking", contract_address: "0x1D51b0aB7018a86ADD284f881FA6fC47aeD7AF96" },
-  { card_title: "lp staking", contract_address: "0xeE8f87c7cd22D8939eB825dc55e0D0380A849DE1" },
+  { card_title: "token", contract_address: "0xb9E0b8385B63d94367043b248414C58a94A37932" },
+  { card_title: "nft", contract_address: "0xC21Bd794cC47443692A485cC4B6B1200becCF89d" },
+  { card_title: "vault", contract_address: "0xAcaFE370403d7172539d96Df62979221116313eB" },
+  { card_title: "liquidity pool", contract_address: "0x6bD1A20Da7Cb05394dE87197EC8b02E67D249C03" },
+  { card_title: "token staking", contract_address: "0x37EA4C3fd77DBf4e796f86fC75bCde83567c846e" },
+  { card_title: "nft staking", contract_address: "0x63B2d27F4B1cCFacE4CE048856647C38a35beac0" },
+  { card_title: "lp staking", contract_address: "0x6e5451ac32FA376FE8BEFEa0f37Fc665f4020677" },
 ]
 
 const Home: NextPage = () => {
