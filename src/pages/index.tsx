@@ -84,7 +84,7 @@ const Home: NextPage = () => {
     if (vaultTokensLeft) {
       let convertedVaultTokens = Number(BigInt(Math.floor(Number(vaultTokensLeft) / 1000000000000000000)))
       
-      const startDate = new Date('2024-06-08T00:37:12Z'); // 'Z' indicates UTC
+      const startDate = new Date('2024-08-16T22:22:20Z'); // 'Z' indicates UTC
       const currentDate = new Date();
       const differenceInTime = currentDate.getTime() - startDate.getTime();
       const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // Convert milliseconds to days
