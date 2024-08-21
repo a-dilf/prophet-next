@@ -273,11 +273,11 @@ const Prophet: NextPage = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={styles.table}>Total $PROPHET tokens staked:</TableCell>
-                <TableCell className={styles.table}>{Number(totalStakedTokensState) / 1000000000000000000}</TableCell>
+                <TableCell className={styles.table}>{Math.floor(Number(totalStakedTokensState) / 1000000000000000000)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className={styles.table}>$PROPHET staked by 0x{String(address).slice(-4)}:</TableCell>
-                <TableCell className={styles.table}>{Number(userStakedTokensState) / 1000000000000000000}</TableCell>
+                <TableCell className={styles.table}>{Math.floor(Number(userStakedTokensState) / 1000000000000000000)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

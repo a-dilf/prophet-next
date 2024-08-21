@@ -147,15 +147,15 @@ const Liquidity: NextPage = () => {
                             </TableRow>
                             <TableRow>
                                 <TableCell className={styles.table}>Liquidity tokens owned by 0x{String(address).slice(-4)}:</TableCell>
-                                <TableCell className={styles.table}>{Number(toWei(Number(userLPTBalanceState), "wei")) / 1000000000000000000}</TableCell>
+                                <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(userLPTBalanceState), "wei")) / 1000000000000000000)}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={styles.table}>Total liquidity tokens staked:</TableCell>
-                                <TableCell className={styles.table}>{Number(totalStakedTokens)}</TableCell>
+                                <TableCell className={styles.table}>{Math.floor(Number(totalStakedTokens))}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell className={styles.table}>Liquidity tokens staked by 0x{String(address).slice(-4)}:</TableCell>
-                                <TableCell className={styles.table}>{Number(currentlyStakedTokens)}</TableCell>
+                                <TableCell className={styles.table}>{Math.floor(Number(currentlyStakedTokens))}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
