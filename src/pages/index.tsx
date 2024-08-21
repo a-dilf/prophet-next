@@ -28,7 +28,7 @@ const addressesForAccordian = [
 
 const Home: NextPage = () => {
   const [mounted, setMounted] = React.useState(false);
-  const [burnedTokenBalanceState, setBurnedTokenBalance] = React.useState(0n);
+  const [totalSupplyState, settotalSupply] = React.useState(0n);
   const [taxRewardsState, setTaxRewardsState] = React.useState(0);
   const [tokensInCirculation, setTokensInCirculation] = React.useState(0n);
 
@@ -37,8 +37,7 @@ const Home: NextPage = () => {
   const burnBalanceOfContractConfig = {
     address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as '0x${string}',
     abi: token_abi,
-    args: ["0x0000000000000000000000000000000000000000"],
-    functionName: "balanceOf"
+    functionName: "totalSupply"
   } as const;
 
   const tokensRemainingInValtContractConfig = {
@@ -53,7 +52,7 @@ const Home: NextPage = () => {
     functionName: 'taxFromParticipation',
   } as const;
 
-  const { data: burnedTokenBalance } = useReadContract({
+  const { data: totalSupply } = useReadContract({
     ...burnBalanceOfContractConfig,
   });
 
@@ -66,10 +65,11 @@ const Home: NextPage = () => {
   });
 
   React.useEffect(() => {
-    if (burnedTokenBalance) {
-      setBurnedTokenBalance(BigInt(Math.floor(Number(burnedTokenBalance) / 1000000000000000000)));
+    if (totalSupply) {
+      const tokensBurned = 200000000000000000000000000000 - Number(totalSupply)
+      settotalSupply(BigInt(Math.floor(tokensBurned / 1000000000000000000)));
     }
-  }, [burnedTokenBalance]);
+  }, [totalSupply]);
 
   React.useEffect(() => {
     if (taxRewardsAmount) {
@@ -192,7 +192,7 @@ const Home: NextPage = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={styles.table}># of tokens burnt:</TableCell>
-                <TableCell className={styles.table}>{Number(burnedTokenBalanceState)}</TableCell>
+                <TableCell className={styles.table}>{Number(totalSupplyState)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
