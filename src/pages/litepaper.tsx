@@ -174,13 +174,60 @@ const Litepaper: NextPage = () => {
                 <Typography variant="h6" component="div" sx={{ mb: 2 }}> {/* Customize the title here */}
                     Chart of ido sales structure with price and implied FDV
                 </Typography>
-                <Box sx={{ width: '100%', height: 'auto', paddingTop: "15px", paddingBottom: "15px" }}>
-                    <img
-                        src="idochart.png"
-                        alt="ido sales structure"
-                        style={{ width: '100%', height: 'auto' }} // Inline styling
-                    />
-                </Box>
+                <TableContainer>
+                    <Table>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell className={styles.table}>No NFT</TableCell>
+                                <TableCell className={styles.table}>131%</TableCell>
+                                <TableCell className={styles.table}>132%</TableCell>
+                                <TableCell className={styles.table}>133%</TableCell>
+                                <TableCell className={styles.table}>134%</TableCell>
+                                <TableCell className={styles.table}>135%</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={styles.table}>Tier 1</TableCell>
+                                <TableCell className={styles.table}>11%</TableCell>
+                                <TableCell className={styles.table}>11%</TableCell>
+                                <TableCell className={styles.table}>11%</TableCell>
+                                <TableCell className={styles.table}>11%</TableCell>
+                                <TableCell className={styles.table}>11%</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={styles.table}>Tier 2</TableCell>
+                                <TableCell className={styles.table}>9%</TableCell>
+                                <TableCell className={styles.table}>9%</TableCell>
+                                <TableCell className={styles.table}>9%</TableCell>
+                                <TableCell className={styles.table}>9%</TableCell>
+                                <TableCell className={styles.table}>9%</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={styles.table}>Tier 3</TableCell>
+                                <TableCell className={styles.table}>7%</TableCell>
+                                <TableCell className={styles.table}>7%</TableCell>
+                                <TableCell className={styles.table}>7%</TableCell>
+                                <TableCell className={styles.table}>7%</TableCell>
+                                <TableCell className={styles.table}>7%</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={styles.table}>Tier 4</TableCell>
+                                <TableCell className={styles.table}>5%</TableCell>
+                                <TableCell className={styles.table}>5%</TableCell>
+                                <TableCell className={styles.table}>5%</TableCell>
+                                <TableCell className={styles.table}>5%</TableCell>
+                                <TableCell className={styles.table}>5%</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={styles.table}>Tier 5</TableCell>
+                                <TableCell className={styles.table}>3%</TableCell>
+                                <TableCell className={styles.table}>3%</TableCell>
+                                <TableCell className={styles.table}>3%</TableCell>
+                                <TableCell className={styles.table}>3%</TableCell>
+                                <TableCell className={styles.table}>3%</TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
 
             <div className="container">
