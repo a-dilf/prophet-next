@@ -172,58 +172,40 @@ const Litepaper: NextPage = () => {
                 </Box>
 
                 <Typography variant="h6" component="div" sx={{ mb: 2 }}> {/* Customize the title here */}
-                    Chart of ido sales structure with price and implied FDV
+                    A table infographic of ido sales structure with round, price, and total raise amount
                 </Typography>
                 <TableContainer>
                     <Table>
                         <TableBody>
                             <TableRow>
-                                <TableCell className={styles.table}>No NFT</TableCell>
-                                <TableCell className={styles.table}>131%</TableCell>
-                                <TableCell className={styles.table}>132%</TableCell>
-                                <TableCell className={styles.table}>133%</TableCell>
-                                <TableCell className={styles.table}>134%</TableCell>
-                                <TableCell className={styles.table}>135%</TableCell>
+                                <TableCell className={styles.table}>Round 1</TableCell>
+                                <TableCell className={styles.table}>.000000003125 Eth</TableCell>
+                                <TableCell className={styles.table}>62.5 Eth</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 1</TableCell>
-                                <TableCell className={styles.table}>11%</TableCell>
-                                <TableCell className={styles.table}>11%</TableCell>
-                                <TableCell className={styles.table}>11%</TableCell>
-                                <TableCell className={styles.table}>11%</TableCell>
-                                <TableCell className={styles.table}>11%</TableCell>
+                                <TableCell className={styles.table}>Round 2</TableCell>
+                                <TableCell className={styles.table}>.00000000625 Eth</TableCell>
+                                <TableCell className={styles.table}>125 Eth</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 2</TableCell>
-                                <TableCell className={styles.table}>9%</TableCell>
-                                <TableCell className={styles.table}>9%</TableCell>
-                                <TableCell className={styles.table}>9%</TableCell>
-                                <TableCell className={styles.table}>9%</TableCell>
-                                <TableCell className={styles.table}>9%</TableCell>
+                                <TableCell className={styles.table}>Round 3</TableCell>
+                                <TableCell className={styles.table}>.0000000125 Eth</TableCell>
+                                <TableCell className={styles.table}>250 Eth</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 3</TableCell>
-                                <TableCell className={styles.table}>7%</TableCell>
-                                <TableCell className={styles.table}>7%</TableCell>
-                                <TableCell className={styles.table}>7%</TableCell>
-                                <TableCell className={styles.table}>7%</TableCell>
-                                <TableCell className={styles.table}>7%</TableCell>
+                                <TableCell className={styles.table}>Round 4</TableCell>
+                                <TableCell className={styles.table}>.000000025 Eth</TableCell>
+                                <TableCell className={styles.table}>500 Eth</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 4</TableCell>
-                                <TableCell className={styles.table}>5%</TableCell>
-                                <TableCell className={styles.table}>5%</TableCell>
-                                <TableCell className={styles.table}>5%</TableCell>
-                                <TableCell className={styles.table}>5%</TableCell>
-                                <TableCell className={styles.table}>5%</TableCell>
+                                <TableCell className={styles.table}>Round 5</TableCell>
+                                <TableCell className={styles.table}>.00000005 Eth</TableCell>
+                                <TableCell className={styles.table}>1000 Eth</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={styles.table}>Tier 5</TableCell>
-                                <TableCell className={styles.table}>3%</TableCell>
-                                <TableCell className={styles.table}>3%</TableCell>
-                                <TableCell className={styles.table}>3%</TableCell>
-                                <TableCell className={styles.table}>3%</TableCell>
-                                <TableCell className={styles.table}>3%</TableCell>
+                                <TableCell className={styles.table}>Round 6</TableCell>
+                                <TableCell className={styles.table}>.0000001 Eth</TableCell>
+                                <TableCell className={styles.table}>2000 Eth</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
