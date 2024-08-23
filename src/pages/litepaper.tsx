@@ -212,6 +212,10 @@ const Litepaper: NextPage = () => {
                 </TableContainer>
             </div>
 
+              <Typography variant="h6" component="div" sx={{ mb: 2 }}> {/* Customize the title here */}
+                    Additionally, there is one last piece in this puzzle, there is an "anti jeet" / arbitrage tax of an additional 10% to any ido buyer who then buys or sells from the LP within the same round. Example, user buys in ido rd 1 with a tier 5 nft, until the 1st rd ido is entirely bought out, the tax rate interacting with the LP will be 13% instead of 3%. Once ido rd 2 starts, the tax rate will revert back to 3%  
+                </Typography>
+
             <div className="container">
                 <List sx={{ listStyleType: 'disc' }}>
                     {items.map((item, index) => (
