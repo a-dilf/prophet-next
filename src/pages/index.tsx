@@ -220,7 +220,7 @@ const Home: NextPage = () => {
 
       <div className="container">
         <Typography className="container" variant="h4">How the ecosystem works</Typography>
-        <Typography sx={{ paddingTop: "15px" }}>Users stake $PROPHET tokens to claim a taxed share of trade voulume via a reflection
+        <Typography sx={{ paddingTop: "15px" }}>Users stake $PROPHET tokens to claim a taxed share of trade volume via a reflection
           system. Building upon this simple and popular framework, ProphetLady adds a unique twist: users can burn a set amount of their
           $PROPHET tokens to mint a Milady derivative (the ProphetLady collection) that reduces the tax paid on sells. A ProphetLady can then
           be increased in tier by burning additional $PROPHET tokens for decreased tax rates and access to the NFT staking rewards pool.</Typography>
