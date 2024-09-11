@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 
 import styles from '../styles/Nfts.module.css';
 
-import { Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box } from '@mui/material';
 
 import IconButton from '@mui/material/IconButton';
 import IncrementIcon from '@mui/icons-material/Add'; // Import Add Icon
@@ -173,7 +173,25 @@ const Nfts: NextPage = () => {
         }
     };
 
-    const tokenId = 0
+    const [currentPage, setCurrentPage] = useState(0);
+    const cardsPerPage = 10;
+
+    const displayedCards = ownedNftCardProps.slice(
+        currentPage * cardsPerPage,
+        (currentPage + 1) * cardsPerPage
+    );
+
+    const loadNextCards = () => {
+        if ((currentPage + 1) * cardsPerPage < ownedNftCardProps.length) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const loadPreviousCards = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
     // TODO - make NFTS populate iteratively and fix the always minting forever bug
     // TODO - make unstake flip the card and have the unstake button on the back
@@ -181,50 +199,50 @@ const Nfts: NextPage = () => {
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
             <div className="nfttop">
-            <Typography className="container" variant="h2">NFT Zone</Typography>
-            <div className='container'>
-                <TableContainer>
-                    <Table>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell className={styles.table}>NFTs in circulation:</TableCell>
-                                <TableCell className={styles.table}>{Number(totalMinted)}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className={styles.table}>Total level 5NFTs staked:</TableCell>
-                                <TableCell className={styles.table}>{Number(totalStakedState)}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className={styles.table}>Level 5 NFTs staked by 0x{String(address).slice(-4)}:</TableCell>
-                                <TableCell className={styles.table}>{Number(userStakedState)}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell className={styles.table}>$PROPHET tokens owned 0x{String(address).slice(-4)}:</TableCell>
-                                <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(currentTokenBalanceState), "wei")) / 1000000000000000000)}</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Typography className="container" variant="h2">NFT Zone</Typography>
+                <div className='container'>
+                    <TableContainer>
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell className={styles.table}>NFTs in circulation:</TableCell>
+                                    <TableCell className={styles.table}>{Number(totalMinted)}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell className={styles.table}>Total level 5NFTs staked:</TableCell>
+                                    <TableCell className={styles.table}>{Number(totalStakedState)}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell className={styles.table}>Level 5 NFTs staked by 0x{String(address).slice(-4)}:</TableCell>
+                                    <TableCell className={styles.table}>{Number(userStakedState)}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell className={styles.table}>$PROPHET tokens owned 0x{String(address).slice(-4)}:</TableCell>
+                                    <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(currentTokenBalanceState), "wei")) / 1000000000000000000)}</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+                <div className='container'>
+                    <Typography variant="h3" sx={{ marginTop: "12px" }}>Approve and Mint</Typography>
+                </div>
+                <div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+                    <Typography>Number of NFTS to mint and/or level up: </Typography>
+                    <Box sx={{ border: '1px solid', borderColor: 'secondary.main', borderRadius: '4px', p: 1 }}>
+                        <IconButton onClick={decrementCount}>
+                            <DecrementIcon className={styles.symbol} />
+                        </IconButton>
+                        <span>{mintCount}</span>
+                        <IconButton onClick={incrementCount}>
+                            <IncrementIcon className={styles.symbol} />
+                        </IconButton>
+                    </Box>
+                </div>
             </div>
-            <div className='container'>
-                <Typography variant="h3" sx={{ marginTop: "12px" }}>Approve and Mint</Typography>
-            </div>
-            <div className="container" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-                <Typography>Number of NFTS to mint and/or level up: </Typography>
-                <Box sx={{ border: '1px solid', borderColor: 'secondary.main', borderRadius: '4px', p: 1 }}>
-                    <IconButton onClick={decrementCount}>
-                        <DecrementIcon className={styles.symbol} />
-                    </IconButton>
-                    <span>{mintCount}</span>
-                    <IconButton onClick={incrementCount}>
-                        <IncrementIcon className={styles.symbol} />
-                    </IconButton>
-                </Box>
-            </div>
-            </div>    
             <NftApproveAndActionCard mounted={mounted} isConnected={isConnected} cardTitle={"Approve burning $PROPHET"} amountToApprove={(Number(toWei(mintCount, "ether")) * 400000.01)} allowanceAmount={Number(currentAllowanceState)} mintCount={mintCount} totalMinted={totalMinted} setTotalMinted={setTotalMinted} setOwnedNftCardProps={setOwnedNftCardProps} setStateAllowanceAmount={setStateAllowanceAmount}></NftApproveAndActionCard>
             <Typography className="container" variant="h3">NFTs at 0x{String(address).slice(-4)}</Typography>
-            {ownedNftCardProps.map((cardData, index) => (
+            {displayedCards.map((cardData, index) => (
                 <NftCard
                     key={index}
                     mounted={cardData.mounted}
@@ -234,6 +252,26 @@ const Nfts: NextPage = () => {
                     setStateAllowanceAmount={cardData.setStateAllowanceAmount}
                 />
             ))}
+            <div>
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    style={{ marginTop: 24, marginLeft: 15 }}
+                    onClick={loadPreviousCards} 
+                    disabled={currentPage === 0}
+                >
+                    Previous 10
+                </Button>
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    style={{ marginTop: 24, marginLeft: 15 }}
+                    onClick={loadNextCards}
+                    disabled={(currentPage + 1) * cardsPerPage >= ownedNftCardProps.length}
+                >
+                    Next 10
+                </Button>
+            </div>
         </div>
     );
 };

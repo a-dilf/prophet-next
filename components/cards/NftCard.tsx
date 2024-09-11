@@ -39,9 +39,6 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
 
     const { address } = useAccount();
 
-    console.log("asdf: ", currentAllowanceState)
-    console.log("qwert: ", (5 - Number(tokenTier)), Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000), (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000)
-
     // get image URL for display
     useEffect(() => {
         async function fetchData() {
@@ -52,7 +49,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
         }
 
         fetchData();
-    }, []);
+    }, [tokenId]);
 
     const nftLevelMaxContractConfig = {
         address: process.env.NEXT_PUBLIC_NFT_ADDRESS as '0x${string}',
@@ -484,6 +481,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                         <>
                             {tokenImageUrl && (
                                 <Image
+                                    key={tokenId} // Add this line
                                     layout="fill"
                                     src={tokenImageUrl}
                                     width="500"
@@ -500,10 +498,11 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                     <BackCard isCardFlipped={tokenStakeStatus}>
                         <div style={{ padding: 24 }}>
                             <Image
+                                key={`back-${tokenId}`} // Add this line
                                 src={tokenImageUrl}
                                 width="60"
                                 height="80"
-                                alt="RainbowKit Demo NFT"
+                                alt={`NFT Image ${tokenId}`} // Modify this line
                                 style={{ borderRadius: 8 }}
                                 priority
                             />
