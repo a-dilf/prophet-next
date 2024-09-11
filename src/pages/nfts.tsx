@@ -242,6 +242,26 @@ const Nfts: NextPage = () => {
             </div>
             <NftApproveAndActionCard mounted={mounted} isConnected={isConnected} cardTitle={"Approve burning $PROPHET"} amountToApprove={(Number(toWei(mintCount, "ether")) * 400000.01)} allowanceAmount={Number(currentAllowanceState)} mintCount={mintCount} totalMinted={totalMinted} setTotalMinted={setTotalMinted} setOwnedNftCardProps={setOwnedNftCardProps} setStateAllowanceAmount={setStateAllowanceAmount}></NftApproveAndActionCard>
             <Typography className="container" variant="h3">NFTs at 0x{String(address).slice(-4)}</Typography>
+            <div>
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    style={{ marginTop: 24, marginLeft: 15 }}
+                    onClick={loadPreviousCards} 
+                    disabled={currentPage === 0}
+                >
+                    Previous 10
+                </Button>
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    style={{ marginTop: 24, marginLeft: 15 }}
+                    onClick={loadNextCards}
+                    disabled={(currentPage + 1) * cardsPerPage >= ownedNftCardProps.length}
+                >
+                    Next 10
+                </Button>
+            </div>
             {displayedCards.map((cardData, index) => (
                 <NftCard
                     key={index}
