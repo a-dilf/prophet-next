@@ -39,6 +39,8 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
 
     const { address } = useAccount();
 
+    console.log("inside card -> ", tokenId, tokenTier)
+
     // get image URL for display
     useEffect(() => {
         async function fetchData() {
@@ -344,7 +346,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                                     color="secondary"
                                     variant="contained"
                                     style={{ marginTop: 24, marginLeft: 15 }}
-                                    disabled={!level || isLevelLoading || isLevelStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < 1}
+                                    // disabled={!level || isLevelLoading || isLevelStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < 1}
                                     data-mint-started={isLevelLoading && !isLevelStarted}
                                     data-mint-complete={!isLevelLoading && isLevelStarted}
                                     onClick={() =>
@@ -364,7 +366,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                                 color="secondary"
                                 variant="contained"
                                 style={{ marginTop: 24, marginLeft: 15 }}
-                                disabled={!maxLevel || isMaxLoading || isMaxStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < (5 - Number(tokenTier))}
+                                // disabled={!maxLevel || isMaxLoading || isMaxStarted || Number(tokenTier) >= 5 || (Math.floor(Number(toWei(Number(currentAllowanceState), "wei")) / 1000000000000000000)) / 400000 < (5 - Number(tokenTier))}
                                 data-mint-started={isMaxLoading && !isMaxStarted}
                                 data-mint-complete={!isMaxLoading && isMaxStarted}
                                 onClick={() =>
@@ -382,7 +384,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                                 color="secondary"
                                 variant="contained"
                                 style={{ marginTop: 24, marginLeft: 15 }}
-                                disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
+                                // disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
                                 data-mint-started={isStakeStarted && !isStakeLoading}
                                 data-mint-complete={!isStakeLoading && isStakeStarted}
                                 onClick={() =>
@@ -419,7 +421,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                                 color="secondary"
                                 variant="contained"
                                 style={{ marginTop: 24, marginLeft: 15 }}
-                                disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
+                                // disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
                                 data-mint-started={isStakeStarted && !isStakeLoading}
                                 data-mint-complete={!isStakeLoading && isStakeStarted}
                                 onClick={() =>
@@ -456,7 +458,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
                                 color="secondary"
                                 variant="contained"
                                 style={{ marginTop: 24, marginLeft: 15 }}
-                                disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
+                                // disabled={!stake || isStakeLoading || isStakeStarted || tokenStakeStatusForButton || (Number(tokenTier) < 5)}
                                 data-mint-started={isStakeLoading && !isStakeStarted}
                                 data-mint-complete={!isStakeLoading && isStakeStarted}
                                 onClick={() =>
@@ -543,4 +545,4 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
     );
 };
 
-export default NftCard;
+export default React.memo(NftCard);
