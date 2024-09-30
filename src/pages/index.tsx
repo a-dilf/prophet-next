@@ -136,6 +136,17 @@ const Home: NextPage = () => {
               </Button>
             </Box>
           </Grid>
+          <Grid item>
+            <Box component={Link} href="https://dexscreener.com/arbitrum/0x6bd1a20da7cb05394de87197ec8b02e67d249c03" underline="none">
+              <Button
+                color="secondary"
+                variant="contained"
+                style={{ marginTop: 24, marginLeft: 15 }}
+              >
+                Dex Screener
+              </Button>
+            </Box>
+          </Grid>
         </Grid>
       </div>
       </div>  
