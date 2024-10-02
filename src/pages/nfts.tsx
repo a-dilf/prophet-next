@@ -20,6 +20,8 @@ import {
 import { nft_abi } from '../../abi_objects/nft_abi';
 import { token_abi } from '../../abi_objects/token_abi';
 import { staking_nft_abi } from '../../abi_objects/staking_nft_abi';
+import { usd_abi } from 'abi_objects/usd_abi';
+import { pair_abi } from 'abi_objects/pair_abi';
 
 // component imports
 import NftCard from '../../components/cards/NftCard';
@@ -37,6 +39,9 @@ const Nfts: NextPage = () => {
     const [currentAllowanceState, setStateAllowanceAmount] = React.useState(0n);
     const [ownedNftCardProps, setOwnedNftCardProps] = React.useState(new Array);
     const [currentTokenBalanceState, setCurrentTokenBalanceState] = React.useState(0n);
+    const [ethInUSD, setEthInUSD] = React.useState(0);
+    const [reservesProphet, setReservesProphet] = React.useState(0);
+    const [reservesEth, setReservesEth] = React.useState(0);
 
     const { address, isConnected } = useAccount();
 
@@ -80,7 +85,23 @@ const Nfts: NextPage = () => {
         functionName: 'balanceOf',
     } as const;
 
+     // contract config objects
+     const usdcPairContractConfig = {
+        address: "0xC6962004f452bE9203591991D15f6b388e09E8D0",
+        abi: usd_abi
+    } as const;
+
+    const pairContractConfig = {
+        address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
+        abi: pair_abi
+    } as const;
+
     //// READ OPERATIONS
+    const { data: reserves } = useReadContract({
+        ...pairContractConfig,
+        functionName: 'getReserves',
+    });
+
     const { data: currentBalance } = useReadContract({
         ...balanceOfContractConfig,
     });
@@ -108,8 +129,37 @@ const Nfts: NextPage = () => {
         ...userStakedContractConfig,
     });
 
+    const { data: usd_price } = useReadContract({
+        ...usdcPairContractConfig,
+        functionName: 'slot0',
+    });
 
     //// STATE UPDATES
+    React.useEffect(() => {
+        if (reserves) {
+            // TODO - check if amount comes in as WEI
+            // setEthAmountToAdd(BigInt(toWei(Number(ethAmount), "wei")));
+            const reserves0_wei = Number(reserves[0]) / 1000000000000000000
+            const reserves1_wei = Number(reserves[1]) / 1000000000000000000
+            
+            console.log("reserves ", reserves[0], reserves[1])
+            console.log("reserves ", reserves0_wei / reserves1_wei)
+            console.log("reserves ", reserves1_wei / reserves0_wei)
+            console.log("USD cost basis ", (reserves0_wei / reserves1_wei) * ethInUSD)
+
+            setReservesEth(reserves0_wei)
+            setReservesProphet(reserves1_wei);
+        }
+    }, [reserves]);
+
+    React.useEffect(() => {
+        if (usd_price) {
+            const price = (Number(usd_price[0]) * Number(usd_price[0]) * (10**18) / (2**192));
+            console.log("USD: ", usd_price[0], price / 1000000)
+            setEthInUSD(price / 1000000)
+        }
+    }, [usd_price]);
+
     // update state with the read results
     React.useEffect(() => {
         if (ownedNfts && currentAllowanceState >= 0) {
@@ -194,8 +244,8 @@ const Nfts: NextPage = () => {
     };
 
     // TODO - make NFTS populate iteratively and fix the always minting forever bug
-    // TODO - make unstake flip the card and have the unstake button on the back
-
+    // TODO - make unstake flip the card and have the unstake button on the bac
+    
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
             <div className="nfttop">
@@ -207,6 +257,10 @@ const Nfts: NextPage = () => {
                                 <TableRow>
                                     <TableCell className={styles.table}>NFTs in circulation:</TableCell>
                                     <TableCell className={styles.table}>{Number(totalMinted)}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell className={styles.table}>APR for NFT staking</TableCell>
+                                    <TableCell className={styles.table}>{((1 / Number(totalStakedState) * 7500000 * 365 * ((reservesEth / reservesProphet) * ethInUSD) / 25) * 100)}%</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell className={styles.table}>Total level 5NFTs staked:</TableCell>
