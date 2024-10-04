@@ -141,11 +141,6 @@ const Nfts: NextPage = () => {
             // setEthAmountToAdd(BigInt(toWei(Number(ethAmount), "wei")));
             const reserves0_wei = Number(reserves[0]) / 1000000000000000000
             const reserves1_wei = Number(reserves[1]) / 1000000000000000000
-            
-            console.log("reserves ", reserves[0], reserves[1])
-            console.log("reserves ", reserves0_wei / reserves1_wei)
-            console.log("reserves ", reserves1_wei / reserves0_wei)
-            console.log("USD cost basis ", (reserves0_wei / reserves1_wei) * ethInUSD)
 
             setReservesEth(reserves0_wei)
             setReservesProphet(reserves1_wei);
@@ -155,7 +150,6 @@ const Nfts: NextPage = () => {
     React.useEffect(() => {
         if (usd_price) {
             const price = (Number(usd_price[0]) * Number(usd_price[0]) * (10**18) / (2**192));
-            console.log("USD: ", usd_price[0], price / 1000000)
             setEthInUSD(price / 1000000)
         }
     }, [usd_price]);
@@ -176,8 +170,6 @@ const Nfts: NextPage = () => {
             setOwnedNftCardProps(nftCardsData)
         }
     }, [ownedNfts, currentAllowanceState]);
-
-    console.log("current allowance: ", currentAllowanceState)
 
     React.useEffect(() => {
         if (totalSupplyData) {
@@ -260,7 +252,7 @@ const Nfts: NextPage = () => {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell className={styles.table}>APR for NFT staking</TableCell>
-                                    <TableCell className={styles.table}>{((1 / Number(totalStakedState) * 7500000 * 365 * ((reservesEth / reservesProphet) * ethInUSD) / 25) * 100)}%</TableCell>
+                                    <TableCell className={styles.table}>{Math.floor(((1 / Number(totalStakedState) * 7500000 * 365 * ((reservesEth / reservesProphet) * ethInUSD) / 25) * 100))}%</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell className={styles.table}>Total level 5NFTs staked:</TableCell>

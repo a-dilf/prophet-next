@@ -16,6 +16,7 @@ import {
 import { pair_abi } from '../../abi_objects/pair_abi';
 import { staking_lp_abi } from '../../abi_objects/staking_lp_abi';
 import { lp_abi } from 'abi_objects/lp_abi';
+import { usd_abi } from 'abi_objects/usd_abi';
 
 // component imports
 import LiquidityCard from '../../components/cards/LiquidityCard';
@@ -33,6 +34,8 @@ const Liquidity: NextPage = () => {
     const [userLPTBalanceStateDisplay, setUserLPTBalanceStateDisplay] = React.useState(0n);
     const [currentlyStakedTokens, setCurrentlyStakedTokens] = React.useState(0n);
     const [totalStakedTokens, setTotalStakedTokens] = React.useState(0n);
+    const [ethInUSD, setEthInUSD] = React.useState(0);
+    const [totalSupplyInPool, setTotalSupplyInPool] = React.useState(0);
 
     const { address, isConnected } = useAccount();
 
@@ -42,6 +45,12 @@ const Liquidity: NextPage = () => {
     const pairContractConfig = {
         address: process.env.NEXT_PUBLIC_LP_POOL_ADDRESS as '0x${string}',
         abi: pair_abi
+    } as const;
+
+    // contract config objects
+    const usdcPairContractConfig = {
+        address: "0xC6962004f452bE9203591991D15f6b388e09E8D0",
+        abi: usd_abi
     } as const;
 
     const tokenBalanceOfContractConfig = {
@@ -73,6 +82,16 @@ const Liquidity: NextPage = () => {
         functionName: 'getReserves',
     });
 
+    const { data: poolTotalSupply } = useReadContract({
+        ...pairContractConfig,
+        functionName: 'totalSupply',
+    });
+
+    const { data: usd_price } = useReadContract({
+        ...usdcPairContractConfig,
+        functionName: 'slot0',
+    });
+
     const { data: userBalance } = useReadContract({
         ...tokenBalanceOfContractConfig,
     });
@@ -89,10 +108,24 @@ const Liquidity: NextPage = () => {
         if (reserves) {
             // TODO - check if amount comes in as WEI
             // setEthAmountToAdd(BigInt(toWei(Number(ethAmount), "wei")));
+            const reserves0_wei = Number(reserves[0]) / 1000000000000000000
+            const reserves1_wei = Number(reserves[1]) / 1000000000000000000
+            
+            console.log("reserves ", reserves[0], reserves[1])
+            console.log("reserves ", reserves0_wei / reserves1_wei)
+            console.log("reserves ", reserves1_wei / reserves0_wei)
+            console.log("USD cost basis ", (reserves0_wei / reserves1_wei) * ethInUSD)
+
             setReservesEth(reserves[0])
             setReservesProphet(reserves[1]);
         }
     }, [reserves]);
+
+    React.useEffect(() => {
+        if (poolTotalSupply) {
+            setTotalSupplyInPool(Number(poolTotalSupply))
+        }
+    }, [poolTotalSupply]);
 
     React.useEffect(() => {
         if (userBalance) {
@@ -126,12 +159,29 @@ const Liquidity: NextPage = () => {
             setTotalStakedTokens(BigInt(Math.floor(Number(totalStakingBalance) / 1000000000000000000)))
         }
     }, [totalStakingBalance]);
+    
+    React.useEffect(() => {
+        if (usd_price) {
+            const price = (Number(usd_price[0]) * Number(usd_price[0]) * (10**18) / (2**192));
+            // console.log("USD: ", usd_price[0], price / 1000000)
+            setEthInUSD(price / 1000000)
+        }
+    }, [usd_price]);
 
     //// STATE UPDATES
 
     // TODO - make NFTS populate iteratively and fix the always minting forever bug
     // TODO - make unstake flip the card and have the unstake button on the back
     // BigInt(toWei(Number(ethAmount), "wei"))
+
+    console.log("ETH required for 1 UNIv2 ", Number(reservesEth) / totalSupplyInPool)
+    console.log("PROPHET required for 1 UNIv2 ", Number(reservesProphet) / totalSupplyInPool)
+    console.log("total staked UNIv2 ", Number(totalStakedTokens))
+    console.log("price of ETH ", Number(ethInUSD))
+    console.log("ETH reserves ", Number(reservesEth))
+    console.log("total supply ", Number(totalSupplyInPool))
+    console.log("div ", Number(reservesEth) / Number(totalSupplyInPool))
+
 
     return (
         <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
@@ -145,6 +195,10 @@ const Liquidity: NextPage = () => {
                                 <TableCell className={styles.table}>Current pool ratio:</TableCell>
                                 <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(reservesProphet), "wei")) / 1000000000000000000)} $PROPHET to {Number(toWei(Number(reservesEth), "wei")) / 1000000000000000000} ETH</TableCell>
                             </TableRow>
+                            <TableRow>
+                                <TableCell className={styles.table}>APR for Liquidity staking:</TableCell>
+                                <TableCell className={styles.table}>{Math.floor(((1 / Number(totalStakedTokens) * 7500000 * 365 * ((Number(reservesEth) / totalSupplyInPool) * ethInUSD) / 35)))}%</TableCell>
+                                </TableRow>
                             <TableRow>
                                 <TableCell className={styles.table}>Liquidity tokens owned by 0x{String(address).slice(-4)}:</TableCell>
                                 <TableCell className={styles.table}>{Math.floor(Number(toWei(Number(userLPTBalanceState), "wei")) / 1000000000000000000)}</TableCell>
