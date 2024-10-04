@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ open, setOpen }) => {
                 {/* Add this Box component */}
                 <div>
                   <a
-                    href="https://discord.gg/dCPnBxxF"
+                    href="https://discord.gg/PBjr4cw6Bw"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: "white" }}
