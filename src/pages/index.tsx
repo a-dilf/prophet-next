@@ -9,6 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { token_abi } from '../../abi_objects/token_abi';
 import { ido_vault_abi } from '../../abi_objects/ido_abi';
 import { toWei } from 'web3-utils';
+import ImageBar from 'components/ImageBar';
 
 // rainbowkit+ imports
 import {
@@ -83,19 +84,19 @@ const Home: NextPage = () => {
   React.useEffect(() => {
     if (vaultTokensLeft) {
       let convertedVaultTokens = Number(BigInt(Math.floor(Number(vaultTokensLeft) / 1000000000000000000)))
-      
+
       const startDate = new Date('2024-08-16T22:22:20Z'); // 'Z' indicates UTC
       const currentDate = new Date();
       const differenceInTime = currentDate.getTime() - startDate.getTime();
       const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // Convert milliseconds to days
-      const pool_one_tokens =  differenceInDays * 15000000
-      
+      const pool_one_tokens = differenceInDays * 15000000
+
       const differenceInMonths = Math.floor(differenceInTime / (1000 * 3600 * 24 * 30)); // Approximation assuming 30 days per month
       const pool_two_tokens = Math.min(differenceInMonths, 12) * 250000000; // 250 million per month
       const pool_three_tokens = Math.min(differenceInMonths, 24) * 833333333; // 833333333 per month
 
-      let total_tokens = convertedVaultTokens + pool_one_tokens + pool_two_tokens + pool_three_tokens; 
-      
+      let total_tokens = convertedVaultTokens + pool_one_tokens + pool_two_tokens + pool_three_tokens;
+
       // console.log("!!! ", convertedVaultTokens, pool_one_tokens, total_tokens)
       setTokensInCirculation(BigInt(total_tokens));
     }
@@ -106,50 +107,65 @@ const Home: NextPage = () => {
 
   React.useEffect(() => setMounted(true), []);
 
+  const oekaki_images = [
+    { src: 'oekaki/407.avif', alt: 'Description 1' },
+    { src: 'oekaki/1366.avif', alt: 'Description 1' },
+    { src: 'oekaki/3146.avif', alt: 'Description 1' },
+    { src: 'oekaki/3376.avif', alt: 'Description 1' },
+    { src: 'oekaki/3500.avif', alt: 'Description 1' },
+    { src: 'oekaki/3510.avif', alt: 'Description 1' },
+    { src: 'oekaki/3513.avif', alt: 'Description 1' },
+    { src: 'oekaki/3522.avif', alt: 'Description 1' },
+    { src: 'oekaki/3734.avif', alt: 'Description 1' },
+    { src: 'oekaki/3941.avif', alt: 'Description 1' },
+    { src: 'oekaki/4598.avif', alt: 'Description 1' },
+    { src: 'oekaki/5167.avif', alt: 'Description 1' },
+  ];
+
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '35px' }}>
       <div className="homepagetop">
-      <Typography className={styles.container} variant="h2">$PROPHET</Typography>
-      <Typography className="container" variant="h4">The Prophecy: A Milady inspired NFT derivative gambling #based ecosystem</Typography>
+        <Typography className={styles.container} variant="h2">$PROPHET</Typography>
+        <Typography className="container" variant="h4">The Prophecy: A Milady inspired NFT derivative gambling #based ecosystem</Typography>
 
-      <div className="container">
-        <Grid container justifyContent="center" alignItems="center" spacing={6}>
-          <Grid item>
-            <Box component={Link} href="/prophet" underline="none">
-              <Button
-                color="secondary"
-                variant="contained"
-                style={{ marginTop: 24, marginLeft: 15 }}
-              >
-                Enter App
-              </Button>
-            </Box>
+        <div className="container">
+          <Grid container justifyContent="center" alignItems="center" spacing={6}>
+            <Grid item>
+              <Box component={Link} href="/prophet" underline="none">
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{ marginTop: 24, marginLeft: 15 }}
+                >
+                  Enter App
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box component={Link} href="/litepaper" underline="none">
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{ marginTop: 24, marginLeft: 15 }}
+                >
+                  Litepaper
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box component={Link} href="https://dexscreener.com/arbitrum/0x6bd1a20da7cb05394de87197ec8b02e67d249c03" underline="none">
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  style={{ marginTop: 24, marginLeft: 15 }}
+                >
+                  Dex Screener
+                </Button>
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Box component={Link} href="/litepaper" underline="none">
-              <Button
-                color="secondary"
-                variant="contained"
-                style={{ marginTop: 24, marginLeft: 15 }}
-              >
-                Litepaper
-              </Button>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Box component={Link} href="https://dexscreener.com/arbitrum/0x6bd1a20da7cb05394de87197ec8b02e67d249c03" underline="none">
-              <Button
-                color="secondary"
-                variant="contained"
-                style={{ marginTop: 24, marginLeft: 15 }}
-              >
-                Dex Screener
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
+        </div>
       </div>
-      </div>  
 
       <div className="container">
         <Typography variant="h6" component="div" sx={{ mb: 2 }}> {/* Customize the title here */}
@@ -227,6 +243,16 @@ const Home: NextPage = () => {
         <br></br>
         <Typography>Since inception of the bet tracker in November 2020, it has generated nearly 600
           units in total. Averaging roughly 200% returns in about 3 years--compounding per year.</Typography>
+      </div>
+
+      <div className="container">
+        <Typography className="container" variant="h4">The Sweep Vault</Typography>
+        <Typography sx={{ paddingTop: "15px" }}>Prophet Lady operates as a Milady derivative and complies with the mandate to sweep Remco assets--including related ecosystem NFTs. Sweeped assets can be see below.</Typography>
+
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}> {/* Customize the title here */}
+          Oekaki Maker
+        </Typography>
+        <ImageBar images={oekaki_images}></ImageBar>
       </div>
 
       <div className="container">
