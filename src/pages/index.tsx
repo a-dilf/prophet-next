@@ -122,6 +122,21 @@ const Home: NextPage = () => {
     { src: 'oekaki/5167.avif', alt: 'Description 1' },
   ];
 
+  const white_heart_images = [
+    { src: 'white_hearts/331.avif', alt: 'Description 1' },
+    { src: 'white_hearts/355.avif', alt: 'Description 1' },
+    { src: 'white_hearts/784.avif', alt: 'Description 1' },
+    { src: 'white_hearts/785.avif', alt: 'Description 1' },
+    { src: 'white_hearts/1081.avif', alt: 'Description 1' },
+    { src: 'white_hearts/1349.avif', alt: 'Description 1' },
+    { src: 'white_hearts/1786.avif', alt: 'Description 1' },
+    { src: 'white_hearts/2285.avif', alt: 'Description 1' },
+    { src: 'white_hearts/2309.avif', alt: 'Description 1' },
+    { src: 'white_hearts/2445.avif', alt: 'Description 1' },
+    { src: 'white_hearts/2448.avif', alt: 'Description 1' },
+    { src: 'white_hearts/2450.avif', alt: 'Description 1' },
+  ];
+
   return (
     <div className="page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '35px' }}>
       <div className="homepagetop">
@@ -247,12 +262,34 @@ const Home: NextPage = () => {
 
       <div className="container">
         <Typography className="container" variant="h4">The Sweep Vault</Typography>
-        <Typography sx={{ paddingTop: "15px" }}>Prophet Lady operates as a Milady derivative and complies with the mandate to sweep Remco assets--including related ecosystem NFTs. Sweeped assets can be see below.</Typography>
+        <Typography sx={{ paddingTop: "15px", paddingBottom: "15px" }}>Prophet Lady operates as a Milady derivative and complies with the mandate to sweep Remco assets--including related ecosystem NFTs. Sweeped assets can be seen below.</Typography>
+
+        <Accordion key={54312}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls={`54312`}
+            id={`54312`}
+          >
+            <Typography>Sweep Vault Wallet</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box component={Link} href={"https://opensea.io/0x58D37267e48a3A4678e2a6e99e52b74a576c0240"} target="_blank" rel="noopener noreferrer" underline="none">
+              <ListItem >
+                <ListItemText primary={"0x" + "0x58D37267e48a3A4678e2a6e99e52b74a576c0240".slice(0, 4) + "..." + "0x58D37267e48a3A4678e2a6e99e52b74a576c0240".slice(-4)} secondary="👉 Open Sea Link" />
+              </ListItem>
+            </Box>
+          </AccordionDetails>
+        </Accordion>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}> {/* Customize the title here */}
           Oekaki Maker
         </Typography>
         <ImageBar images={oekaki_images}></ImageBar>
+
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}> {/* Customize the title here */}
+          White Hearts
+        </Typography>
+        <ImageBar images={white_heart_images}></ImageBar>
       </div>
 
       <div className="container">
