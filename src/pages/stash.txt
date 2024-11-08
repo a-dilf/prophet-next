@@ -17,6 +17,8 @@ import {
   useReadContract,
 } from 'wagmi';
 
+import Moralis from 'moralis';
+
 const addressesForAccordian = [
   { card_title: "token", contract_address: "0xb9E0b8385B63d94367043b248414C58a94A37932" },
   { card_title: "nft", contract_address: "0xC21Bd794cC47443692A485cC4B6B1200becCF89d" },
@@ -102,15 +104,62 @@ const Home: NextPage = () => {
     }
   }, [vaultTokensLeft]);
 
-  // 2297933441
-  // 2792933441
-
   React.useEffect(() => setMounted(true), []);
 
-  const oekaki_images_1 = [
+  const [nfts, setNfts] = React.useState([]);
+  const [totalValue, setTotalValue] = React.useState(0);
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
+    async function fetchNFTsAndCalculateValue() {
+      try {
+        if (!Moralis.Core.isStarted) {
+          await Moralis.start({
+            apiKey: "YOUR_API_KEY"
+          });
+        }
+
+        const address = "0x58D37267e48a3A4678e2a6e99e52b74a576c0240"; // The wallet address
+
+        const response = await Moralis.EvmApi.nft.getWalletNFTs({
+          chain: "0x1",
+          format: "decimal",
+          mediaItems: false,
+          address: address
+        });
+
+        const nftsWithPrice = await Promise.all(response.result.map(async (nft) => {
+          try {
+            const floorPriceResponse = await Moralis.EvmApi.nft.getNFTLowestPrice({
+              address: nft.tokenAddress,
+              chain: "0x1",
+            });
+            return {
+              ...nft,
+              floorPrice: floorPriceResponse.result ? parseFloat(floorPriceResponse.result.price.ether) : 0
+            };
+          } catch (e) {
+            console.error(`Error fetching floor price for ${nft.tokenAddress}:`, e);
+            return { ...nft, floorPrice: 0 };
+          }
+        }));
+
+        const totalValueETH = nftsWithPrice.reduce((sum, nft) => sum + nft.floorPrice, 0);
+
+        setNfts(nftsWithPrice);
+        setTotalValue(totalValueETH);
+      } catch (e) {
+        console.error(e);
+        setError(e.message);
+      }
+    }
+
+    fetchNFTsAndCalculateValue();
+  }, []);
+
+  const oekaki_images = [
     { src: 'oekaki/407.avif', alt: 'Description 1' },
     { src: 'oekaki/1366.avif', alt: 'Description 1' },
-    { src: 'oekaki/2122.avif', alt: 'Description 1' },
     { src: 'oekaki/3146.avif', alt: 'Description 1' },
     { src: 'oekaki/3376.avif', alt: 'Description 1' },
     { src: 'oekaki/3500.avif', alt: 'Description 1' },
@@ -119,22 +168,8 @@ const Home: NextPage = () => {
     { src: 'oekaki/3522.avif', alt: 'Description 1' },
     { src: 'oekaki/3734.avif', alt: 'Description 1' },
     { src: 'oekaki/3941.avif', alt: 'Description 1' },
-    { src: 'oekaki/4126.avif', alt: 'Description 1' },
     { src: 'oekaki/4598.avif', alt: 'Description 1' },
-    { src: 'oekaki/4782.avif', alt: 'Description 1' },
     { src: 'oekaki/5167.avif', alt: 'Description 1' },
-  ];
-
-  const oekaki_images_2 = [
-    { src: 'oekaki/2122.avif', alt: 'Description 1' },
-    { src: 'oekaki/4126.avif', alt: 'Description 1' },
-    { src: 'oekaki/4782.avif', alt: 'Description 1' },
-  ];
-  
-  const kagami_images = [
-    { src: 'kagami/252.png', alt: 'Description 1' },
-    { src: 'kagami/1768.avif', alt: 'Description 1' },
-    { src: 'kagami/2802.png', alt: 'Description 1' },
   ];
 
   const white_heart_images = [
@@ -310,28 +345,20 @@ const Home: NextPage = () => {
           </Accordion>
         </div>
 
-        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}> {/* Customize the title here */}
           Oekaki Maker
         </Typography>
-        <ImageBar images={oekaki_images_1}></ImageBar>
-        <Box sx={{ marginBottom: '16px', paddingTop: '15px' }}>
-          <ImageBar images={oekaki_images_2}></ImageBar>
-        </Box>
+        <ImageBar images={oekaki_images}></ImageBar>
 
-        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}> {/* Customize the title here */}
           White Hearts
         </Typography>
         <ImageBar images={white_heart_images}></ImageBar>
 
-        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}> {/* Customize the title here */}
           Cigarettes
         </Typography>
         <ImageBar images={cigarette_images}></ImageBar>
-        
-        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Kagmi
-        </Typography>
-        <ImageBar images={kagami_images}></ImageBar>
       </div>
 
       <div className="container">
