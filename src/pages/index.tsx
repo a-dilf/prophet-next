@@ -11,6 +11,9 @@ import { ido_vault_abi } from '../../abi_objects/ido_abi';
 import { toWei } from 'web3-utils';
 import ImageBar from 'components/ImageBar';
 
+import { usePublicClient } from 'wagmi';
+import { parseAbi } from 'viem';
+
 // rainbowkit+ imports
 import {
   useAccount,
@@ -32,6 +35,43 @@ const Home: NextPage = () => {
   const [totalSupplyState, settotalSupply] = React.useState(0n);
   const [taxRewardsState, setTaxRewardsState] = React.useState(0);
   const [tokensInCirculation, setTokensInCirculation] = React.useState(0n);
+
+  const [claimEventsTotal, setClaimEventsTotal] = React.useState(0);
+  const publicClient = usePublicClient();
+  console.log("pub type", typeof(publicClient))
+
+  const fetchClaimEvents = React.useCallback(async () => {
+    if (!publicClient) return; // Early return if publicClient is undefined
+
+    try {
+      const logs = await publicClient.getLogs({
+        address: '0x37EA4C3fd77DBf4e796f86fC75bCde83567c846e', // token staking address
+        event: parseAbi(['event Claim(address indexed _account, uint256 tokenAmount)'])[0],
+        fromBlock: 0n,
+        toBlock: 'latest'
+      });
+
+      // Sum all claim amounts
+      const total = logs.reduce(
+        (sum, log) => sum + (log.args.tokenAmount as bigint),
+        0n
+      );
+      
+      await console.log("claims check ", total)
+
+      // Convert from wei to eth and set state
+      setClaimEventsTotal(Number(total) / 1e18);
+    } catch (err) {
+      console.error('Error fetching claim events:', err);
+    }
+  }, [publicClient]);
+
+  // Add useEffect to fetch claim events only when publicClient is available
+  React.useEffect(() => {
+    if (publicClient) {
+      fetchClaimEvents();
+    }
+  }, [fetchClaimEvents, publicClient]);
 
   const { address } = useAccount();
 
@@ -130,7 +170,7 @@ const Home: NextPage = () => {
     { src: 'oekaki/4126.avif', alt: 'Description 1' },
     { src: 'oekaki/4782.avif', alt: 'Description 1' },
   ];
-  
+
   const kagami_images = [
     { src: 'kagami/252.png', alt: 'Description 1' },
     { src: 'kagami/1768.avif', alt: 'Description 1' },
@@ -252,8 +292,8 @@ const Home: NextPage = () => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className={styles.table}>Total rewards distributed:</TableCell>
-                <TableCell className={styles.table}>{Number(taxRewardsState)}</TableCell>
+                <TableCell className={styles.table}>Total rewards claimed:</TableCell>
+                <TableCell className={styles.table}>{Number(claimEventsTotal).toLocaleString()} ETH</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className={styles.table}>Tokens in circulation:</TableCell>
@@ -327,7 +367,7 @@ const Home: NextPage = () => {
           Cigarettes
         </Typography>
         <ImageBar images={cigarette_images}></ImageBar>
-        
+
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Kagmi
         </Typography>
