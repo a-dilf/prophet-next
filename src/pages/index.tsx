@@ -38,7 +38,7 @@ const Home: NextPage = () => {
 
   const [claimEventsTotal, setClaimEventsTotal] = React.useState(0);
   const publicClient = usePublicClient();
-  console.log("pub type", typeof(publicClient))
+  console.log("pub type", typeof (publicClient))
 
   const fetchClaimEvents = React.useCallback(async () => {
     if (!publicClient) return; // Early return if publicClient is undefined
@@ -56,7 +56,7 @@ const Home: NextPage = () => {
         (sum, log) => sum + (log.args.tokenAmount as bigint),
         0n
       );
-      
+
       await console.log("claims check ", total)
 
       // Convert from wei to eth and set state
@@ -147,6 +147,8 @@ const Home: NextPage = () => {
 
   React.useEffect(() => setMounted(true), []);
 
+  // NOTE - only 12 can be shown at a time
+
   const oekaki_images_1 = [
     { src: 'oekaki/407.avif', alt: 'Description 1' },
     { src: 'oekaki/1366.avif', alt: 'Description 1' },
@@ -160,12 +162,12 @@ const Home: NextPage = () => {
     { src: 'oekaki/3734.avif', alt: 'Description 1' },
     { src: 'oekaki/3941.avif', alt: 'Description 1' },
     { src: 'oekaki/4126.avif', alt: 'Description 1' },
-    { src: 'oekaki/4598.avif', alt: 'Description 1' },
-    { src: 'oekaki/4782.avif', alt: 'Description 1' },
-    { src: 'oekaki/5167.avif', alt: 'Description 1' },
   ];
 
   const oekaki_images_2 = [
+    { src: 'oekaki/4598.avif', alt: 'Description 1' },
+    { src: 'oekaki/4782.avif', alt: 'Description 1' },
+    { src: 'oekaki/5167.avif', alt: 'Description 1' },
     { src: 'oekaki/2122.avif', alt: 'Description 1' },
     { src: 'oekaki/4126.avif', alt: 'Description 1' },
     { src: 'oekaki/4782.avif', alt: 'Description 1' },
@@ -175,6 +177,14 @@ const Home: NextPage = () => {
     { src: 'kagami/252.png', alt: 'Description 1' },
     { src: 'kagami/1768.avif', alt: 'Description 1' },
     { src: 'kagami/2802.png', alt: 'Description 1' },
+
+  ];
+
+  const pixel_lady_images = [
+    { src: 'pixel_lady/1870.png', alt: 'Description 1' },
+    { src: 'pixel_lady/2246.png', alt: 'Description 1' },
+    { src: 'pixel_lady/7908.png', alt: 'Description 1' },
+    { src: 'pixel_lady/7914.png', alt: 'Description 1' },
   ];
 
   const white_heart_images = [
@@ -193,15 +203,37 @@ const Home: NextPage = () => {
   ];
 
   const cigarette_images = [
+    { src: 'cigarette/968.avif', alt: 'Description 1' },
+    { src: 'cigarette/1093.avif', alt: 'Description 1' },
     { src: 'cigarette/1211.avif', alt: 'Description 1' },
+    { src: 'cigarette/2230.avif', alt: 'Description 1' },
     { src: 'cigarette/2602.png', alt: 'Description 1' },
     { src: 'cigarette/2604.avif', alt: 'Description 1' },
+    { src: 'cigarette/3015.avif', alt: 'Description 1' },
     { src: 'cigarette/3177.avif', alt: 'Description 1' },
     { src: 'cigarette/3774.avif', alt: 'Description 1' },
+    { src: 'cigarette/4042.avif', alt: 'Description 1' },
+    { src: 'cigarette/6182.avif', alt: 'Description 1' },
     { src: 'cigarette/7439.avif', alt: 'Description 1' },
     { src: 'cigarette/7546.avif', alt: 'Description 1' },
+    { src: 'cigarette/7762.avif', alt: 'Description 1' },
+    { src: 'cigarette/8123.avif', alt: 'Description 1' },
+    { src: 'cigarette/8529.avif', alt: 'Description 1' },
+    { src: 'cigarette/8794.avif', alt: 'Description 1' },
     { src: 'cigarette/8950.avif', alt: 'Description 1' },
     { src: 'cigarette/8951.avif', alt: 'Description 1' },
+    { src: 'cigarette/9615.avif', alt: 'Description 1' },
+  ];
+
+  const cigarette_images2 = [
+    { src: 'cigarette/7546.avif', alt: 'Description 1' },
+    { src: 'cigarette/7762.avif', alt: 'Description 1' },
+    { src: 'cigarette/8123.avif', alt: 'Description 1' },
+    { src: 'cigarette/8529.avif', alt: 'Description 1' },
+    { src: 'cigarette/8794.avif', alt: 'Description 1' },
+    { src: 'cigarette/8950.avif', alt: 'Description 1' },
+    { src: 'cigarette/8951.avif', alt: 'Description 1' },
+    { src: 'cigarette/9615.avif', alt: 'Description 1' },
   ];
 
   return (
@@ -351,6 +383,11 @@ const Home: NextPage = () => {
         </div>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+          Pixel Lady
+        </Typography>
+        <ImageBar images={pixel_lady_images}></ImageBar>
+
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Oekaki Maker
         </Typography>
         <ImageBar images={oekaki_images_1}></ImageBar>
@@ -367,11 +404,16 @@ const Home: NextPage = () => {
           Cigarettes
         </Typography>
         <ImageBar images={cigarette_images}></ImageBar>
+        <Box sx={{ marginBottom: '16px', paddingTop: '15px' }}>
+          <ImageBar images={cigarette_images2}></ImageBar>
+        </Box>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Kagmi
+          Kagmi Academy
         </Typography>
         <ImageBar images={kagami_images}></ImageBar>
+
+
       </div>
 
       <div className="container">
