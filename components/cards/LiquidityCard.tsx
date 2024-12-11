@@ -36,6 +36,8 @@ interface LiquidityCardProps {
 
 // TODO - revert these type changes??
 
+const tester = "test"
+
 const LiquidityCard: React.FC<LiquidityCardProps> = ({ mounted, isConnected, cardTitle }) => {
 
     // TODO - get this from user input!
