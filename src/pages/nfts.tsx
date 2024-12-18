@@ -319,7 +319,7 @@ const Nfts: NextPage = () => {
                     setStateAllowanceAmount={cardData.setStateAllowanceAmount}
                 />
             ))}
-            </div>
+    
             <div>
                 <Button
                     color="secondary"
