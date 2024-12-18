@@ -309,30 +309,6 @@ const Nfts: NextPage = () => {
                 </Button>
             </div>
             <div className='container'>
-                    <TableContainer>
-                        <Table>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell className={styles.table}>ID: X</TableCell>
-                                    <TableCell className={styles.table}>tier</TableCell>
-                                    <TableCell className={styles.table}>level button</TableCell>
-                                    <TableCell className={styles.table}>level max button</TableCell>
-                                    <TableCell className={styles.table}>stake button</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className={styles.table}>ID: X</TableCell>
-                                    <TableCell className={styles.table}>tier</TableCell>
-                                    <TableCell className={styles.table}>level button</TableCell>
-                                    <TableCell className={styles.table}>level max button</TableCell>
-                                    <TableCell className={styles.table}>stake button</TableCell>
-                                    <TableCell className={styles.table}>opensea link to image</TableCell>
-                                </TableRow>
-                                
-                                
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>
             {displayedCards.map((cardData, index) => (
                 <NftCard
                     key={index}
@@ -343,6 +319,7 @@ const Nfts: NextPage = () => {
                     setStateAllowanceAmount={cardData.setStateAllowanceAmount}
                 />
             ))}
+            </div>
             <div>
                 <Button
                     color="secondary"
