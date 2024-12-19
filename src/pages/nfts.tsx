@@ -308,7 +308,7 @@ const Nfts: NextPage = () => {
                     Next 10
                 </Button>
             </div>
-            <div className='container'>
+
             {displayedCards.map((cardData, index) => (
                 <NftCard
                     key={index}
