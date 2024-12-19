@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-interface TexturedCubeProps {
+interface BouncingCubeProps {
   imagePaths?: {
     right?: string;
     left?: string;
@@ -12,11 +12,11 @@ interface TexturedCubeProps {
   };
   width?: string;
   height?: string;
-  rotation_x?: GLfloat;
-  rotation_y?: GLfloat;
+  rotation_x?: number;
+  rotation_y?: number;
 }
 
-const TexturedCube: React.FC<TexturedCubeProps> = ({ 
+const BouncingCube: React.FC<BouncingCubeProps> = ({ 
   imagePaths = {
     right: '/path/to/default/right.jpg',
     left: '/path/to/default/left.jpg',
@@ -35,8 +35,14 @@ const TexturedCube: React.FC<TexturedCubeProps> = ({
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const cubeRef = useRef<THREE.Mesh | null>(null);
-  const reverseFlagRef = useRef<number>(1);
-  const viewportBoundsRef = useRef<{left: number, right: number}>({ left: 0, right: 0 });
+  const xReverseFlagRef = useRef<number>(1);
+  const yReverseFlagRef = useRef<number>(1);
+  const viewportBoundsRef = useRef<{
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+  }>({ left: 0, right: 0, top: 0, bottom: 0 });
 
   useEffect(() => {
     if (typeof window !== 'undefined' && mountRef.current) {
@@ -56,13 +62,15 @@ const TexturedCube: React.FC<TexturedCubeProps> = ({
 
       // Calculate viewport boundaries
       const calculateViewportBounds = () => {
-        const vFOV = THREE.MathUtils.degToRad(camera.fov); // convert vertical fov to radians
-        const height = 2 * Math.tan(vFOV / 2) * camera.position.z; // visible height
-        const width = height * camera.aspect; // visible width
+        const vFOV = THREE.MathUtils.degToRad(camera.fov);
+        const height = 2 * Math.tan(vFOV / 2) * camera.position.z;
+        const width = height * camera.aspect;
         
         viewportBoundsRef.current = {
-          left: -width / 2 + 0.5, // Add half cube width offset (cube is 1 unit wide)
-          right: width / 2 - 0.5  // Subtract half cube width offset
+          left: -width / 2 + 0.5,
+          right: width / 2 - 0.5,
+          top: height / 2 - 0.5,
+          bottom: -height / 2 + 0.5
         };
       };
       
@@ -121,17 +129,27 @@ const TexturedCube: React.FC<TexturedCubeProps> = ({
           cube.rotation.x += rotation_x;
           cube.rotation.y += rotation_y;
 
-          // Handle oscillation
-          cube.position.x += (0.005 * reverseFlagRef.current);
+          // Handle X and Y oscillation
+          cube.position.x += (0.005 * xReverseFlagRef.current);
+          cube.position.y += (0.005 * yReverseFlagRef.current);
 
-          // Check boundaries and reverse direction
-          const { left, right } = viewportBoundsRef.current;
+          // Check X boundaries and reverse direction
+          const { left, right, top, bottom } = viewportBoundsRef.current;
           if (cube.position.x >= right) {
-            reverseFlagRef.current = -1;
-            cube.position.x = right; // Prevent overshooting
+            xReverseFlagRef.current = -1;
+            cube.position.x = right;
           } else if (cube.position.x <= left) {
-            reverseFlagRef.current = 1;
-            cube.position.x = left; // Prevent overshooting
+            xReverseFlagRef.current = 1;
+            cube.position.x = left;
+          }
+
+          // Check Y boundaries and reverse direction
+          if (cube.position.y >= top) {
+            yReverseFlagRef.current = -1;
+            cube.position.y = top;
+          } else if (cube.position.y <= bottom) {
+            yReverseFlagRef.current = 1;
+            cube.position.y = bottom;
           }
           
           renderer.render(scene, camera);
@@ -168,4 +186,4 @@ const TexturedCube: React.FC<TexturedCubeProps> = ({
   />;
 };
 
-export default TexturedCube;
+export default BouncingCube;
