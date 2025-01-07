@@ -371,7 +371,15 @@ const Home: NextPage = () => {
         >
           <List>
             {addressesForAccordian.map(({ card_title, contract_address }) => (
-              <Accordion key={card_title}>
+              <Accordion
+                key={card_title}
+                sx={{
+                  backgroundColor: "#ee82ee", // Or any color you want
+                  "&.Mui-expanded": {
+                    backgroundColor: "#ee82ee", // Keep same color when expanded
+                  },
+                }}
+              >
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls={`panel${card_title}a-content`}
@@ -439,7 +447,15 @@ const Home: NextPage = () => {
         </Typography>
 
         <div className="container">
-          <Accordion key={54312}>
+          <Accordion
+            key={54312}
+            sx={{
+              backgroundColor: "#ee82ee", // Or any color you want
+              "&.Mui-expanded": {
+                backgroundColor: "#ee82ee", // Keep same color when expanded
+              },
+            }}
+          >
             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`54312`} id={`54312`}>
               <Typography>Sweep Vault Wallet</Typography>
             </AccordionSummary>
