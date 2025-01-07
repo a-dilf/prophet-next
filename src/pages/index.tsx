@@ -420,7 +420,9 @@ const Home: NextPage = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={styles.table}># of tokens burnt:</TableCell>
-                <TableCell className={styles.table}>{Number(totalSupplyState)}</TableCell>
+                <TableCell className={styles.table}>
+                  {Number(totalSupplyState)} ({((Number(totalSupplyState) / 200000000000) * 100).toFixed(2)}%)
+                </TableCell>{" "}
               </TableRow>
             </TableBody>
           </Table>
@@ -465,8 +467,20 @@ const Home: NextPage = () => {
           </Accordion>
         </div>
 
+        <div className="container">
+          <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "30px" }}>
+            Token Holdings
+          </Typography>
+        </div>
+
+        <div className="container">
+          <Typography variant="h3" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+            153,438 CULT
+          </Typography>
+        </div>
+
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Pixel Lady
+          Pixelady Maker
         </Typography>
         <ImageBar images={pixel_lady_images}></ImageBar>
 
@@ -484,7 +498,7 @@ const Home: NextPage = () => {
         <ImageBar images={white_heart_images}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Cigarettes
+          Cigawrette Packs
         </Typography>
         <ImageBar images={cigarette_images}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
@@ -492,7 +506,7 @@ const Home: NextPage = () => {
         </Box>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Kagmi Academy
+          Kagami Academy
         </Typography>
         <ImageBar images={kagami_images}></ImageBar>
       </div>
