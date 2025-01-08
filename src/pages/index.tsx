@@ -33,6 +33,8 @@ import { usePublicClient } from "wagmi";
 
 import TexturedCube from "components/TexturedCube";
 
+import FlashingHeader from "components/FlashingHeader";
+
 // rainbowkit+ imports
 import { useAccount, useReadContract } from "wagmi";
 
@@ -258,35 +260,49 @@ const Home: NextPage = () => {
           The Prophecy: A Milady inspired NFT derivative gambling #based ecosystem
         </Typography>
 
-        <div className="container">
-          <Grid container justifyContent="center" alignItems="center" spacing={6}>
-            <Grid item>
-              <Box component={Link} href="/prophet" underline="none">
-                <Button color="secondary" variant="contained" style={{ marginTop: 24, marginLeft: 15 }}>
-                  Enter App
-                </Button>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box component={Link} href="/litepaper" underline="none">
-                <Button color="secondary" variant="contained" style={{ marginTop: 24, marginLeft: 15 }}>
-                  Litepaper
-                </Button>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box
-                component={Link}
-                href="https://dexscreener.com/arbitrum/0x6bd1a20da7cb05394de87197ec8b02e67d249c03"
-                underline="none"
-              >
-                <Button color="secondary" variant="contained" style={{ marginTop: 24, marginLeft: 15 }}>
-                  Dex Screener
-                </Button>
-              </Box>
-            </Grid>
+        <Box
+          component={Link}
+          href="/prophet"
+          underline="none"
+          sx={{ width: "100%" }} // Make Box take full width
+        >
+          <Button
+            color="secondary"
+            variant="contained"
+            fullWidth // This makes the button fill the Box
+            sx={{
+              // Using sx prop instead of style for better Material UI integration
+              mt: 3, // marginTop: 24px (theme spacing 3 = 24px)
+              py: 1.5, // Add more padding to make button taller
+            }}
+          >
+            <FlashingHeader>
+            </FlashingHeader>
+          </Button>
+        </Box>
+      </div>
+
+      <div className="container">
+        <Grid container justifyContent="center" alignItems="center" spacing={6}>
+          <Grid item>
+            <Box component={Link} href="/litepaper" underline="none">
+              <Button color="secondary" variant="contained" style={{ marginTop: 24, marginLeft: 15 }}>
+                Litepaper
+              </Button>
+            </Box>
           </Grid>
-        </div>
+          <Grid item>
+            <Box
+              component={Link}
+              href="https://dexscreener.com/arbitrum/0x6bd1a20da7cb05394de87197ec8b02e67d249c03"
+              underline="none"
+            >
+              <Button color="secondary" variant="contained" style={{ marginTop: 24, marginLeft: 15 }}>
+                Dex Screener
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
       </div>
 
       <div className="container">
