@@ -10,8 +10,6 @@ import IncrementIcon from "@mui/icons-material/Add"; // Import Add Icon
 import DecrementIcon from "@mui/icons-material/Remove"; // Import Remove Icon
 import IconButton from "@mui/material/IconButton";
 
-import BouncingCube from "components/BouncingCube";
-
 // rainbowkit+ imports
 import { useAccount, useReadContract } from "wagmi";
 
@@ -276,21 +274,6 @@ const Nfts: NextPage = () => {
             </Table>
           </TableContainer>
         </div>
-
-        <BouncingCube
-          imagePaths={{
-            right: "prophet_lady/0.avif",
-            left: "prophet_lady/1.avif",
-            top: "prophet_lady/2.avif",
-            bottom: "prophet_lady/3.avif",
-            front: "prophet_lady/4.avif",
-            back: "prophet_lady/5.avif",
-          }}
-          width="100%"
-          height="100%"
-          rotation_x={0.005}
-          rotation_y={0.005}
-        />
 
         <div className="container">
           <Typography variant="h3" sx={{ marginTop: "12px" }}>
