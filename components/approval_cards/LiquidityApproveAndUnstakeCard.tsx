@@ -60,11 +60,7 @@ const LiquidityApproveAndUnstakeCard: React.FC<LiquidityApproveAndUnstakeCardPro
 
     React.useEffect(() => {
         if (userBalance) {
-            // TODO - check if amount comes in as WEI
-            // Math.floor(Number(toWei(Number(userBalance), "wei")) / 1000000000000000000)
-            const userAmountInWei = BigInt(toWei(Number(userBalance[0]), "wei"))
-            // settokenAmountToRemove(BigInt(Math.floor(Number(userAmountInWei) / 1000000000000000000)));
-            settokenAmountToRemove(BigInt(Number(userBalance[0]) / 1000000000000000000));
+            settokenAmountToRemove(userBalance[0] / BigInt(10**18));
             setCurrentlyStakedTokens(BigInt(userBalance[0]))
         }
     }, [userBalance]);
