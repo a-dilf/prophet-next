@@ -250,6 +250,10 @@ const Home: NextPage = () => {
     { src: "cigarette/9615.avif", alt: "Description 1" },
   ];
 
+  const schizo_poster = [
+    { src: "schizo_poster/4611.avif", alt: "Description 1" },
+  ]
+
   return (
     <div className="page" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "35px" }}>
       <div className="homepagetop">
@@ -510,6 +514,11 @@ const Home: NextPage = () => {
             153,438 CULT
           </Typography>
         </div>
+
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+          SchizoPoster 
+        </Typography>
+        <ImageBar images={schizo_poster}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Pixelady Maker
