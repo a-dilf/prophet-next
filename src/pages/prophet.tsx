@@ -408,6 +408,9 @@ const Prophet: NextPage = () => {
       <div className="container" style={{ marginTop: "20px" }}>
         <Typography variant="h3">Staking</Typography>
       </div>
+      <div className="container" style={{ marginTop: "20px" }}>
+        <Typography variant="h5">Stake $PROPHET to earn ETH!</Typography>
+      </div>
       <div>
         <ProphetApproveAndStakeCard
           mounted={mounted}
