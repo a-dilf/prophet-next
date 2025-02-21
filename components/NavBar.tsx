@@ -100,6 +100,7 @@ export const Sidebar: React.FC<NavbarProps> = ({ open, setOpen }) => {
     { name: "NFTs", path: "/nfts" },
     { name: "Liquidity", path: "/liquidity" },
     { name: "Rewards", path: "/rewards" },
+    { name: "Members", path: "/members" },
   ];
   return (
     <Drawer
