@@ -184,9 +184,26 @@ const Home: NextPage = () => {
     { src: "oekaki/4782.avif", alt: "Description 1" },
     { src: "oekaki/5167.avif", alt: "Description 1" },
     { src: "oekaki/2122.avif", alt: "Description 1" },
-    { src: "oekaki/4126.avif", alt: "Description 1" },
-    { src: "oekaki/4782.avif", alt: "Description 1" },
+    { src: "oekaki/799.avif", alt: "Description 1" },
+    { src: "oekaki/868.avif", alt: "Description 1" },
+    { src: "oekaki/1702.avif", alt: "Description 1" },
+    { src: "oekaki/1990.avif", alt: "Description 1" },
+    { src: "oekaki/2136.avif", alt: "Description 1" },
+    { src: "oekaki/2184.avif", alt: "Description 1" },
+    { src: "oekaki/2512.avif", alt: "Description 1" },
+    { src: "oekaki/2601.avif", alt: "Description 1" },
+    { src: "oekaki/3064.avif", alt: "Description 1" },
   ];
+
+  const oekaki_images_3 = [
+    { src: "oekaki/3938.avif", alt: "Description 1" },
+    { src: "oekaki/4675.avif", alt: "Description 1" },
+    { src: "oekaki/5185.avif", alt: "Description 1" },
+    { src: "oekaki/5188.avif", alt: "Description 1" },
+    { src: "oekaki/5275.avif", alt: "Description 1" },
+    { src: "oekaki/5343.avif", alt: "Description 1" },
+  ];
+
 
   const kagami_images = [
     { src: "kagami/252.png", alt: "Description 1" },
@@ -252,6 +269,7 @@ const Home: NextPage = () => {
 
   const schizo_poster = [
     { src: "schizo_poster/4611.avif", alt: "Description 1" },
+    { src: "schizo_poster/3306.avif", alt: "Description 1" },
   ]
 
   return (
@@ -531,6 +549,7 @@ const Home: NextPage = () => {
         <ImageBar images={oekaki_images_1}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
           <ImageBar images={oekaki_images_2}></ImageBar>
+          <ImageBar images={oekaki_images_3}></ImageBar>
         </Box>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
