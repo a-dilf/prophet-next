@@ -43,7 +43,7 @@ const MembersPage = () => {
   const burnConfig = {
     address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as "0x${string}",
     abi: token_abi,
-    args: [BigInt(2000000 * 1000000000000000000)],
+    args: [BigInt(1 * 1000000000000000000)],
     functionName: "burn",
   } as const;
 
