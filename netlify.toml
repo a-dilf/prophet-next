@@ -1,4 +1,7 @@
 # example netlify.toml
+[functions]
+  timeout = 30
+
 [build]
   command = "npm run build"
   functions = "netlify/functions"
