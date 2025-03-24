@@ -50,7 +50,7 @@ const MembersPage = () => {
   // write contract burn function instance
   const {
     data: hash,
-    writeContract: buy,
+    writeContract: burn,
     isPending: isBurnLoading,
     isSuccess: isBurnStarted,
     error: burnError,
@@ -161,6 +161,7 @@ const MembersPage = () => {
   // graceful error handling
   React.useEffect(() => {
     if (burnError) {
+      console.error("Burn error:", burnError);
       setErrorMessage(burnError["message"]);
     }
   }, [burnError]);
@@ -198,11 +199,11 @@ const MembersPage = () => {
               mt: 3, // marginTop: 24px (theme spacing 3 = 24px)
               py: 1.5, // Add more padding to make button taller
             }}
-            disabled={!buy || isBurnLoading || isBurnStarted}
+            disabled={!burn || isBurnLoading || isBurnStarted}
             data-mint-started={isBurnLoading && !isBurnStarted}
             data-mint-complete={!isBurnLoading && isBurnStarted}
             onClick={() =>
-              buy?.({
+              burn?.({
                 ...burnConfig,
               })
             }
@@ -245,11 +246,11 @@ const MembersPage = () => {
             mt: 3, // marginTop: 24px (theme spacing 3 = 24px)
             py: 1.5, // Add more padding to make button taller
           }}
-          disabled={!buy || isBurnLoading || isBurnStarted}
+          disabled={!burn || isBurnLoading || isBurnStarted}
           data-mint-started={isBurnLoading && !isBurnStarted}
           data-mint-complete={!isBurnLoading && isBurnStarted}
           onClick={() =>
-            buy?.({
+            burn?.({
               ...burnConfig,
             })
           }
