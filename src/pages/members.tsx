@@ -2,7 +2,7 @@
 import React from "react";
 import styles from "../styles/HomePage.module.css";
 
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import { token_abi } from "../../abi_objects/token_abi";
 import ErrorAlert from "../../components/ErrorAlert";
@@ -179,37 +179,41 @@ const MembersPage = () => {
   }
 
   if (!user) {
-    return (<div className="homepagetop">
-      <Typography className={styles.container} variant="h2">
-        Members
-      </Typography>
-      <Typography className="container" variant="h4" sx={{ paddingTop: "25px" }}>
-        Burn 2,000,000 $PROPHET tokens for a month of membership and get access to our lines.
-      </Typography>
+    return (
+      <div className="page" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "30px" }}>
+        <div className="homepagetop">
+          <Typography className={styles.container} variant="h2">
+            Members
+          </Typography>
+          <Typography className="container" variant="h4" sx={{ paddingTop: "25px" }}>
+            Burn 2,000,000 $PROPHET tokens for a month of membership and get access to our lines.
+          </Typography>
 
-      <Button
-        color="secondary"
-        variant="contained"
-        fullWidth // This makes the button fill the Box
-        sx={{
-          // Using sx prop instead of style for better Material UI integration
-          mt: 3, // marginTop: 24px (theme spacing 3 = 24px)
-          py: 1.5, // Add more padding to make button taller
-        }}
-        disabled={!buy || isBurnLoading || isBurnStarted}
-        data-mint-started={isBurnLoading && !isBurnStarted}
-        data-mint-complete={!isBurnLoading && isBurnStarted}
-        onClick={() =>
-          buy?.({
-            ...burnConfig,
-          })
-        }
-      >
-        {!isBurnLoading && !isBurnStarted && "Sign Up"}
-        {isBurnLoading && "Executing..."}
-        {!isBurnLoading && isBurnStarted && "complete"}
-      </Button>
-    </div>)
+          <Button
+            color="secondary"
+            variant="contained"
+            fullWidth // This makes the button fill the Box
+            sx={{
+              // Using sx prop instead of style for better Material UI integration
+              mt: 3, // marginTop: 24px (theme spacing 3 = 24px)
+              py: 1.5, // Add more padding to make button taller
+            }}
+            disabled={!buy || isBurnLoading || isBurnStarted}
+            data-mint-started={isBurnLoading && !isBurnStarted}
+            data-mint-complete={!isBurnLoading && isBurnStarted}
+            onClick={() =>
+              buy?.({
+                ...burnConfig,
+              })
+            }
+          >
+            {!isBurnLoading && !isBurnStarted && "Sign Up"}
+            {isBurnLoading && "Executing..."}
+            {!isBurnLoading && isBurnStarted && "complete"}
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   const expiryDate = new Date(user.expiryDate);
@@ -272,7 +276,6 @@ const MembersPage = () => {
           </div>
 
           <FighterCard data={lines} />
-
         </div>
       )}
     </div>
