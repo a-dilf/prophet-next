@@ -272,6 +272,18 @@ const Home: NextPage = () => {
     { src: "schizo_poster/3306.avif", alt: "Description 1" },
   ]
 
+  const love_idols_images = [
+    { src: "love_idols/1125.png", alt: "Description 1" },
+    { src: "love_idols/1126.png", alt: "Description 1" },
+    { src: "love_idols/1135.png", alt: "Description 1" },
+    { src: "love_idols/1136.png", alt: "Description 1" },
+    { src: "love_idols/1137.avif", alt: "Description 1" },
+    { src: "love_idols/1152.png", alt: "Description 1" },
+    { src: "love_idols/1153.png", alt: "Description 1" },
+    { src: "love_idols/1154.png", alt: "Description 1" },
+    { src: "love_idols/1155.avif", alt: "Description 1" },
+  ]
+
   return (
     <div className="page" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "35px" }}>
       <div className="homepagetop">
@@ -556,6 +568,11 @@ const Home: NextPage = () => {
           White Hearts
         </Typography>
         <ImageBar images={white_heart_images}></ImageBar>
+
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+          Love Idols
+        </Typography>
+        <ImageBar images={love_idols_images}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Cigawrette Packs
