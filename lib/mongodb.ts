@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI as string
+const uri = "mongodb+srv://dilfdev:guvuUxssx01gfypQ@cluster0.alsc6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&tls=true"
 const options = { appName: "devrel.template.nextjs" };
 
 let client: MongoClient;
