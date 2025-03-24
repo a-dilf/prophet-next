@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
 // Get connection string from environment variables
-const uri = "mongodb+srv://dilfdev:wPJs2NkGYJkXIQSy@cluster0.alsc6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&tls=true"
+const uri = process.env.MONGODB_URI as string
 if (!uri) {
   throw new Error("Please define the MONGODB_URI environment variable");
 }
