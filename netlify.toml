@@ -19,3 +19,7 @@
   #  publish = "dist" # Folder with the static content for _redirect file
 
   ## more info on configuring this file: https://ntl.fyi/file-based-build-config
+
+[functions]
+  node_bundler = "esbuild"
+  timeout = 30
