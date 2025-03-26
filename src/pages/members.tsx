@@ -234,7 +234,7 @@ const MembersPage = () => {
           Members
         </Typography>
         <Typography className="container" variant="h4" sx={{ paddingTop: "25px" }}>
-          Burn 2.5MM $PROPHET tokens for a month of membership and get access to our lines.
+          Burn 2 million $PROPHET tokens for a month of membership and get access to our lines.
         </Typography>
 
         <Button
