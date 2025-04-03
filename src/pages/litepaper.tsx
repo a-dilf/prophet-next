@@ -77,7 +77,7 @@ const Litepaper: NextPage = () => {
 
       <div className="container" style={{ marginTop: "15px" }}>
         <Typography sx={{ marginBottom: "15px" }}>
-          The logic: users deposit Eth for $prophet, the team gambles on select events that have emperically enjoyed
+          The logic: users deposit Eth for $prophet, the team gambles on select events and have emperically enjoyed
           strong results. Prophets, should they occur, are intended towards Milady community empowerment.
         </Typography>
         <Typography>
