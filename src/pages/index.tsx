@@ -196,6 +196,7 @@ const Home: NextPage = () => {
   ];
 
   const oekaki_images_3 = [
+    { src: "oekaki/3064.avif", alt: "Description 1" },
     { src: "oekaki/3938.avif", alt: "Description 1" },
     { src: "oekaki/4675.avif", alt: "Description 1" },
     { src: "oekaki/5185.avif", alt: "Description 1" },
@@ -281,7 +282,16 @@ const Home: NextPage = () => {
     { src: "love_idols/1152.png", alt: "Description 1" },
     { src: "love_idols/1153.png", alt: "Description 1" },
     { src: "love_idols/1154.png", alt: "Description 1" },
-    { src: "love_idols/1155.avif", alt: "Description 1" },
+    { src: "love_idols/2411.avif", alt: "Description 1" },
+    { src: "love_idols/2412.avif", alt: "Description 1" },
+    { src: "love_idols/2413.avif", alt: "Description 1" },
+    { src: "love_idols/2414.avif", alt: "Description 1" },
+  ]
+
+  const love_idols_images_2 = [
+    { src: "love_idols/2415.avif", alt: "Description 1" },
+    { src: "love_idols/2416.avif", alt: "Description 1" },
+    { src: "love_idols/2417.avif", alt: "Description 1" },
   ]
 
   return (
@@ -561,6 +571,8 @@ const Home: NextPage = () => {
         <ImageBar images={oekaki_images_1}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
           <ImageBar images={oekaki_images_2}></ImageBar>
+        </Box>
+        <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
           <ImageBar images={oekaki_images_3}></ImageBar>
         </Box>
 
@@ -573,6 +585,9 @@ const Home: NextPage = () => {
           Love Idols
         </Typography>
         <ImageBar images={love_idols_images}></ImageBar>
+        <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
+          <ImageBar images={love_idols_images_2}></ImageBar>
+        </Box>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Cigawrette Packs
