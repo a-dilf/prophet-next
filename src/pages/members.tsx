@@ -43,7 +43,7 @@ const MembersPage = () => {
   const burnConfig = {
     address: process.env.NEXT_PUBLIC_TOKEN_ADDRESS as "0x${string}",
     abi: token_abi,
-    args: [BigInt(1 * 1000000000000000000)],
+    args: [BigInt(2000000 * 1000000000000000000)],
     functionName: "burn",
   } as const;
 
@@ -234,7 +234,7 @@ const MembersPage = () => {
           Members
         </Typography>
         <Typography className="container" variant="h4" sx={{ paddingTop: "25px" }}>
-          Burn 2.5MM $PROPHET tokens for a month of membership and get access to our lines.
+          Burn 2 million $PROPHET tokens for a month of membership and get access to our lines.
         </Typography>
 
         <Button
