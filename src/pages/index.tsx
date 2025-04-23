@@ -14,6 +14,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemIcon,
   Table,
   TableBody,
   TableCell,
@@ -22,6 +23,7 @@ import {
   Typography,
 } from "@mui/material";
 
+import CircleIcon from "@mui/icons-material/Circle";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ImageBar from "components/ImageBar";
 import { toWei } from "web3-utils";
@@ -192,9 +194,8 @@ const Home: NextPage = () => {
     { src: "oekaki/2184.avif", alt: "Description 1" },
     { src: "oekaki/2512.avif", alt: "Description 1" },
     { src: "oekaki/2601.avif", alt: "Description 1" },
-    { src: "oekaki/3064.avif", alt: "Description 1" },
   ];
-
+  
   const oekaki_images_3 = [
     { src: "oekaki/3064.avif", alt: "Description 1" },
     { src: "oekaki/3938.avif", alt: "Description 1" },
@@ -204,7 +205,6 @@ const Home: NextPage = () => {
     { src: "oekaki/5275.avif", alt: "Description 1" },
     { src: "oekaki/5343.avif", alt: "Description 1" },
   ];
-
 
   const kagami_images = [
     { src: "kagami/252.png", alt: "Description 1" },
@@ -271,7 +271,8 @@ const Home: NextPage = () => {
   const schizo_poster = [
     { src: "schizo_poster/4611.avif", alt: "Description 1" },
     { src: "schizo_poster/3306.avif", alt: "Description 1" },
-  ]
+    { src: "schizo_poster/642.avif", alt: "Description 1" },
+  ];
 
   const love_idols_images = [
     { src: "love_idols/1125.png", alt: "Description 1" },
@@ -286,13 +287,28 @@ const Home: NextPage = () => {
     { src: "love_idols/2412.avif", alt: "Description 1" },
     { src: "love_idols/2413.avif", alt: "Description 1" },
     { src: "love_idols/2414.avif", alt: "Description 1" },
-  ]
+  ];
 
   const love_idols_images_2 = [
     { src: "love_idols/2415.avif", alt: "Description 1" },
     { src: "love_idols/2416.avif", alt: "Description 1" },
     { src: "love_idols/2417.avif", alt: "Description 1" },
-  ]
+    { src: "love_idols/1155.avif", alt: "Description 1" },
+    { src: "love_idols/2477.avif", alt: "Description 1" },
+    { src: "love_idols/2478.avif", alt: "Description 1" },
+    { src: "love_idols/2479.avif", alt: "Description 1" },
+    { src: "love_idols/2480.avif", alt: "Description 1" },
+    { src: "love_idols/2481.avif", alt: "Description 1" },
+    { src: "love_idols/2488.avif", alt: "Description 1" },
+    { src: "love_idols/2489.avif", alt: "Description 1" },
+    { src: "love_idols/2490.avif", alt: "Description 1" },
+  ];
+
+  const love_idols_images_3 = [
+    { src: "love_idols/2491.avif", alt: "Description 1" },
+    { src: "love_idols/2492.avif", alt: "Description 1" },
+    { src: "love_idols/2493.avif", alt: "Description 1" },
+  ];
 
   return (
     <div className="page" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "35px" }}>
@@ -320,8 +336,7 @@ const Home: NextPage = () => {
               py: 1.5, // Add more padding to make button taller
             }}
           >
-            <FlashingHeader>
-            </FlashingHeader>
+            <FlashingHeader></FlashingHeader>
           </Button>
         </Box>
       </div>
@@ -347,6 +362,38 @@ const Home: NextPage = () => {
             </Box>
           </Grid>
         </Grid>
+      </div>
+
+      <div className="container">
+        <Typography variant="h4" component="div" sx={{ mb: 2 }}>
+          Mission Statement: Elite MMA betters gamble on human cockfighting, generate yield for token holders via bets, and sweep Remilia/remco derivative assets
+        </Typography>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="total nfts swept: 100" />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+            <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="collections swept: 6" />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+            <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="total $ spent sweeping nfts: $12,350" />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+            <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="total $ spent on buybacks / burning tokens: $13,000" />
+          </ListItem>
+        </List>
       </div>
 
       <div className="container">
@@ -556,7 +603,7 @@ const Home: NextPage = () => {
         </div>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          SchizoPoster 
+          SchizoPoster
         </Typography>
         <ImageBar images={schizo_poster}></ImageBar>
 
@@ -572,7 +619,7 @@ const Home: NextPage = () => {
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
           <ImageBar images={oekaki_images_2}></ImageBar>
         </Box>
-        <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
+        <Box>
           <ImageBar images={oekaki_images_3}></ImageBar>
         </Box>
 
@@ -588,6 +635,10 @@ const Home: NextPage = () => {
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
           <ImageBar images={love_idols_images_2}></ImageBar>
         </Box>
+        <Box>
+          <ImageBar images={love_idols_images_3}></ImageBar>
+        </Box>
+
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Cigawrette Packs

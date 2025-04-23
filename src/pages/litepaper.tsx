@@ -70,8 +70,8 @@ const Litepaper: NextPage = () => {
         </Typography>
         <br></br>
         <Typography>
-          Since inception of the bet tracker in November 2020, it has generated nearly 600 units in total. Averaging
-          roughly 200% returns in about 3 years--compounding per year.
+          Since inception of the bet tracker in November 2020, it has generated nearly 700 units in total. Averaging
+          roughly 160% returns in about 4 years--compounding per year.
         </Typography>
       </div>
 
@@ -83,7 +83,7 @@ const Litepaper: NextPage = () => {
         <Typography>
           Prophetlady Corp. is a small cadre of autists that specialize in mma betting. The following infographs show
           the teams performance since inception from a start date of november 2020, so in 4 years its averaging roughly
-          150% returns per year.
+          160% returns per year.
         </Typography>
       </div>
 
@@ -91,7 +91,7 @@ const Litepaper: NextPage = () => {
         <Typography variant="h6" component="div" sx={{ mb: 2 }}>
           {" "}
           {/* Customize the title here */}
-          Muh infograps of performance 2023
+          Muh infographs of performance 2024
         </Typography>
 
         <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
@@ -229,63 +229,6 @@ const Litepaper: NextPage = () => {
           tokens, 7.5% of that is 15 billion. 15 billion tokens divided every day for 5 years =7.5 million tokens
           roughly split between proportion of LP participants daily)
         </Typography>
-      </div>
-
-      <div className="container">
-        <Typography variant="h6" component="div" sx={{ mb: 2 }}>
-          {" "}
-          {/* Customize the title here */}
-          Exhibit A
-        </Typography>
-        <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
-          <img
-            src="option1.png"
-            alt="add liquidity to LP pool"
-            style={{ width: "100%", height: "auto" }} // Inline styling
-          />
-        </Box>
-        <Typography>
-          Option 2 would be to simply stake $prophet tokens and collect the fees from taxes that are incurred from buys
-          and sells
-        </Typography>
-      </div>
-
-      <div className="container">
-        <Typography variant="h6" component="div" sx={{ mb: 2 }}>
-          {" "}
-          {/* Customize the title here */}
-          Exhibit B
-        </Typography>
-        <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
-          <img
-            src="option2.png"
-            alt="add liquidity to LP pool"
-            style={{ width: "100%", height: "auto" }} // Inline styling
-          />
-        </Box>
-        <Typography>
-          Option 3 is to burn a set amount of Prophet tokens for a milady style inspired derivative collection, the idea
-          of the nft being that with the more tokens one burns, one increase the tier of said NFT. The value being that
-          the higher the tier of NFT, the lower the tax rate will be for when swapping Prophet tokens back for Eth.
-          Also, users who upgrade or acquire the highest tier available (rank 5) can deposit said Nfts into another
-          distinct pool to collect Prophet tokens. This pool also will distribute 7.5% of the total token supply to
-          stakers equally over the course of a 5 year period.
-        </Typography>
-      </div>
-
-      <div className="container">
-        <Typography variant="h6" component="div" sx={{ mb: 2 }}>
-          {" "}
-          {/* Customize the title here */}
-          Exhibit C
-        </Typography>
-        <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
-          <img
-            src="option3.png"
-            alt="burn prophet to generate or upgrade nft"
-            style={{ width: "100%", height: "auto" }} // Inline styling
-          />
-        </Box>
       </div>
 
       <div className="container">
