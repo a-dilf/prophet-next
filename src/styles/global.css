@@ -30,6 +30,21 @@ body {
   justify-content: center;
 }
 
+.container2 {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0 30px;
+  justify-content: center;
+  background: radial-gradient(circle, black, rgb(31, 3, 31));
+  margin: 2%;
+  padding: 5%;
+  border: 4px;
+  border-style: double;
+  border-color: violet;
+  width: 99%;
+}
+
 .homepagetop {
   background: radial-gradient(circle, black, rgb(31, 3, 31));
   margin: 2%;
