@@ -364,9 +364,9 @@ const Home: NextPage = () => {
         </Grid>
       </div>
 
-      <div className="container">
+      <div className="container2">
         <Typography variant="h4" component="div" sx={{ mb: 2 }}>
-          Mission Statement: Elite MMA betters gamble on human cockfighting, generate yield for token holders via bets, and sweep Remilia/remco derivative assets
+          Mission Statement: World leading MMA bettors gamble on human cockfighting, spend prophets from bets on generating yield for token holders, sweeping Remilia assets / derivatives
         </Typography>
         <List>
           <ListItem>
@@ -379,19 +379,19 @@ const Home: NextPage = () => {
             <ListItemIcon>
             <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="collections swept: 6" />
+            <ListItemText primary="collections swept: 7" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
             <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="total $ spent sweeping nfts: $12,350" />
+            <ListItemText primary="total $ spent sweeping nfts: > $11,500" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
             <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="total $ spent on buybacks / burning tokens: $13,000" />
+            <ListItemText primary="total $ spent on buybacks: >$14,500" />
           </ListItem>
         </List>
       </div>
