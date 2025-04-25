@@ -351,7 +351,8 @@ const Litepaper: NextPage = () => {
         Additionally, there is one last piece in this puzzle, there is an "anti jeet" / arbitrage tax of an additional
         10% to any ido buyer who then buys or sells from the LP within the same round. Example, user buys in ido rd 1
         with a tier 5 nft, until the 1st rd ido is entirely bought out, the tax rate interacting with the LP will be 13%
-        instead of 3%. Once ido rd 2 starts, the tax rate will revert back to 3%.
+        instead of 3%. Once ido rd 2 starts, the tax rate will revert back to 3%. Finally, we do wish to note that 10% of all taxes
+        collected do go into the treasury to help bolster bet sizing growth for future world domination.
       </Typography>
       </div>
 
