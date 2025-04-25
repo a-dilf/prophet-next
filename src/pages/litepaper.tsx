@@ -80,11 +80,6 @@ const Litepaper: NextPage = () => {
           The logic: users deposit Eth for $prophet, the team gambles on select events, and have historically enjoyed
           strong results. Prophets, should they occur, are intended towards Milady community empowerment.
         </Typography>
-        <Typography>
-          Prophetlady Corp. is a small cadre of autists that specialize in mma betting. The following infographs show
-          the teams performance since inception from a start date of november 2020, so in 4 years its averaging roughly
-          160% returns per year.
-        </Typography>
       </div>
 
       <div className="container" style={{ marginTop: "15px" }}>
