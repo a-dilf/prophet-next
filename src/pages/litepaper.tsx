@@ -370,22 +370,29 @@ const Litepaper: NextPage = () => {
           Musings...
         </Typography>
 
-        <Typography>
+        <Typography sx={{ letterSpacing: "0.5px", lineHeight: 1.6, fontSize: "18px" }}>
           The name of the game here is large numbers/ scaling. Assume that the team can deliver 100% roi a year and has
           3 of the IDO stages fully funded. As of this writing that would equate to roughly $750,000. At 2% a week
           returns, half of the proceeds would be dedicated to sweeping NFTS ($7500 a week) while also being able to
           buyback and burn approximately 333 million tokens a week. If this were to hold consistant throughout a year
-          that would mean... approximately 17 billion tokens a year get removed from total possible market supply. Now
-          consider the firepower this protocol has at a max raise (approximately $7,000,000). At this level, assuming 2%
-          weekly returns means close to 400 million tokens get bought/burnt a week and $70,000 a week in NFT sweeps. It
-          is the stated goal of this project to sweep roughly 2-10% of 15-20 Nft projects that are in the Remilia
+          that would mean... approximately 17 billion tokens a year get removed from total possible market supply.
+          <br />
+          <br />
+          Now consider the firepower this protocol has at a max raise (approximately $7,000,000). At this level,
+          assuming 2% weekly returns means close to 400 million tokens get bought/burnt a week and $70,000 a week in NFT
+          sweeps.
+          <br />
+          <br />
+          It is the stated goal of this project to sweep roughly 2-10% of 15-20 Nft projects that are in the Remilia
           universe or are widely considered to be a derivate. To further go on, if after a couple years the Prophetlady
           Corporation has swept say 5-10% of the total collections we are interested in, then the entire amount of
-          prophets would go to buybacks/burns (roughly 800 million tokens a week/ 40 billion a year). Lastly, consider
-          if all NFTs in the prophetlady collections were to be minted and upgraded (50,000 total x 2 million to max
-          upgrade) this would take out half of the total token supple. If one were to add these too possibliities
-          together that means that hypthetically the entire 200 billion token supply could be completely burned within 5
-          years of completeing multiple IDO rounds.
+          prophets would go to buybacks/burns (roughly 800 million tokens a week/ 40 billion a year).
+          <br />
+          <br />
+          Lastly, consider if all NFTs in the prophetlady collections were to be minted and upgraded (50,000 total x 2
+          million to max upgrade) this would take out half of the total token supple. If one were to add these too
+          possibliities together that means that hypthetically the entire 200 billion token supply could be completely
+          burned within 5 years of completeing multiple IDO rounds.
         </Typography>
       </div>
 
