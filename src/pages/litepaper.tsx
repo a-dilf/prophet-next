@@ -7,6 +7,7 @@ import {
   Box,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText,
   Table,
   TableBody,
@@ -16,18 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const items = [
-  "Emperically speaking, 200% per year for the last 3 years is what the team has accomplished, however, given the law of large numbers, should the treasury go beyond 7 figures, this will likely prove too difficult to achieve, so with this a general target of success the team hopes for is roughly 50-100% a year......",
-  "Assume full raise occurs = $15,000,000",
-  "75% roi divided weekly = 1.5%",
-  "1.5% of 15,000,000 = $225,000",
-  '.75% (or half... $112,500) goes to "community building", the other.75% ($112,500) goes to building the treasury further',
-  "Assume full raise: 15,000,000 ",
-  "Year zero: treasury at 15 million: 5.6 mil distributed +5.6 mil added to treasury",
-  "Year 1: treasury at 20 million:    7.5 mil distributed + 7.5 mil added to treasury",
-  "Year 2: treasury at 28 million: 10.5 mil distributed + 10.5 mil added to treasury",
-  "Year 3: treasury at 38 million:    14 mil distributed + 14 mil added to treasury. etc. etc. etc.",
-];
+import CircleIcon from "@mui/icons-material/Circle";
 
 const Litepaper: NextPage = () => {
   const [mounted, setMounted] = React.useState(false);
@@ -40,10 +30,9 @@ const Litepaper: NextPage = () => {
           Litepaper
         </Typography>
         <Typography variant="h6" sx={{ paddingTop: "15px", paddingBottom: "15px" }}>
-          Prophet token ($PROPHET) is a Milady inspired memecoin and nft derivative created on Arbitrum that operates on
-          a tiered tax structure basis. Meaning that it is a reflection token that shifts a % of trading volume back to
-          staked token holders, paid in Ethereum. However users who buy or sell the token can reduce the tax rate via
-          aquiring the projects NFT collection.
+          $PROPHET is a Milady inspired unique project / NFT derivative created on Arbitrum that operates on a simple
+          idea: what if a small team of world class mma gamblers created an ecosystem based off distributing prophets
+          from bets back to token holders and to sweeping collections (will never sell) from the Milady community?
         </Typography>
       </div>
 
@@ -52,7 +41,8 @@ const Litepaper: NextPage = () => {
           The Thesis
         </Typography>
         <Typography sx={{ paddingTop: "15px" }}>
-          Empower the Milady ecosystem through betting on modern age gladatorial cock fights.
+          Elite mma betting syndicate known as "The Prophetlady Corporation" generating yield via betting on modern age
+          gladatorial cock fights.
         </Typography>
 
         <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
@@ -65,20 +55,14 @@ const Litepaper: NextPage = () => {
 
         <Typography>
           {" "}
-          ProphetLady represents the vision of a Milady inspired derivative from elite gambling autists specializing in
-          MMA betting. Check out the <a href="https://www.betmma.tips/Headmooment">team's success tracker here.</a>
+          ProphetLady represents the vision of a Milady inspired derivative created by elite gambling autists
+          specializing in MMA betting. Check out the{" "}
+          <a href="https://www.betmma.tips/Headmooment">team's tracker here (ranked 5th on the leaderboard)</a>
         </Typography>
         <br></br>
         <Typography>
           Since inception of the bet tracker in November 2020, it has generated nearly 700 units in total. Averaging
-          roughly 160% returns in about 4 years--compounding per year.
-        </Typography>
-      </div>
-
-      <div className="container" style={{ marginTop: "15px" }}>
-        <Typography sx={{ marginBottom: "15px" }}>
-          The logic: users deposit Eth for $prophet, the team gambles on select events, and have historically enjoyed
-          strong results. Prophets, should they occur, are intended towards Milady community empowerment.
+          roughly 160% average returns per year over 4 years
         </Typography>
       </div>
 
@@ -119,49 +103,148 @@ const Litepaper: NextPage = () => {
           How the ecosystem works
         </Typography>
         <Typography sx={{ paddingTop: "15px" }}>
-          Users stake $PROPHET tokens to claim a taxed share of trade volume via a reflection system. Building upon this
-          simple and popular framework, ProphetLady adds a unique twist: users can burn a set amount of their $PROPHET
-          tokens to mint a Milady derivative (the ProphetLady collection) that reduces the tax paid on sells. A
-          ProphetLady can then be increased in tier by burning additional $PROPHET tokens for decreased tax rates and
-          access to the NFT staking rewards pool.
+          Users who wish to partake can deposit worthless ETH to buy tokens from our IDO here. As users deposit eth into
+          what is the "treasury", this grows the size of what amounts of $ will be bet. Larger treasury = larger bet
+          sizes = larger prophets (hopefully) = larger NFT Sweeps/larger token buybacks/ token burns. To create a more
+          crypto fun style ecosystem, several additional fun elements have been created, such as:
+        </Typography>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="Designing this as a tax token, so token stakers are rewarded from total volume traded" />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="Introducing an NFT that can be bought to reduce tax rates, minted by burning the Prophet token" />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="The NFT can be 'powered up' to further reduce taxes paid on buys or sells, also done by burning more tokens" />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="Users can provide liquidity or stake highest 'tier' of NFT to earn prophet tokens, or stake tokens to earn yield paid in ETH" />
+          </ListItem>
+        </List>
+
+        <Typography className="container" variant="h5">
+          To make clear what you, the noble cryptocurrency participant, can do once buying into the IDO, have 1 of 3
+          options:
+        </Typography>
+
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText
+              primary="Provide liquidity, by depositing an eth/prophet pair token into the liquidity pool users will earn a proportional stake
+            of 7.5 million tokens to be emitted daily for 5 years"
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="Stake the token, in order to earn eth collected from taxes havested from buying and selling the token on the open market" />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="Mint NFTs, which are created from burning the Prophet token" />
+          </ListItem>
+        </List>
+
+        <Typography variant="h6" component="div" sx={{ mb: 2 }}>
+          {" "}
+          {/* Customize the title here */}
+          Muh chart in totality to illustrate the method to the madness.
+        </Typography>
+        <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
+          <img
+            src="infograph.png"
+            alt="a chart describing the structure of the coin"
+            style={{ width: "100%", height: "auto" }} // Inline styling
+          />
+        </Box>
+
+        <Typography variant="h4" sx={{ paddingTop: "15px", paddingBottom: "15px" }}>
+          NFT explaination charts...
         </Typography>
 
         <Typography sx={{ paddingTop: "15px", paddingBottom: "15px" }}>
-          Burn costs for minting and upgrading each tier of ProphetLady will be fixed at 400k $PROPHET tokens required
-          to reach the next level.
+          Burn costs for minting and upgrading each tier of the Prophetlady ecosystem NFT will be fixed at 400k $PROPHET
+          tokens required to reach the next level.
         </Typography>
         <Typography variant="h6" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           {" "}
           {/* Customize the title here */}
-          Cumulative costs for each tier:
+          Cumulative costs for each tier and corresponding tax rate:
         </Typography>
+
         <TableContainer>
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className={styles.table}>Level 1</TableCell>
+                <TableCell className={styles.table}>Tier category</TableCell>
+                <TableCell className={styles.table}># of tokens to burn</TableCell>
+                <TableCell className={styles.table}>tax rate</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={styles.table}>No NFT</TableCell>
+                <TableCell className={styles.table}>0</TableCell>
+                <TableCell className={styles.table}>13%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={styles.table}>Tier 1</TableCell>
                 <TableCell className={styles.table}>400,000</TableCell>
+                <TableCell className={styles.table}>11%</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Level 2</TableCell>
+                <TableCell className={styles.table}>Tier 2</TableCell>
                 <TableCell className={styles.table}>800,000</TableCell>
+                <TableCell className={styles.table}>9%</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Level 3</TableCell>
+                <TableCell className={styles.table}>Tier 3</TableCell>
                 <TableCell className={styles.table}>1,200,000</TableCell>
+                <TableCell className={styles.table}>7%</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Level 4</TableCell>
+                <TableCell className={styles.table}>Tier 4</TableCell>
                 <TableCell className={styles.table}>1,600,000</TableCell>
+                <TableCell className={styles.table}>5%</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>Level 5</TableCell>
+                <TableCell className={styles.table}>Tier 5</TableCell>
                 <TableCell className={styles.table}>2,000,000</TableCell>
+                <TableCell className={styles.table}>3%</TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
       </div>
+
+      <Typography variant="h6" component="div" sx={{ mb: 2 }}>
+        {" "}
+        {/* Customize the title here */}A detailed look into the mechanics of the NFTs and the tax rates...
+      </Typography>
+      <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
+        <img
+          src="nftinfograph.png"
+          alt="nft structure"
+          style={{ width: "100%", height: "auto" }} // Inline styling
+        />
+      </Box>
 
       <div className="container">
         <Typography className="container" variant="h4">
@@ -171,7 +254,10 @@ const Litepaper: NextPage = () => {
           Total tokens in existence = 200,000,000,000
         </Typography>
 
-        <Typography>120,000,000,000 (60%) $PROPHET will be distributed via 6 stages of IDO</Typography>
+        <Typography>
+          120,000,000,000 (60% of total token supply) $PROPHET will be distributed via 6 stages of IDO, with the price
+          of the token doubling at each 'stage'
+        </Typography>
         <Typography variant="h6" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           {" "}
           {/* Customize the title here */}
@@ -216,149 +302,98 @@ const Litepaper: NextPage = () => {
             style={{ width: "100%", height: "auto" }} // Inline styling
           />
         </Box>
-
-        <Typography>
-          Holders will have one of multiple options of what to do with the prophet token once aquiring it. Option 1
-          would be to contribute to the liquidity mining pool. The eth/prophet LP has an incentive of 7.5% of the entire
-          supply to be evenly distributed on a proportional basis, daily, over the course of 5 years. (200 billion total
-          tokens, 7.5% of that is 15 billion. 15 billion tokens divided every day for 5 years =7.5 million tokens
-          roughly split between proportion of LP participants daily)
-        </Typography>
       </div>
 
-      <div className="container">
-        <Typography variant="h6" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          {" "}
-          {/* Customize the title here */}
-          Tax % by NFT tier level:
-        </Typography>
-        <TableContainer>
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell className={styles.table}>No NFT</TableCell>
-                <TableCell className={styles.table}>13%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Tier 1</TableCell>
-                <TableCell className={styles.table}>11%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Tier 2</TableCell>
-                <TableCell className={styles.table}>9%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Tier 3</TableCell>
-                <TableCell className={styles.table}>7%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Tier 4</TableCell>
-                <TableCell className={styles.table}>5%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Tier 5</TableCell>
-                <TableCell className={styles.table}>3%</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-
-      <div className="container">
-        <Typography variant="h6" component="div" sx={{ mb: 2 }}>
-          {" "}
-          {/* Customize the title here */}A detailed look into the mechanics of the NFTs and the tax rates...
-        </Typography>
-        <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
-          <img
-            src="nftinfograph.png"
-            alt="nft structure"
-            style={{ width: "100%", height: "auto" }} // Inline styling
-          />
-        </Box>
-
-        <Typography variant="h6" component="div" sx={{ mb: 2 }}>
-          {" "}
-          {/* Customize the title here */}
-          Muh chart in totality to illustrate the method to the madness.
-        </Typography>
-        <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
-          <img
-            src="infograph.png"
-            alt="a chart describing the structure of the coin"
-            style={{ width: "100%", height: "auto" }} // Inline styling
-          />
-        </Box>
-
-        <Typography variant="h6" component="div" sx={{ mb: 2 }}>
-          {" "}
-          {/* Customize the title here */}A table infographic of ido sales structure with round, price, and total raise
-          amount
-        </Typography>
-        <TableContainer>
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell className={styles.table}>Round 1</TableCell>
-                <TableCell className={styles.table}>.000000003125 Eth</TableCell>
-                <TableCell className={styles.table}>62.5 Eth</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Round 2</TableCell>
-                <TableCell className={styles.table}>.00000000625 Eth</TableCell>
-                <TableCell className={styles.table}>125 Eth</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Round 3</TableCell>
-                <TableCell className={styles.table}>.0000000125 Eth</TableCell>
-                <TableCell className={styles.table}>250 Eth</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Round 4</TableCell>
-                <TableCell className={styles.table}>.000000025 Eth</TableCell>
-                <TableCell className={styles.table}>500 Eth</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Round 5</TableCell>
-                <TableCell className={styles.table}>.00000005 Eth</TableCell>
-                <TableCell className={styles.table}>1000 Eth</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={styles.table}>Round 6</TableCell>
-                <TableCell className={styles.table}>.0000001 Eth</TableCell>
-                <TableCell className={styles.table}>2000 Eth</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+      <Typography variant="h6" component="div" sx={{ mb: 2 }}>
+        {" "}
+        {/* Customize the title here */}A table infographic of ido sales structure with round, price, and total raise
+        amount in eth per stage. TLDR; 20 billion tokens are availible to be bought per stage, the token price doubles
+        in each progressive stage
+      </Typography>
+      <TableContainer>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell className={styles.table}>Stage 1</TableCell>
+              <TableCell className={styles.table}>.000000003125 Eth</TableCell>
+              <TableCell className={styles.table}>62.5 Eth</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className={styles.table}>Stage 2</TableCell>
+              <TableCell className={styles.table}>.00000000625 Eth</TableCell>
+              <TableCell className={styles.table}>125 Eth</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className={styles.table}>Stage 3</TableCell>
+              <TableCell className={styles.table}>.0000000125 Eth</TableCell>
+              <TableCell className={styles.table}>250 Eth</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className={styles.table}>Stage 4</TableCell>
+              <TableCell className={styles.table}>.000000025 Eth</TableCell>
+              <TableCell className={styles.table}>500 Eth</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className={styles.table}>Stage 5</TableCell>
+              <TableCell className={styles.table}>.00000005 Eth</TableCell>
+              <TableCell className={styles.table}>1000 Eth</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className={styles.table}>Stage 6</TableCell>
+              <TableCell className={styles.table}>.0000001 Eth</TableCell>
+              <TableCell className={styles.table}>2000 Eth</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       <div className="homepagetop">
         <Typography className={styles.container} variant="h2">
           WATCH OUT!!!
         </Typography>
         <Typography variant="h6" sx={{ paddingTop: "15px", paddingBottom: "15px" }}>
-          In order to benefit from the NFT tier tax cut, at least one of the leveled up NFT's must be unstaked! Don't CUCK yourself and swap without an unstaked level 5 NFT in your wallet.
+          In order to benefit from the NFT tier tax cut, at least one of the leveled up NFT's must be unstaked! Don't
+          CUCK yourself and swap without an unstaked level 5 NFT in your wallet.
         </Typography>
         <Typography variant="h6" component="div" sx={{ mb: 2 }}>
-        {" "}
-        {/* Customize the title here */}
-        Additionally, there is one last piece in this puzzle, there is an "anti jeet" / arbitrage tax of an additional
-        10% to any ido buyer who then buys or sells from the LP within the same round. Example, user buys in ido rd 1
-        with a tier 5 nft, until the 1st rd ido is entirely bought out, the tax rate interacting with the LP will be 13%
-        instead of 3%. Once ido rd 2 starts, the tax rate will revert back to 3%. Finally, we do wish to note that 10% of all taxes
-        collected do go into the treasury to help bolster bet sizing growth for future world domination.
-      </Typography>
+          {" "}
+          {/* Customize the title here */}
+          Additionally, there is one last piece in this puzzle, there is an "anti jeet" / arbitrage tax of an additional
+          10% to any ido buyer who then buys or sells from the LP within the same round. Example, user buys in ido rd 1
+          with a tier 5 nft, until the 1st rd ido is entirely bought out, the tax rate interacting with the LP will be
+          13% instead of 3%. Once ido rd 2 starts, the tax rate will revert back to 3%.
+        </Typography>
       </div>
 
       <div className="container">
-        <List sx={{ listStyleType: "disc" }}>
-          {items.map((item, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={item} />
-            </ListItem>
-          ))}
-        </List>
+        <Typography variant="h6" sx={{ paddingTop: "15px", paddingBottom: "15px" }}>
+          Musings...
+        </Typography>
+
+        <Typography sx={{ letterSpacing: "0.5px", lineHeight: 1.6, fontSize: "18px" }}>
+          The name of the game here is large numbers/ scaling. Assume that the team can deliver 100% roi a year and has
+          3 of the IDO stages fully funded. As of this writing that would equate to roughly $750,000. At 2% a week
+          returns, half of the proceeds would be dedicated to sweeping NFTS ($7500 a week) while also being able to
+          buyback and burn approximately 333 million tokens a week. If this were to hold consistant throughout a year
+          that would mean... approximately 17 billion tokens a year get removed from total possible market supply.
+          <br />
+          <br />
+          Now consider the firepower this protocol has at a max raise (approximately $7,000,000). At this level,
+          assuming 2% weekly returns means close to 400 million tokens get bought/burnt a week and $70,000 a week in NFT
+          sweeps.
+          <br />
+          <br />
+          It is the stated goal of this project to sweep roughly 2-10% of 15-20 Nft projects that are in the Remilia
+          universe or are widely considered to be a derivate. To further go on, if after a couple years the Prophetlady
+          Corporation has swept say 5-10% of the total collections we are interested in, then the entire amount of
+          prophets would go to buybacks/burns (roughly 800 million tokens a week/ 40 billion a year).
+          <br />
+          <br />
+          Lastly, consider if all NFTs in the prophetlady collections were to be minted and upgraded (50,000 total x 2
+          million to max upgrade) this would take out half of the total token supple. If one were to add these too
+          possibliities together that means that hypthetically the entire 200 billion token supply could be completely
+          burned within 5 years of completeing multiple IDO rounds.
+        </Typography>
       </div>
 
       <div className="container">
@@ -408,3 +443,4 @@ const Litepaper: NextPage = () => {
 };
 
 export default Litepaper;
+
