@@ -365,7 +365,7 @@ const Home: NextPage = () => {
       </div>
 
       <div className="container2">
-        <Typography variant="h4" component="div" sx={{ mb: 2 }}>
+        <Typography variant="h4" component="div" sx={{ mb: 2, fontSize: {xs: "1rem", md: "2rem"} }}>
           Mission Statement: World leading MMA bettors gamble on human cockfighting, spend prophets from bets on generating yield for token holders, sweeping Remilia assets / derivatives
         </Typography>
         <List>
