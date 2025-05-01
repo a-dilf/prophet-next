@@ -103,10 +103,27 @@ const Litepaper: NextPage = () => {
           How the ecosystem works
         </Typography>
         <Typography sx={{ paddingTop: "15px" }}>
-          Users who wish to partake can deposit worthless ETH to buy tokens from our IDO here. As users deposit eth into
-          what is the "treasury", this grows the size of what amounts of $ will be bet. Larger treasury = larger bet
-          sizes = larger prophets (hopefully) = larger NFT Sweeps/larger token buybacks/ token burns. To create a more
-          crypto fun style ecosystem, several additional fun elements have been created, such as:
+          Users who wish to partake can deposit worthless ETH to buy tokens from our IDO{"  "}
+          <Box
+            component="a"
+            href="https://prophetlady.com/prophet"
+            sx={{
+              color: "#ee82ee", // violet
+              textDecoration: "none",
+              fontWeight: "bold",
+              textShadow: "0 0 6px #b76eb8", // darker violet glow
+              transition: "text-shadow 0.3s",
+              "&:hover": {
+                textShadow: "0 0 10px #b76eb8, 0 0 16px #b76eb8",
+              },
+            }}
+          >
+            Here.
+          </Box>{" "}
+          As users deposit eth into what is the "treasury", this grows the size of what amounts of $ will be bet. Larger
+          treasury = larger bet sizes = larger prophets (hopefully) = larger NFT Sweeps/larger token buybacks/ token
+          burns. To create a more crypto fun style ecosystem, several additional fun elements have been created, such
+          as:
         </Typography>
         <List>
           <ListItem>
@@ -263,37 +280,91 @@ const Litepaper: NextPage = () => {
           {/* Customize the title here */}
           IDO distribution rates
         </Typography>
-
         <TableContainer>
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000003125 ETH</TableCell>
+                <TableCell className={styles.table}>Stage 1</TableCell>
+                <TableCell className={styles.table}>.000000003125 Eth</TableCell>
+                <TableCell className={styles.table}>62.5 Eth</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000006250 ETH</TableCell>
+                <TableCell className={styles.table}>Stage 2</TableCell>
+                <TableCell className={styles.table}>.00000000625 Eth</TableCell>
+                <TableCell className={styles.table}>125 Eth</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000012500 ETH</TableCell>
+                <TableCell className={styles.table}>Stage 3</TableCell>
+                <TableCell className={styles.table}>.0000000125 Eth</TableCell>
+                <TableCell className={styles.table}>250 Eth</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000025000 ETH</TableCell>
+                <TableCell className={styles.table}>Stage 4</TableCell>
+                <TableCell className={styles.table}>.000000025 Eth</TableCell>
+                <TableCell className={styles.table}>500 Eth</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000050000 ETH</TableCell>
+                <TableCell className={styles.table}>Stage 5</TableCell>
+                <TableCell className={styles.table}>.00000005 Eth</TableCell>
+                <TableCell className={styles.table}>1000 Eth</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={styles.table}>20,000,000,000</TableCell>
-                <TableCell className={styles.table}>at .000000100000 ETH</TableCell>
+                <TableCell className={styles.table}>Stage 6</TableCell>
+                <TableCell className={styles.table}>.0000001 Eth</TableCell>
+                <TableCell className={styles.table}>2000 Eth</TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
+
+        <Typography variant="h6" sx={{ paddingTop: "30px", paddingBottom: "15px" }}>
+          The totality of allocation of the entire token supply goes as follows:
+        </Typography>
+
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText primary="60% (120 billion tokens) are in a contract and can only be introduced into circulation upon being bought from one of the IDO rounds" />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText
+              primary="10% (20 bilion tokens) are to go to the 3 core team members who are the creators of this idea, the 20 billion tokens
+            are emitted equally on a monthly basis over the course of two years"
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText
+              primary="7.5% (15 billion tokens) are dedicated to be emitted to Liquidity providers over the course of 5 years from the start date
+            of this protocol"
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText
+              primary="7.5% (15 billion tokens) are dedicated to be emitted to NFT stakers over the course of 5 years from the start date of
+            this protocol"
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
+            </ListItemIcon>
+            <ListItemText
+              primary="15% (30 billion tokens) are dedicated to miscellaneous uses to be determined by the team, users include but are not limited
+            to: burning tokens to mint NFTs to do giveaways to community members, adding additional liquidity, marketing opperations, etc etc... "
+            />
+          </ListItem>
+        </List>
 
         <Box sx={{ width: "100%", height: "auto", paddingTop: "15px", paddingBottom: "15px" }}>
           <img
@@ -303,49 +374,6 @@ const Litepaper: NextPage = () => {
           />
         </Box>
       </div>
-
-      <Typography variant="h6" component="div" sx={{ mb: 2 }}>
-        {" "}
-        {/* Customize the title here */}A table infographic of ido sales structure with round, price, and total raise
-        amount in eth per stage. TLDR; 20 billion tokens are availible to be bought per stage, the token price doubles
-        in each progressive stage
-      </Typography>
-      <TableContainer>
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell className={styles.table}>Stage 1</TableCell>
-              <TableCell className={styles.table}>.000000003125 Eth</TableCell>
-              <TableCell className={styles.table}>62.5 Eth</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.table}>Stage 2</TableCell>
-              <TableCell className={styles.table}>.00000000625 Eth</TableCell>
-              <TableCell className={styles.table}>125 Eth</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.table}>Stage 3</TableCell>
-              <TableCell className={styles.table}>.0000000125 Eth</TableCell>
-              <TableCell className={styles.table}>250 Eth</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.table}>Stage 4</TableCell>
-              <TableCell className={styles.table}>.000000025 Eth</TableCell>
-              <TableCell className={styles.table}>500 Eth</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.table}>Stage 5</TableCell>
-              <TableCell className={styles.table}>.00000005 Eth</TableCell>
-              <TableCell className={styles.table}>1000 Eth</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.table}>Stage 6</TableCell>
-              <TableCell className={styles.table}>.0000001 Eth</TableCell>
-              <TableCell className={styles.table}>2000 Eth</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
 
       <div className="homepagetop">
         <Typography className={styles.container} variant="h2">
