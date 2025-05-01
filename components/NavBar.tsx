@@ -96,7 +96,7 @@ export const Sidebar: React.FC<NavbarProps> = ({ open, setOpen }) => {
   const navigationItems = [
     { name: "Home", path: "/" },
     { name: "Litepaper", path: "/litepaper" },
-    { name: "$PROPHET", path: "/prophet" },
+    { name: "$PROPHET/ Staking", path: "/prophet" },
     { name: "NFTs", path: "/nfts" },
     { name: "Liquidity", path: "/liquidity" },
     { name: "Rewards", path: "/rewards" },
@@ -148,3 +148,4 @@ export const Sidebar: React.FC<NavbarProps> = ({ open, setOpen }) => {
 };
 
 export default Navbar;
+
