@@ -418,7 +418,7 @@ const Litepaper: NextPage = () => {
           <br />
           <br />
           Lastly, consider if all NFTs in the prophetlady collections were to be minted and upgraded (50,000 total x 2
-          million to max upgrade) this would take out half of the total token supple. If one were to add these too
+          million to max upgrade) this would take out half of the total token supple. If one were to add these two
           possibliities together that means that hypthetically the entire 200 billion token supply could be completely
           burned within 5 years of completeing multiple IDO rounds.
         </Typography>
