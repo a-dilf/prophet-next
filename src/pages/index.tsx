@@ -310,6 +310,14 @@ const Home: NextPage = () => {
     { src: "love_idols/2493.avif", alt: "Description 1" },
   ];
 
+  const radbros = [
+    { src: "radbros/285.avif", alt: "Description 1" },
+    { src: "radbros/1787.avif", alt: "Description 1" },
+    { src: "radbros/1857.avif", alt: "Description 1" },
+    { src: "radbros/2704.avif", alt: "Description 1" },
+    { src: "radbros/3581.avif", alt: "Description 1" },
+  ];
+
   return (
     <div className="page" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "35px" }}>
       <div className="homepagetop">
@@ -641,7 +649,6 @@ const Home: NextPage = () => {
           <ImageBar images={love_idols_images_3}></ImageBar>
         </Box>
 
-
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Cigawrette Packs
         </Typography>
@@ -654,6 +661,12 @@ const Home: NextPage = () => {
           Kagami Academy
         </Typography>
         <ImageBar images={kagami_images}></ImageBar>
+
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+          Rad Bros
+        </Typography>
+        <ImageBar images={radbros}></ImageBar>
+        
       </div>
     </div>
   );
