@@ -516,7 +516,9 @@ const Home: NextPage = () => {
         </Box>
       </div>
 
-      <div className="container">
+     
+
+      <div className="container2">
         <Typography variant="h6" component="div" sx={{ mb: 2 }}>
           {" "}
           {/* Customize the title here */}
