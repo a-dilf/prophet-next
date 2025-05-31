@@ -663,7 +663,7 @@ const Home: NextPage = () => {
         <ImageBar images={kagami_images}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Rad Bros
+          Radbro
         </Typography>
         <ImageBar images={radbros}></ImageBar>
         
