@@ -318,6 +318,18 @@ const Home: NextPage = () => {
     { src: "radbros/3581.avif", alt: "Description 1" },
   ];
 
+  const yumemono = [
+    { src: "yumemono/yumemono 1269.avif", alt: "Description 1" },
+  ];
+
+  const banner = [
+    { src: "banner/banner_1975.avif", alt: "Description 1" },
+  ];
+
+  const yayo = [
+    { src: "yayo/yayo_2135.avif", alt: "Description 1" },
+  ];
+
   return (
     <div className="page" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "35px" }}>
       <div className="homepagetop">
@@ -666,6 +678,21 @@ const Home: NextPage = () => {
           Rad Bros
         </Typography>
         <ImageBar images={radbros}></ImageBar>
+
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+          Banner
+        </Typography>
+        <ImageBar images={banner}></ImageBar>
+
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+          Yayo
+        </Typography>
+        <ImageBar images={yayo}></ImageBar>
+
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+          Yumemono
+        </Typography>
+        <ImageBar images={yumemono}></ImageBar>
         
       </div>
     </div>
