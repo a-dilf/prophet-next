@@ -393,13 +393,13 @@ const Home: NextPage = () => {
             <ListItemIcon>
               <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="Total nfts swept: 112" />
+            <ListItemText primary="Total nfts swept: 117" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
             <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="Collections swept: 8" />
+            <ListItemText primary="Collections swept: 11" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
@@ -411,7 +411,7 @@ const Home: NextPage = () => {
             <ListItemIcon>
             <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="Total $ spent on buybacks: >$15,000" />
+            <ListItemText primary="Total $ spent on buybacks: >$16,000" />
           </ListItem>
         </List>
       </div>
@@ -675,7 +675,7 @@ const Home: NextPage = () => {
         <ImageBar images={kagami_images}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Rad Bros
+          Radbro
         </Typography>
         <ImageBar images={radbros}></ImageBar>
 
