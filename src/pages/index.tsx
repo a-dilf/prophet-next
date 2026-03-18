@@ -680,12 +680,12 @@ const Home: NextPage = () => {
         <ImageBar images={radbros}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Banner
+          Banners
         </Typography>
         <ImageBar images={banner}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Yayo
+          Yayo Corp.
         </Typography>
         <ImageBar images={yayo}></ImageBar>
 
