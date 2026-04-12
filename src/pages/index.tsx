@@ -247,14 +247,6 @@ const Home: NextPage = () => {
     { src: "cigarette/4042.avif", alt: "Description 1" },
     { src: "cigarette/6182.avif", alt: "Description 1" },
     { src: "cigarette/7439.avif", alt: "Description 1" },
-    { src: "cigarette/7546.avif", alt: "Description 1" },
-    { src: "cigarette/7762.avif", alt: "Description 1" },
-    { src: "cigarette/8123.avif", alt: "Description 1" },
-    { src: "cigarette/8529.avif", alt: "Description 1" },
-    { src: "cigarette/8794.avif", alt: "Description 1" },
-    { src: "cigarette/8950.avif", alt: "Description 1" },
-    { src: "cigarette/8951.avif", alt: "Description 1" },
-    { src: "cigarette/9615.avif", alt: "Description 1" },
   ];
 
   const cigarette_images2 = [
