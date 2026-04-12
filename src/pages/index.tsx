@@ -249,7 +249,7 @@ const Home: NextPage = () => {
     { src: "cigarette/7439.avif", alt: "Description 1" },
   ];
 
-  const cigarette_images2 = [
+  const cigarette_images_2 = [
     { src: "cigarette/7546.avif", alt: "Description 1" },
     { src: "cigarette/7762.avif", alt: "Description 1" },
     { src: "cigarette/8123.avif", alt: "Description 1" },
@@ -264,7 +264,7 @@ const Home: NextPage = () => {
     { src: "cigarette/cig 6721.jpeg", alt: "Description 1" },
   ];
 
-   const cigarette_images3 = [
+   const cigarette_images_3 = [
     { src: "cigarette/cig 1721.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 2141.png", alt: "Description 1" },
     { src: "cigarette/cig 2848.jpeg", alt: "Description 1" },
@@ -279,7 +279,7 @@ const Home: NextPage = () => {
     { src: "cigarette/cig 7128.png", alt: "Description 1" },
   ];
 
-  const cigarette_images4 = [
+  const cigarette_images_4 = [
     { src: "cigarette/cig 7130.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 7134.png", alt: "Description 1" },
     { src: "cigarette/cig 7138.jpeg", alt: "Description 1" },
@@ -294,7 +294,7 @@ const Home: NextPage = () => {
     { src: "cigarette/cig 948.jpeg", alt: "Description 1" },
   ];
 
-  const cigarette_images5 = [
+  const cigarette_images_5 = [
     { src: "cigarette/cig 9536.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 9677.jpeg", alt: "Description 1" },
   ];
