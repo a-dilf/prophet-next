@@ -234,7 +234,7 @@ const Home: NextPage = () => {
     { src: "white_hearts/2450.avif", alt: "Description 1" },
   ];
 
-  const cigarette_images = [
+  const cigarette_images_1 = [
     { src: "cigarette/968.avif", alt: "Description 1" },
     { src: "cigarette/1093.avif", alt: "Description 1" },
     { src: "cigarette/1211.avif", alt: "Description 1" },
@@ -264,7 +264,7 @@ const Home: NextPage = () => {
     { src: "cigarette/cig 6721.jpeg", alt: "Description 1" },
   ];
 
-   const cigarette_images_3 = [
+  const cigarette_images_3 = [
     { src: "cigarette/cig 1721.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 2141.png", alt: "Description 1" },
     { src: "cigarette/cig 2848.jpeg", alt: "Description 1" },
@@ -695,9 +695,9 @@ const Home: NextPage = () => {
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Cigawrette Packs
         </Typography>
-        <ImageBar images={cigarette_images}></ImageBar>
+        <ImageBar images={cigarette_images_1}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
-          <ImageBar images={cigarette_images2}></ImageBar>
+          <ImageBar images={cigarette_images_2}></ImageBar>
         </Box>
         <Box
           <ImageBar images={cigarette_images_3}></ImageBar>
