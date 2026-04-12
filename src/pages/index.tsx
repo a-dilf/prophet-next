@@ -266,6 +266,10 @@ const Home: NextPage = () => {
     { src: "cigarette/8950.avif", alt: "Description 1" },
     { src: "cigarette/8951.avif", alt: "Description 1" },
     { src: "cigarette/9615.avif", alt: "Description 1" },
+    { src: "cigarette/6811.avif", alt: "Description 1" },
+    { src: "cigarette/9402.avif", alt: "Description 1" },
+    { src: "cigarette/9243.avif", alt: "Description 1" },
+    { src: "cigarette/6721.avif", alt: "Description 1" },
   ];
 
   const schizo_poster = [
