@@ -339,6 +339,38 @@ const Home: NextPage = () => {
     { src: "love_idols/2491.avif", alt: "Description 1" },
     { src: "love_idols/2492.avif", alt: "Description 1" },
     { src: "love_idols/2493.avif", alt: "Description 1" },
+    { src: "love_idols/love idols 1047.png", alt: "Description 1" },
+    { src: "love_idols/love idols 1184.png", alt: "Description 1" },
+    { src: "love_idols/love idols 1235.png", alt: "Description 1" },
+    { src: "love_idols/love idols 1337.png", alt: "Description 1" },
+    { src: "love_idols/love idols 1380.png", alt: "Description 1" },
+    { src: "love_idols/love idols 1464.png", alt: "Description 1" },
+    { src: "love_idols/love idols 1776.png", alt: "Description 1" },
+    { src: "love_idols/love idols 1780.png", alt: "Description 1" },
+    { src: "love_idols/love idols 2139.png", alt: "Description 1" },
+  ];
+
+  const love_idols_images_4 = [
+    { src: "love_idols/love idols 2147.png", alt: "Description 1" },
+    { src: "love_idols/love idols 2150.png", alt: "Description 1" },
+    { src: "love_idols/love idols 2157.png", alt: "Description 1" },
+    { src: "love_idols/love idols 2167.png", alt: "Description 1" },
+    { src: "love_idols/love idols 1184.png", alt: "Description 1" },
+    { src: "love_idols/love idols 2168.png", alt: "Description 1" },
+    { src: "love_idols/love idols 2330.png", alt: "Description 1" },
+    { src: "love_idols/love idols 2367.png", alt: "Description 1" },
+    { src: "love_idols/love idols 2466.png", alt: "Description 1" },
+    { src: "love_idols/love idols 321.png", alt: "Description 1" },
+    { src: "love_idols/love idols 323.png", alt: "Description 1" },
+    { src: "love_idols/love idols 347.png", alt: "Description 1" },
+  ];
+
+  const love_idols_images_5 = [
+    { src: "love_idols/love idols 384.png", alt: "Description 1" },
+    { src: "love_idols/love idols 461.png", alt: "Description 1" },
+    { src: "love_idols/love idols 504.png", alt: "Description 1" },
+    { src: "love_idols/love idols 917.png", alt: "Description 1" },
+    { src: "love_idols/love idols 929.png", alt: "Description 1" },
   ];
 
   const radbros = [
@@ -691,7 +723,12 @@ const Home: NextPage = () => {
         <Box>
           <ImageBar images={love_idols_images_3}></ImageBar>
         </Box>
-
+         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }} >
+          <ImageBar images={love_idols_images_4}></ImageBar>
+        </Box>
+        <Box>
+          <ImageBar images={love_idols_images_5}></ImageBar>
+        </Box>
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Cigawrette Packs
         </Typography>
