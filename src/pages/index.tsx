@@ -290,7 +290,7 @@ const Home: NextPage = () => {
     { src: "cigarette/cig 8808.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 9404.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 9410.jpeg", alt: "Description 1" },
-    { src: "cigarette/cig 9945.png", alt: "Description 1" },
+    { src: "cigarette/cig 9445.png", alt: "Description 1" },
     { src: "cigarette/cig 948.jpeg", alt: "Description 1" },
   ];
 
