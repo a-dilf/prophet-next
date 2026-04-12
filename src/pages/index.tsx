@@ -699,7 +699,7 @@ const Home: NextPage = () => {
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
           <ImageBar images={cigarette_images_2}></ImageBar>
         </Box>
-        <Box
+        <Box>
           <ImageBar images={cigarette_images_3}></ImageBar>
         </Box>
         <Box>
