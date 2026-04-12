@@ -699,6 +699,15 @@ const Home: NextPage = () => {
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
           <ImageBar images={cigarette_images2}></ImageBar>
         </Box>
+        <Box
+          <ImageBar images={cigarette_images_3}></ImageBar>
+        </Box>
+        <Box>
+          <ImageBar images={cigarette_images_4}></ImageBar>
+        </Box>
+        <Box>
+          <ImageBar images={cigarette_images_5}></ImageBar>
+        </Box>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           Kagami Academy
