@@ -449,7 +449,7 @@ const Home: NextPage = () => {
 
       <div className="container2">
         <Typography variant="h4" component="div" sx={{ mb: 2, fontSize: {xs: "1rem", md: "2rem"} }}>
-          Mission Statement: World leading MMA bettors gamble on human cockfighting, spend prophets from bets on generating yield for token holders, sweeping Remilia assets / derivatives
+          Mission Statement: World leading MMA bettors gamble on human cockfighting, spend prophets from bets on generating yield for token holders, buying back and burning token, sweeping Remilia assets / derivatives
         </Typography>
         <List>
           <ListItem>
@@ -634,8 +634,8 @@ const Home: NextPage = () => {
           The Sweep Vault
         </Typography>
         <Typography sx={{ paddingTop: "15px", paddingBottom: "15px" }}>
-          Prophet Lady operates as a Milady derivative and complies with the mandate to sweep Remco assets--including
-          related ecosystem NFTs. Sweeped assets can be seen below.
+          Prophet Lady operates as a Milady derivative and has a mandate to sweep Remilia assets--including
+          derivative ecosystem NFTs. Sweeped assets can be seen below.
         </Typography>
 
         <div className="container">
@@ -688,17 +688,17 @@ const Home: NextPage = () => {
         </div>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          SchizoPoster
+          3 SchizoPosters
         </Typography>
         <ImageBar images={schizo_poster}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Pixelady Maker
+          4 Pixelady Makers
         </Typography>
         <ImageBar images={pixel_lady_images}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Oekaki Maker
+          31 Oekaki Makers
         </Typography>
         <ImageBar images={oekaki_images_1}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
@@ -709,12 +709,12 @@ const Home: NextPage = () => {
         </Box>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          White Hearts
+          12 White Hearts
         </Typography>
         <ImageBar images={white_heart_images}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Love Idols
+          53 Love Idols
         </Typography>
         <ImageBar images={love_idols_images}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
@@ -730,7 +730,7 @@ const Home: NextPage = () => {
           <ImageBar images={love_idols_images_5}></ImageBar>
         </Box>
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Cigawrette Packs
+          50 Cigawrette Packs
         </Typography>
         <ImageBar images={cigarette_images_1}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
@@ -747,27 +747,27 @@ const Home: NextPage = () => {
         </Box>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Kagami Academy
+          3 Kagami Academy
         </Typography>
         <ImageBar images={kagami_images}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Radbro
+          5 Radbros
         </Typography>
         <ImageBar images={radbros}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Banners
+          1 Banners
         </Typography>
         <ImageBar images={banner}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Yayo Corp.
+          1 Yayo Corp.
         </Typography>
         <ImageBar images={yayo}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          Yumemono
+          1 Yumemono
         </Typography>
         <ImageBar images={yumemono}></ImageBar>
         
