@@ -354,7 +354,7 @@ const Home: NextPage = () => {
     { src: "love_idols/love idols 2147.png", alt: "Description 1" },
     { src: "love_idols/love idols 2150.png", alt: "Description 1" },
     { src: "love_idols/love idols 2157.png", alt: "Description 1" },
-    { src: "love_idols/love idols 2167.png", alt: "Description 1" },
+    { src: "love_idols/love idols 2161.png", alt: "Description 1" },
     { src: "love_idols/love idols 1184.png", alt: "Description 1" },
     { src: "love_idols/love idols 2168.png", alt: "Description 1" },
     { src: "love_idols/love idols 2330.png", alt: "Description 1" },
