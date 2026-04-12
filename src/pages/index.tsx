@@ -258,10 +258,10 @@ const Home: NextPage = () => {
     { src: "cigarette/8950.avif", alt: "Description 1" },
     { src: "cigarette/8951.avif", alt: "Description 1" },
     { src: "cigarette/9615.avif", alt: "Description 1" },
-    { src: "cigarette/6811.jpeg", alt: "Description 1" },
-    { src: "cigarette/9402.jpeg", alt: "Description 1" },
-    { src: "cigarette/9243.jpeg", alt: "Description 1" },
-    { src: "cigarette/6721.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 6811.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 9402.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 9243.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 6721.jpeg", alt: "Description 1" },
   ];
 
   const schizo_poster = [
