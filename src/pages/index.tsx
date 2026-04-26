@@ -456,7 +456,7 @@ const Home: NextPage = () => {
             <ListItemIcon>
               <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="Total nfts swept: 177" />
+            <ListItemText primary="Total nfts swept: 179" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
@@ -468,13 +468,13 @@ const Home: NextPage = () => {
             <ListItemIcon>
             <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="Total $ spent sweeping nfts: > $13,000" />
+            <ListItemText primary="Total $ spent sweeping nfts: > $13,200" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
             <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="Total $ spent on buybacks: >$24,200" />
+            <ListItemText primary="Total $ spent on buybacks: >$24,700" />
           </ListItem>
         </List>
       </div>
