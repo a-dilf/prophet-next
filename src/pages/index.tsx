@@ -381,9 +381,31 @@ const Home: NextPage = () => {
     { src: "radbros/3581.avif", alt: "Description 1" },
   ];
 
-  const yumemono = [
+  const yumemono_images_1 = [
     { src: "yumemono/yumemono 1269.avif", alt: "Description 1" },
+    { src: "yumemono/yu 1117.png", alt: "Description 1" },
+    { src: "yumemono/yu 1143.png", alt: "Description 1" },
+    { src: "yumemono/yu 1294.png", alt: "Description 1" },
+    { src: "yumemono/yu 1498.png", alt: "Description 1" },
+    { src: "yumemono/yu 1905.png", alt: "Description 1" },
+    { src: "yumemono/yu 2296.png", alt: "Description 1" },
+    { src: "yumemono/yu 2302.png", alt: "Description 1" },
+    { src: "yumemono/yu 2308.png", alt: "Description 1" },
+    { src: "yumemono/yu 2518.png", alt: "Description 1" },
+    { src: "yumemono/yu 2617.png", alt: "Description 1" },
+    { src: "yumemono/yu 3204.png", alt: "Description 1" },
   ];
+
+  const yumemono_images_2 = [
+    { src: "yumemono/yu 3258.png", alt: "Description 1" },
+    { src: "yumemono/yu 3344.png", alt: "Description 1" },
+    { src: "yumemono/yu 372.png", alt: "Description 1" },
+    { src: "yumemono/yu 4704.png", alt: "Description 1" },
+    { src: "yumemono/yu 5002.png", alt: "Description 1" },
+    { src: "yumemono/yu 5045.png", alt: "Description 1" },
+    { src: "yumemono/yu 514.png", alt: "Description 1" },
+    { src: "yumemono/yu 591.png", alt: "Description 1" },
+  ];  
 
   const banner = [
     { src: "banner/banner_1975.avif", alt: "Description 1" },
@@ -767,9 +789,12 @@ const Home: NextPage = () => {
         <ImageBar images={yayo}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          1 Yumemono
+          20 Yumemono
         </Typography>
-        <ImageBar images={yumemono}></ImageBar>
+        <ImageBar images={yumemono_images_1}></ImageBar>
+        <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
+          <ImageBar images={yumemono_images_2}></ImageBar>
+        </Box>
         
       </div>
     </div>
