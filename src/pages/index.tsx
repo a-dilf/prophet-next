@@ -314,7 +314,7 @@ const Home: NextPage = () => {
     { src: "cigarette/cig 3218.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 3225.png", alt: "Description 1" },
     { src: "cigarette/cig 3290.jpeg", alt: "Description 1" },
-    { src: "cigarette/cig 3292.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 3292.png", alt: "Description 1" },
     { src: "cigarette/cig 3338.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 3350.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 3373.png", alt: "Description 1" },
@@ -325,9 +325,9 @@ const Home: NextPage = () => {
   ];
 
   const cigarette_images_7 = [
-    { src: "cigarette/cig 6019.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 6109.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 6489.jpeg", alt: "Description 1" },
-    { src: "cigarette/cig 6495.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 6495.png", alt: "Description 1" },
     { src: "cigarette/cig 770.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 8562.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 8566.png", alt: "Description 1" },
