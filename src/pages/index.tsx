@@ -297,7 +297,43 @@ const Home: NextPage = () => {
   const cigarette_images_5 = [
     { src: "cigarette/cig 9536.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 9677.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 1011.png", alt: "Description 1" },
+    { src: "cigarette/cig 1774.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 2263.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 2269.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 2523.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 2550.png", alt: "Description 1" },
+    { src: "cigarette/cig 2770.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 3065.png", alt: "Description 1" },
+    { src: "cigarette/cig 3066.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 3155.png", alt: "Description 1" },
   ];
+
+  const cigarette_images_6 = [
+    { src: "cigarette/cig 3215.png", alt: "Description 1" },
+    { src: "cigarette/cig 3218.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 3225.png", alt: "Description 1" },
+    { src: "cigarette/cig 3290.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 3292.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 3338.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 3350.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 3373.png", alt: "Description 1" },
+    { src: "cigarette/cig 51.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 5707.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 6025.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 6028.jpeg", alt: "Description 1" },
+  ];
+
+  const cigarette_images_7 = [
+    { src: "cigarette/cig 6019.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 6489.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 6495.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 770.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 8562.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 8566.png", alt: "Description 1" },
+    { src: "cigarette/cig 8886.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 9361.jpeg", alt: "Description 1" },
+  ]; 
 
   const schizo_poster = [
     { src: "schizo_poster/4611.avif", alt: "Description 1" },
@@ -766,6 +802,12 @@ const Home: NextPage = () => {
         </Box>
         <Box>
           <ImageBar images={cigarette_images_5}></ImageBar>
+        </Box>
+        <Box sx={{ marginBottom: "16px", paddingTop: "15px" }} >
+          <ImageBar images={cigarette_images_6}></ImageBar>
+        </Box>
+        <Box>
+          <ImageBar images={cigarette_images_7}></ImageBar>
         </Box>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
