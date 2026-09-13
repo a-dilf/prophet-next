@@ -532,7 +532,7 @@ const Home: NextPage = () => {
             <ListItemIcon>
             <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="Total $ spent on buybacks: >$28,900" />
+            <ListItemText primary="Total $ spent on buybacks: >$30,400" />
           </ListItem>
         </List>
       </div>
