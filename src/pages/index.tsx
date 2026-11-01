@@ -62,7 +62,9 @@ const Home: NextPage = () => {
   const [taxRewardsState, setTaxRewardsState] = React.useState(0);
   const [tokensInCirculation, setTokensInCirculation] = React.useState(0n);
 
-  const [claimEventsTotal, setClaimEventsTotal] = React.useState(0);
+  const [claimEventsTotal, setClaimEventsTotal] = React.useState<number | null>(null);
+  const [claimEventsError, setClaimEventsError] = React.useState(false);
+
   const publicClient = usePublicClient();
 
   const fetchClaimEvents = React.useCallback(async () => {
@@ -89,8 +91,10 @@ const Home: NextPage = () => {
       }
 
       setClaimEventsTotal(Number(formatEther(total)));
+      setClaimEventsError(false);
     } catch (err) {
       console.error("Error fetching claim events:", err);
+      setClaimEventsError(true);
     }
   }, [publicClient]);
 
@@ -679,9 +683,15 @@ const Home: NextPage = () => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className={styles.table}>Total rewards claimed:</TableCell>
-                <TableCell className={styles.table}>{Number(claimEventsTotal).toLocaleString()} ETH</TableCell>
-              </TableRow>
+                  <TableCell className={styles.table}>Total rewards claimed:</TableCell>
+                  <TableCell className={styles.table}>
+                    {claimEventsError
+                      ? "Unavailable"
+                      : claimEventsTotal === null
+                      ? "Loading..."
+                      : `${claimEventsTotal.toLocaleString()} ETH`}
+                  </TableCell>              
+                </TableRow>
               <TableRow>
                 <TableCell className={styles.table}>Tokens in circulation:</TableCell>
                 <TableCell className={styles.table}>{Number(tokensInCirculation)}</TableCell>
