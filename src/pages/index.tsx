@@ -30,7 +30,7 @@ import { toWei } from "web3-utils";
 import { ido_vault_abi } from "../../abi_objects/ido_abi";
 import { token_abi } from "../../abi_objects/token_abi";
 
-import { parseAbi } from "viem";
+
 import { usePublicClient } from "wagmi";
 
 import TexturedCube from "components/TexturedCube";
@@ -39,6 +39,12 @@ import FlashingHeader from "components/FlashingHeader";
 
 // rainbowkit+ imports
 import { useAccount, useReadContract } from "wagmi";
+
+import { parseAbi, formatEther } from "viem";
+const CLAIM_EVENT = parseAbi(["event Claim(address indexed _account, uint256 tokenAmount)"])[0];
+const STAKING_ADDRESS = "0x37EA4C3fd77DBf4e796f86fC75bCde83567c846e" as const; // token staking address
+const STAKING_DEPLOY_BLOCK = 0n; // TODO: set to the staking contract's deployment block (see Arbiscan)
+const LOG_CHUNK_SIZE = 5_000_000n; // public Arbitrum RPC caps eth_getLogs at 10M blocks
 
 const addressesForAccordian = [
   { card_title: "token", contract_address: "0xb9E0b8385B63d94367043b248414C58a94A37932" },
@@ -58,30 +64,39 @@ const Home: NextPage = () => {
 
   const [claimEventsTotal, setClaimEventsTotal] = React.useState(0);
   const publicClient = usePublicClient();
-  console.log("pub type", typeof publicClient);
 
   const fetchClaimEvents = React.useCallback(async () => {
-    if (!publicClient) return; // Early return if publicClient is undefined
+    if (!publicClient) return;
 
     try {
-      const logs = await publicClient.getLogs({
-        address: "0x37EA4C3fd77DBf4e796f86fC75bCde83567c846e", // token staking address
-        event: parseAbi(["event Claim(address indexed _account, uint256 tokenAmount)"])[0],
-        fromBlock: 0n,
-        toBlock: "latest",
-      });
+      const latest = await publicClient.getBlockNumber();
+      let total = 0n;
 
-      // Sum all claim amounts
-      const total = logs.reduce((sum, log) => sum + (log.args.tokenAmount as bigint), 0n);
+      // Query in chunks to stay under the RPC's block-range limit
+      for (let from = STAKING_DEPLOY_BLOCK; from <= latest; from += LOG_CHUNK_SIZE) {
+        const to = from + LOG_CHUNK_SIZE - 1n > latest ? latest : from + LOG_CHUNK_SIZE - 1n;
 
-      await console.log("claims check ", total);
+        const logs = await publicClient.getLogs({
+          address: STAKING_ADDRESS,
+          event: CLAIM_EVENT,
+          fromBlock: from,
+          toBlock: to,
+        });
 
-      // Convert from wei to eth and set state
-      setClaimEventsTotal(Number(total) / 1e18);
+        for (const log of logs) {
+          total += (log.args.tokenAmount as bigint | undefined) ?? 0n;
+        }
+      }
+
+      setClaimEventsTotal(Number(formatEther(total)));
     } catch (err) {
       console.error("Error fetching claim events:", err);
     }
   }, [publicClient]);
+
+  React.useEffect(() => {
+    fetchClaimEvents();
+  }, [fetchClaimEvents]);
 
   // Add useEffect to fetch claim events only when publicClient is available
   React.useEffect(() => {
@@ -461,20 +476,15 @@ const Home: NextPage = () => {
           The Prophecy: A Milady inspired NFT derivative gambling #based ecosystem
         </Typography>
 
-        <Box
-          component={Link}
-          href="/prophet"
-          underline="none"
-          sx={{ width: "100%" }} // Make Box take full width
-        >
+        <Box sx={{ width: "100%" }}>
           <Button
+            component="div"
             color="secondary"
             variant="contained"
-            fullWidth // This makes the button fill the Box
+            fullWidth
             sx={{
-              // Using sx prop instead of style for better Material UI integration
-              mt: 3, // marginTop: 24px (theme spacing 3 = 24px)
-              py: 1.5, // Add more padding to make button taller
+              mt: 3,
+              py: 1.5,
             }}
           >
             <FlashingHeader></FlashingHeader>
@@ -680,7 +690,7 @@ const Home: NextPage = () => {
                 <TableCell className={styles.table}># of tokens burnt:</TableCell>
                 <TableCell className={styles.table}>
                   {Number(totalSupplyState)} ({((Number(totalSupplyState) / 200000000000) * 100).toFixed(2)}%)
-                </TableCell>{" "}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
