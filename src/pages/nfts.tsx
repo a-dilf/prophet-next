@@ -4,14 +4,25 @@ import React, { useState } from "react";
 
 import styles from "../styles/Nfts.module.css";
 
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
 
 import IncrementIcon from "@mui/icons-material/Add"; // Import Add Icon
 import DecrementIcon from "@mui/icons-material/Remove"; // Import Remove Icon
 import IconButton from "@mui/material/IconButton";
 
 // rainbowkit+ imports
-import { useAccount, useReadContract } from "wagmi";
+import { useAccount, useReadContract, useReadContracts } from "wagmi";
 
 // abi objects
 import { pair_abi } from "abi_objects/pair_abi";
@@ -26,6 +37,8 @@ import NftCard from "../../components/cards/NftCard";
 
 import { toWei } from "web3-utils";
 
+type StakeFilter = "staked" | "unstaked" | null; // null = show all
+
 const Nfts: NextPage = () => {
   const [totalMinted, setTotalMinted] = React.useState(0n);
   const [totalStakedState, setTotalStakedState] = React.useState(0n);
@@ -39,6 +52,11 @@ const Nfts: NextPage = () => {
   const [ethInUSD, setEthInUSD] = React.useState(0);
   const [reservesProphet, setReservesProphet] = React.useState(0);
   const [reservesEth, setReservesEth] = React.useState(0);
+
+  // pagination + stake filter state
+  const [currentPage, setCurrentPage] = useState(0);
+  const [stakeFilter, setStakeFilter] = React.useState<StakeFilter>(null);
+  const cardsPerPage = 10;
 
   const { address, isConnected } = useAccount();
 
@@ -131,6 +149,43 @@ const Nfts: NextPage = () => {
     functionName: "slot0",
   });
 
+  // staked status for every owned NFT in one batched read (NFT contract: stakedTokens(tokenId))
+  const { data: stakedResults, refetch: refetchStaked } = useReadContracts({
+    contracts: (ownedNfts ?? []).map((tokenId) => ({
+      address: process.env.NEXT_PUBLIC_NFT_ADDRESS as "0x${string}",
+      abi: nft_abi,
+      functionName: "stakedTokens",
+      args: [tokenId],
+    })) as any,
+    query: { enabled: !!ownedNfts && ownedNfts.length > 0 },
+  });
+
+  // true once we know the staked status (or there is nothing to look up)
+  const stakeStatusReady = !ownedNfts || ownedNfts.length === 0 || !!stakedResults;
+
+  // set of staked token ids, rebuilt whenever the results change
+  const stakedIds = React.useMemo(() => {
+    const set = new Set<string>();
+    (ownedNfts ?? []).forEach((tokenId, i) => {
+      if ((stakedResults as any)?.[i]?.result === true) set.add(String(tokenId));
+    });
+    return set;
+  }, [ownedNfts, stakedResults]);
+
+  // cards after applying the staked/unstaked filter
+  const filteredCards = React.useMemo(() => {
+    if (!stakeFilter) return ownedNftCardProps;
+    return ownedNftCardProps.filter((card) => {
+      const isStaked = stakedIds.has(String(card.tokenId));
+      return stakeFilter === "staked" ? isStaked : !isStaked;
+    });
+  }, [ownedNftCardProps, stakedIds, stakeFilter]);
+
+  const handleFilterChange = (_: React.MouseEvent<HTMLElement>, next: StakeFilter) => {
+    setStakeFilter(next); // clicking the active button again clears the filter
+    setCurrentPage(0); // avoid landing on an empty page
+  };
+
   //// STATE UPDATES
   React.useEffect(() => {
     if (reserves) {
@@ -211,13 +266,11 @@ const Nfts: NextPage = () => {
     }
   };
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const cardsPerPage = 10;
-
-  const displayedCards = ownedNftCardProps.slice(currentPage * cardsPerPage, (currentPage + 1) * cardsPerPage);
+  // pagination (works on the filtered list)
+  const displayedCards = filteredCards.slice(currentPage * cardsPerPage, (currentPage + 1) * cardsPerPage);
 
   const loadNextCards = () => {
-    if ((currentPage + 1) * cardsPerPage < ownedNftCardProps.length) {
+    if ((currentPage + 1) * cardsPerPage < filteredCards.length) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -308,6 +361,33 @@ const Nfts: NextPage = () => {
       <Typography className="container" variant="h3">
         NFTs at 0x{String(address).slice(-4)}
       </Typography>
+
+     {/* stake status filter */}
+<Box sx={{ display: "flex", gap: 2 }}>
+  <Button
+    color="secondary"
+    variant={stakeFilter === "staked" ? "contained" : "outlined"}
+    disabled={!stakeStatusReady}
+    onClick={() => {
+      setStakeFilter(stakeFilter === "staked" ? null : "staked");
+      setCurrentPage(0);
+    }}
+  >
+    Staked
+  </Button>
+  <Button
+    color="secondary"
+    variant={stakeFilter === "unstaked" ? "contained" : "outlined"}
+    disabled={!stakeStatusReady}
+    onClick={() => {
+      setStakeFilter(stakeFilter === "unstaked" ? null : "unstaked");
+      setCurrentPage(0);
+    }}
+  >
+    Unstaked
+  </Button>
+</Box>
+
       <div>
         <Button
           color="secondary"
@@ -323,20 +403,21 @@ const Nfts: NextPage = () => {
           variant="contained"
           style={{ marginTop: 24, marginLeft: 15 }}
           onClick={loadNextCards}
-          disabled={(currentPage + 1) * cardsPerPage >= ownedNftCardProps.length}
+          disabled={(currentPage + 1) * cardsPerPage >= filteredCards.length}
         >
           Next 10
         </Button>
       </div>
 
-      {displayedCards.map((cardData, index) => (
+      {displayedCards.map((cardData) => (
         <NftCard
-          key={index}
+          key={String(cardData.tokenId)} // stable key so cards don't remount/mix state when filtering
           mounted={cardData.mounted}
           isConnected={cardData.isConnected}
           tokenId={cardData.tokenId}
           currentAllowanceState={cardData.currentAllowanceState}
           setStateAllowanceAmount={cardData.setStateAllowanceAmount}
+          onStakeChange={refetchStaked}
         />
       ))}
 
@@ -355,7 +436,7 @@ const Nfts: NextPage = () => {
           variant="contained"
           style={{ marginTop: 24, marginLeft: 15 }}
           onClick={loadNextCards}
-          disabled={(currentPage + 1) * cardsPerPage >= ownedNftCardProps.length}
+          disabled={(currentPage + 1) * cardsPerPage >= filteredCards.length}
         >
           Next 10
         </Button>

@@ -24,13 +24,14 @@ interface NftCardProps {
     tokenId: number;
     currentAllowanceState: BigInt;
     setStateAllowanceAmount: React.Dispatch<React.SetStateAction<bigint>>;
+    onStakeChange?: () => void; // called after a confirmed stake/unstake so the page can refresh its filter
 }
 
 import { nft_abi } from '../../abi_objects/nft_abi';
 import { staking_nft_abi } from '../../abi_objects/staking_nft_abi';
 import { token_abi } from '../../abi_objects/token_abi';
 
-const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, currentAllowanceState, setStateAllowanceAmount }) => {
+const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, currentAllowanceState, setStateAllowanceAmount, onStakeChange }) => {
     // state values
     const [tokenTier, setTokenTier] = React.useState(BigInt(0));
     const [tokenImageUrl, setTokenImageUrl] = React.useState("");
@@ -92,7 +93,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
         functionName: 'nftTiers'
     });
 
-    const { data: tokenStakeStatus } = useReadContract({
+    const { data: tokenStakeStatus, refetch: refetchStakeStatus } = useReadContract({
         ...nftContractConfig2,
         functionName: 'stakedTokens'
     });
@@ -140,7 +141,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
     } = useWaitForTransactionReceipt({
         hash: stakeHash,
         query: {
-            enabled: !!hash,
+            enabled: !!stakeHash,
         },
     });
 
@@ -203,7 +204,7 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
     } = useWaitForTransactionReceipt({
         hash: unstakeHash,
         query: {
-            enabled: !!hash,
+            enabled: !!unstakeHash,
         },
     });
 
@@ -214,10 +215,18 @@ const NftCard: React.FC<NftCardProps> = ({ mounted, isConnected, tokenId, curren
     }, [tokenTierLevel]);
 
     React.useEffect(() => {
-        if (tokenStakeStatus) {
+        if (tokenStakeStatus !== undefined) {
             setTokenStakeStatusForButton(tokenStakeStatus);
         }
     }, [tokenStakeStatus]);
+
+    // after a confirmed stake/unstake: refresh this card's status and tell the page to refresh its filter
+    React.useEffect(() => {
+        if (stakeSuccess || unstakeSuccess) {
+            refetchStakeStatus();
+            onStakeChange?.();
+        }
+    }, [stakeSuccess, unstakeSuccess]);
 
     React.useEffect(() => {
         if (!isLevelLoading && isLevelStarted) {
