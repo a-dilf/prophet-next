@@ -236,7 +236,27 @@ const Home: NextPage = () => {
     { src: "pixel_lady/2246.png", alt: "Description 1" },
     { src: "pixel_lady/7908.png", alt: "Description 1" },
     { src: "pixel_lady/7914.png", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 5041.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 1985.avif ", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 2986.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 8018.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 4858.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 2037.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 4856.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 2248.avif", alt: "Description 1" },
   ];
+
+  const pixel_lady_images_2 = [
+    { src: "pixel_lady/pixelady 7001.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 9802.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 8553.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 6126.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 2866.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 3241.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 3231.avif", alt: "Description 1" },
+    { src: "pixel_lady/pixelady 4404.avif", alt: "Description 1" },
+
+    ];
 
   const white_heart_images = [
     { src: "white_hearts/331.avif", alt: "Description 1" },
@@ -793,7 +813,9 @@ const Home: NextPage = () => {
           20 Pixelady Makers
         </Typography>
         <ImageBar images={pixel_lady_images}></ImageBar>
-
+         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
+          <ImageBar images={pixel_lady_images_2}></ImageBar>
+        </Box>
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           55 Oekaki Makers
         </Typography>
