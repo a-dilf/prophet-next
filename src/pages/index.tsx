@@ -223,6 +223,36 @@ const Home: NextPage = () => {
     { src: "oekaki/5188.avif", alt: "Description 1" },
     { src: "oekaki/5275.avif", alt: "Description 1" },
     { src: "oekaki/5343.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 4131.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 785.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 2681.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 1370.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 824.avif", alt: "Description 1" },
+  ];
+
+    const oekaki_images_4 = [
+    { src: "oekaki/oekaki 3078.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 1384.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 542.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 2742.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 5473.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 4706.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 3090.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 5539.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 4324.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 4577.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 2240.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 5433.avif", alt: "Description 1" },
+  ];
+
+  const oekaki_images_5 = [
+    { src: "oekaki/oekaki 3477.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 784.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 5369.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 96.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 233.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 3657.avif", alt: "Description 1" },
+    { src: "oekaki/oekaki 396.avif", alt: "Description 1" },
   ];
 
   const kagami_images = [
@@ -825,7 +855,10 @@ const Home: NextPage = () => {
         </Box>
         <Box>
           <ImageBar images={oekaki_images_3}></ImageBar>
+        </Box> <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
+          <ImageBar images={oekaki_images_4}></ImageBar>
         </Box>
+           <ImageBar images={oekaki_images_5}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           12 White Hearts
