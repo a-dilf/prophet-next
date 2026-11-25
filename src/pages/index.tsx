@@ -352,7 +352,26 @@ const Home: NextPage = () => {
     { src: "cigarette/cig 8566.png", alt: "Description 1" },
     { src: "cigarette/cig 8886.jpeg", alt: "Description 1" },
     { src: "cigarette/cig 9361.jpeg", alt: "Description 1" },
+    { src: "cigarette/cig 3684.avif", alt: "Description 1" },
+    { src: "cigarette/cig 6032.avif", alt: "Description 1" },
+    { src: "cigarette/6974.avif", alt: "Description 1" },
+    { src: "cigarette/7897.avif", alt: "Description 1" },
   ]; 
+
+  const cigarette_images_8 = [
+    { src: "cigarette/1039.avif", alt: "Description 1" },
+    { src: "cigarette/1038.avif", alt: "Description 1" },
+    { src: "cigarette/1635.avif", alt: "Description 1" },
+    { src: "cigarette/2289.avif", alt: "Description 1" },
+    { src: "cigarette/1041.avif", alt: "Description 1" },
+    { src: "cigarette/9317.avif", alt: "Description 1" },
+    { src: "cigarette/6857.avif", alt: "Description 1" },
+    { src: "cigarette/171.avif", alt: "Description 1" },
+    { src: "cigarette/7161.avif", alt: "Description 1" },
+    { src: "cigarette/7158.avif", alt: "Description 1" },
+    { src: "cigarette/4879.avif", alt: "Description 1" },
+    { src: "cigarette/4817.avif", alt: "Description 1" },
+   ]; 
 
   const schizo_poster = [
     { src: "schizo_poster/4611.avif", alt: "Description 1" },
@@ -828,6 +847,9 @@ const Home: NextPage = () => {
         </Box>
         <Box>
           <ImageBar images={cigarette_images_7}></ImageBar>
+        </Box>
+        <Box sx={{ marginBottom: "16px", paddingTop: "15px" }} >
+          <ImageBar images={cigarette_images_8}></ImageBar>
         </Box>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
