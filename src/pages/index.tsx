@@ -790,12 +790,12 @@ const Home: NextPage = () => {
         <ImageBar images={schizo_poster}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          4 Pixelady Makers
+          20 Pixelady Makers
         </Typography>
         <ImageBar images={pixel_lady_images}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          31 Oekaki Makers
+          55 Oekaki Makers
         </Typography>
         <ImageBar images={oekaki_images_1}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
@@ -811,7 +811,7 @@ const Home: NextPage = () => {
         <ImageBar images={white_heart_images}></ImageBar>
 
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          53 Love Idols
+          94 Love Idols
         </Typography>
         <ImageBar images={love_idols_images}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
