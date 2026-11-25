@@ -808,7 +808,7 @@ const Home: NextPage = () => {
           <ImageBar images={love_idols_images_5}></ImageBar>
         </Box>
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
-          80 Cigawrette Packs
+          111 Cigawrette Packs
         </Typography>
         <ImageBar images={cigarette_images_1}></ImageBar>
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
