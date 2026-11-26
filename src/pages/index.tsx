@@ -611,6 +611,73 @@ const Home: NextPage = () => {
     { src: "yayo/yayo_2135.avif", alt: "Description 1" },
   ];
 
+  const moemoe_images_1 = [
+     { src: "moemoe/moemoe 3670.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2061.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 4198.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 4630.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 359.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3044.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3524.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 1630.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 1095.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2363.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 4114.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2431.avif", alt: "Description 1" },
+  ];
+
+  const moemoe_images_2 = [
+     { src: "moemoe/moemoe 1640.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 4696.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2474.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3951.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3966.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3231.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2584.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3964.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2581.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2836.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2208.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 997.avif", alt: "Description 1" },
+  ];
+
+  const moemoe_images_3 = [
+     { src: "moemoe/moemoe 2707.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2342.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 1644.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2860.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2080.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 1624.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 5064.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3075.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3394.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 4665.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 4463.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 1848.avif", alt: "Description 1" },
+  ];
+
+  const moemoe_images_4 = [
+     { src: "moemoe/moemoe 4142.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2028.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 342.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 4430.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3297.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 3074.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2496.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2659.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 874.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 795.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 796.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 1466.avif", alt: "Description 1" },
+  ];
+
+  const moemoe_images_5 = [
+     { src: "moemoe/moemoe 1085.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 4742.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 1822.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 1400.avif", alt: "Description 1" },
+  ];
+
   return (
     <div className="page" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "35px" }}>
       <div className="homepagetop">
@@ -1008,6 +1075,22 @@ const Home: NextPage = () => {
         </Typography>
         <ImageBar images={banner}></ImageBar>
 
+        <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
+          52 Moemoes
+        </Typography>
+          <ImageBar images={moemoe_images_1}></ImageBar>
+        <Box sx={{ marginBottom: "16px", paddingTop: "15px" }}>
+          <ImageBar images={moemoe_images_2}></ImageBar>
+        </Box>
+        <Box>
+          <ImageBar images={moemoe_images_3}></ImageBar>
+        </Box>
+        <Box sx={{ marginBottom: "16px", paddingTop: "15px" }} >
+          <ImageBar images={moemoe_images_4}></ImageBar>
+        </Box>
+        <Box>
+          <ImageBar images={moemoe_images_5}></ImageBar>
+        </Box>
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           1 Yayo Corp.
         </Typography>
