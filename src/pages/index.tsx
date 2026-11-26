@@ -736,7 +736,7 @@ const Home: NextPage = () => {
             <ListItemIcon>
               <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="Total nfts swept: 325" />
+            <ListItemText primary="Total nfts swept: 377" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
