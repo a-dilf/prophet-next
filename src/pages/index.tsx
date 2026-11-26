@@ -521,7 +521,7 @@ const Home: NextPage = () => {
     { src: "love_idols/1077.avif", alt: "Description 1" },
     { src: "love_idols/2230.avif", alt: "Description 1" },
     { src: "love_idols/362.avif", alt: "Description 1" },
-    { src: "love_idols/love idols 2289.avif", alt: "Description 1" },
+    { src: "love_idols/2464.avif", alt: "Description 1" },
   ];
 
   const love_idols_images_6 = [
@@ -566,7 +566,6 @@ const Home: NextPage = () => {
     { src: "love_idols/2463.avif", alt: "Description 1" },
     { src: "love_idols/2460.avif", alt: "Description 1" },
     { src: "love_idols/2458.avif", alt: "Description 1" },
-    { src: "love_idols/2464.avif", alt: "Description 1" },
   ];
 
   const radbros = [
