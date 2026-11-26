@@ -645,7 +645,7 @@ const Home: NextPage = () => {
      { src: "moemoe/moemoe 2342.avif", alt: "Description 1" },
      { src: "moemoe/moemoe 1644.avif", alt: "Description 1" },
      { src: "moemoe/moemoe 2860.avif", alt: "Description 1" },
-     { src: "moemoe/moemoe 2080.avif", alt: "Description 1" },
+     { src: "moemoe/moemoe 2070.avif", alt: "Description 1" },
      { src: "moemoe/moemoe 1624.avif", alt: "Description 1" },
      { src: "moemoe/moemoe 5064.avif", alt: "Description 1" },
      { src: "moemoe/moemoe 3075.avif", alt: "Description 1" },
