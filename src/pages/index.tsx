@@ -531,7 +531,7 @@ const Home: NextPage = () => {
     { src: "love_idols/650.avif", alt: "Description 1" },
     { src: "love_idols/553.avif", alt: "Description 1" },
     { src: "love_idols/2213.avif", alt: "Description 1" },
-    { src: "love_idols/2289.avif", alt: "Description 1" },
+    { src: "love_idols/love idols 2289.avif", alt: "Description 1" },
     { src: "love_idols/177.avif", alt: "Description 1" },
     { src: "love_idols/2264.avif", alt: "Description 1" },
     { src: "love_idols/1148.avif", alt: "Description 1" },
