@@ -423,6 +423,26 @@ const Home: NextPage = () => {
     { src: "cigarette/4817.avif", alt: "Description 1" },
    ]; 
 
+    const cigarette_images_9 = [
+    { src: "cigarette/cig 7898.avif", alt: "Description 1" },
+    { src: "cigarette/cig 5579.avif", alt: "Description 1" },
+    { src: "cigarette/cig 947.avif", alt: "Description 1" },
+    { src: "cigarette/cig 8224.avif", alt: "Description 1" },
+    { src: "cigarette/cig 9345.avif", alt: "Description 1" },
+    { src: "cigarette/cig 7899.avif", alt: "Description 1" },
+    { src: "cigarette/cig 8176.avif", alt: "Description 1" },
+    { src: "cigarette/cig 320.avif", alt: "Description 1" },
+    { src: "cigarette/cig 321.avif", alt: "Description 1" },
+    { src: "cigarette/cig 5091.avif", alt: "Description 1" },
+    { src: "cigarette/cig 9343.avif", alt: "Description 1" },
+    { src: "cigarette/cig 4747.avif", alt: "Description 1" },
+   ]; 
+
+     const cigarette_images_10 = [
+    { src: "cigarette/cig 8048.avif", alt: "Description 1" },
+    { src: "cigarette/cig 2314.avif", alt: "Description 1" }, 
+   ];
+
   const schizo_poster = [
     { src: "schizo_poster/4611.avif", alt: "Description 1" },
     { src: "schizo_poster/3306.avif", alt: "Description 1" },
@@ -609,7 +629,7 @@ const Home: NextPage = () => {
             <ListItemIcon>
             <CircleIcon fontSize="small" sx={{ color: "#ee82ee", opacity: 100 }} />
             </ListItemIcon>
-            <ListItemText primary="Total $ spent sweeping nfts: > $18,250" />
+            <ListItemText primary="Total $ spent sweeping nfts: > $19,050" />
           </ListItem>
           <ListItem>
             <ListItemIcon>
@@ -906,7 +926,11 @@ const Home: NextPage = () => {
         <Box sx={{ marginBottom: "16px", paddingTop: "15px" }} >
           <ImageBar images={cigarette_images_8}></ImageBar>
         </Box>
-
+        <ImageBar images={cigarette_images_9}></ImageBar>
+        </Box>
+        <Box sx={{ marginBottom: "16px", paddingTop: "15px" }} >
+          <ImageBar images={cigarette_images_10}></ImageBar>
+        </Box>
         <Typography variant="h5" component="div" sx={{ mb: 2, paddingTop: "15px" }}>
           3 Kagami Academy
         </Typography>
